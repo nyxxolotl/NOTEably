@@ -12,7 +12,7 @@ import com.g3appdev.noteably.Entity.FolderEntity;
 import com.g3appdev.noteably.Service.NoteService;
 import com.g3appdev.noteably.Service.FolderService;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://noteably-final.onrender.com")
 @RestController
 @RequestMapping("/api/note")
 public class NoteController {

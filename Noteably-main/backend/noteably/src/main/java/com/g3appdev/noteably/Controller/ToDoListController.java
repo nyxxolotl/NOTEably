@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import com.g3appdev.noteably.Entity.ToDoListEntity;
 import com.g3appdev.noteably.Service.ToDoListService;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://noteably-final.onrender.com")
 @RestController
 @RequestMapping("/api/TodoList")
 public class ToDoListController {

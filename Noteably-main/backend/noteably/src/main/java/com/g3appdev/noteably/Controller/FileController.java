@@ -14,7 +14,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://noteably-final.onrender.com")
 @RequestMapping("/uploads")
 public class FileController {
 
