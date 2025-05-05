@@ -1,0 +1,113 @@
+/* Flex container for the image and form */
+.register-content {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  max-width: 800px;
+  background-color: #fff;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: inset 0 2px 2px rgba(0, 0, 0, 0.1);
+  border: 2px solid lightgray;
+  
+}
+
+/* Resize the image container */
+.register-image {
+  flex: 0.4; /* Adjust the width ratio of the image */
+}
+
+.register-image img {
+  width: 100%;
+  height: 100%;
+  border-radius: 19px 0 0 19px;
+  object-fit: cover;
+}
+
+/* Adjust form width */
+.register-form {
+  flex: 0.6; /* Adjust the width ratio of the form */
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: var(--darkblue);
+}
+
+.register-form p {
+  font-size: 14px;
+  color:var(--blue);
+  margin-bottom: 15px;
+  margin-top: -15px;
+}
+
+.register-form a {
+  text-decoration: none;
+  color: var(--green);
+  font-weight: bold;
+}
+
+.auth-title {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-input {
+  padding: 12px 15px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  width: 100%;
+  outline: none;
+}
+
+.register-button {
+  padding: 12px 20px;
+  margin-top: 20px !important;
+  font-size: 18px;
+  color: white;
+  background-color: var(--orange);
+  border: none;
+  border-radius: 10px !important;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.register-button:hover {
+  background-color: var(--yellow);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .register-content {
+    flex-direction: column;
+  }
+
+  .register-image {
+    flex: none; /* Reset flex property */
+    height: 200px; /* Set a fixed height for smaller screens */
+  }
+
+  .register-image img {
+    border-radius: 20px 20px 0 0;
+  }
+
+  .register-form {
+    flex: none;
+    padding: 20px; /* Adjust padding for smaller screens */
+  }
+}
+
+/* Styles for the password visibility toggle checkbox */
+.show-password-checkbox {
+    margin-left: 10px; /* Space between the checkbox and the input */
+    cursor: pointer; /* Change cursor to pointer for better UX */
+}
