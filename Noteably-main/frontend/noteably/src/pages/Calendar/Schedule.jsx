@@ -9,7 +9,7 @@ import { Button, TextField, Select, MenuItem, Typography, Box, Dialog, DialogAct
 import { Edit, Delete, Event, PriorityHigh, LowPriority, Star, EventNote, Add } from '@mui/icons-material';
 import './Fullcalendar.css';
 
-const apiUrl = "http://localhost:8080/api/schedules";
+const apiUrl = "https://noteably-final.onrender.com/api/schedules";
 
 function Schedule() {
   const studentId = localStorage.getItem('studentId'); // Get studentId from local storage
@@ -45,7 +45,7 @@ function Schedule() {
 
   const fetchToDoItems = async () => {
     try {
-      const response = await axiosRequest({ method: 'get', url: "http://localhost:8080/api/TodoList/getByStudent/" + studentId }); // Fetch ToDo items by studentId
+      const response = await axiosRequest({ method: 'get', url: "https://noteably-final.onrender.com/api/TodoList/getByStudent/" + studentId }); // Fetch ToDo items by studentId
       setToDoItems(response.data);
     } catch (error) {
       console.error("Error fetching ToDo items", error);
@@ -141,7 +141,7 @@ const handleEdit = (schedule) => {
   const addNewToDo = async () => {
     try {
       const newToDoData = { ...newToDo, studentId: parseInt(studentId, 10) }; // Include studentId
-      const response = await axiosRequest({ method: 'post', url: "http://localhost:8080/api/TodoList/postListRecord", data: { ...newToDoData, scheduleId: selectedId } });
+      const response = await axiosRequest({ method: 'post', url: "https://noteably-final.onrender.com/api/TodoList/postListRecord", data: { ...newToDoData, scheduleId: selectedId } });
       setNewToDo({ title: "", description: "" });
       setOpenToDoDialog(false);
       fetchToDoItems();

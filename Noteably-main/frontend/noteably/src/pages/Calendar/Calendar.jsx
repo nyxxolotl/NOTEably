@@ -7,7 +7,7 @@ import axios from 'axios';
 import KanbanBoard from '../../KanbanBoard';
 import { Box, Tabs, Tab } from '@mui/material';
 
-const apiUrl = "http://localhost:8080/api/schedules"; 
+const apiUrl = "https://noteably-final.onrender.com/api/schedules"; 
 
 function Calendar() { 
   const studentId = localStorage.getItem('studentId'); // Get studentId from local storage

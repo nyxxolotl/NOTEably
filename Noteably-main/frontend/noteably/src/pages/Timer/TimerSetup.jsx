@@ -17,7 +17,7 @@ import ConfirmEditDialog from '../../dialogs/ConfirmEditDialog';
 import ConfirmDeleteDialog from '../../dialogs/ConfirmDeleteDialog';
 
 function TimerSetup() {
-  const url = "http://localhost:8080/api/timer";
+  const url = "https://noteably-final.onrender.com/api/timer";
   const [timerList, setTimerList] = useState([]);
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [editDialogOpen, setEditDialogOpen] = useState(false);

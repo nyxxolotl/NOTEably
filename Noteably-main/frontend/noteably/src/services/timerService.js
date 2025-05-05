@@ -1,6 +1,6 @@
 import { axiosInstance } from '../studentService';
 
-const BASE_URL = 'http://localhost:8080/api/timer';
+const BASE_URL = 'https://noteably-final.onrender.com/timer';
 
 const timerService = {
     getAllTimers: async () => {

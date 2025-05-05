@@ -17,7 +17,7 @@ import com.g3appdev.noteably.Entity.TimerEntity;
 import com.g3appdev.noteably.Service.TimerService;
 
 @RestController
-@CrossOrigin(origins = "https://noteably-final.onrender.com")
+@CrossOrigin(origins = "https://noteably.vercel.app/")
 @RequestMapping("/api/timer")
 public class TimerController {
 

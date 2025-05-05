@@ -15,7 +15,7 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/api/students")
-@CrossOrigin(origins = "https://noteably-final.onrender.com", 
+@CrossOrigin(origins = "https://noteably.vercel.app/", 
     allowedHeaders = "*",
     methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE},
     allowCredentials = "true",
