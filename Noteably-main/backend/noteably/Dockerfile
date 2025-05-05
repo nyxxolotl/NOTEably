@@ -15,7 +15,7 @@ COPY src /app/src
 RUN mvn package -DskipTests
 
 # Use OpenJDK 17 for the runtime stage
-FROM openjdk:17-jre-slim
+FROM openjdk:17-jre
 
 # Copy the JAR file from the build stage
 COPY --from=build /app/target/*.jar /app/app.jar
