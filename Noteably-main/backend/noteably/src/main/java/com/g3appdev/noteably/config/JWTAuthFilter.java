@@ -63,12 +63,19 @@ public class JWTAuthFilter extends OncePerRequestFilter {
 
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);
-            if (jwtUtils.isTokenValid(jwtToken, userDetails)) {
-                UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
-                        userDetails, null, userDetails.getAuthorities());
-                token.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                SecurityContextHolder.getContext().setAuthentication(token);
-            }
+                if (jwtUtils.isTokenValid(jwtToken, userDetails)) {
+                    // Extract authorities from the token directly
+                    var roles = jwtUtils.extractClaim(jwtToken, claims -> claims.get("authorities", java.util.List.class));
+                    var grantedAuthorities = roles.stream()
+                            .map(role -> new org.springframework.security.core.authority.SimpleGrantedAuthority((String) role))
+                            .toList();
+
+                    UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
+                            userDetails, null, grantedAuthorities);
+                    token.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                    SecurityContextHolder.getContext().setAuthentication(token);
+                }
+
         }
         filterChain.doFilter(request, response);
     }
