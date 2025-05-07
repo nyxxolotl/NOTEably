@@ -91,4 +91,9 @@ public class JWT {
     public boolean isTokenExpired(String token) {
         return extractClaims(token, Claims::getExpiration).before(new Date());
     }
+
+    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
+        return extractClaims(token, claimsResolver);
+    }
+    
 }

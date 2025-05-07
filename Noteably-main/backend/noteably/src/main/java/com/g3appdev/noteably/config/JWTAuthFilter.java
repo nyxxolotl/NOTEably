@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.List;
 
 @Component
 public class JWTAuthFilter extends OncePerRequestFilter {
@@ -65,7 +66,7 @@ public class JWTAuthFilter extends OncePerRequestFilter {
             UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);
                 if (jwtUtils.isTokenValid(jwtToken, userDetails)) {
                     // Extract authorities from the token directly
-                    var roles = jwtUtils.extractClaim(jwtToken, claims -> claims.get("authorities", java.util.List.class));
+                    var roles = jwtUtils.extractClaim(jwtToken, claims -> claims.get("authorities", List.class));
                     var grantedAuthorities = roles.stream()
                             .map(role -> new org.springframework.security.core.authority.SimpleGrantedAuthority((String) role))
                             .toList();
