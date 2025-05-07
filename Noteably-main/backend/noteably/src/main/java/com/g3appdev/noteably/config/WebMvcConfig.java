@@ -11,17 +11,26 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/uploads/**")
-                .addResourceLocations("file:uploads/")
+                .addResourceLocations("file:uploads/profile-pictures")
                 .setCachePeriod(3600);
     }
 
     @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedOrigins("https://noteably.vercel.app/")
-                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                .allowedHeaders("*")
-                .allowCredentials(true)
-                .maxAge(3600);
-    }
+public void addCorsMappings(CorsRegistry registry) {
+    registry.addMapping("/**")
+            .allowedOrigins("https://noteably.vercel.app")
+            .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+            .allowedHeaders("*")
+            .allowCredentials(true)
+            .maxAge(3600);
+
+    // Allow access to the uploads folder from the frontend
+    registry.addMapping("/uploads/**")
+            .allowedOrigins("https://noteably.vercel.app")
+            .allowedMethods("GET") // Only allow GET for static files
+            .allowedHeaders("*")
+            .allowCredentials(true)
+            .maxAge(3600);
+}
+
 }
