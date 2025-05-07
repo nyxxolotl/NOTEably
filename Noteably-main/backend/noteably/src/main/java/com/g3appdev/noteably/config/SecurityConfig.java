@@ -47,6 +47,7 @@ public class SecurityConfig {
                 
                 // ✅ Add this line:
                 .requestMatchers("/api/TodoList/**").hasAuthority("USER")
+                .requestMatchers("/api/schedules/**").hasAuthority("USER")
 
                 .anyRequest().authenticated()
             )
