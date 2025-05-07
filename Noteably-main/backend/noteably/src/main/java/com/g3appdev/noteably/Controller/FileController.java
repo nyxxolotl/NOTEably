@@ -28,7 +28,7 @@ public class FileController {
         put("gif", MediaType.IMAGE_GIF);
     }};
 
-    @GetMapping("/profile-pictures/{filename:.+}")
+    @GetMapping("/uploads/profile-pictures/{filename:.+}")
     public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
         try {
             Path filePath = fileService.getFilePath(filename);
