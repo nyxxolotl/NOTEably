@@ -36,21 +36,37 @@ function Schedule() {
 
   const fetchSchedules = async () => {
     try {
-      const response = await axiosRequest({ method: 'get', url: `${apiUrl}/getByStudent/${studentId}` }); // Fetch schedules by studentId
+      const token = localStorage.getItem("token"); // Ensure your login stores token here
+      const response = await axiosRequest({
+        method: 'get',
+        url: `${apiUrl}/getByStudent/${studentId}`,
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
       setSchedules(response.data);
     } catch (error) {
       console.error("Error fetching schedules", error);
     }
   };
+  
 
   const fetchToDoItems = async () => {
     try {
-      const response = await axiosRequest({ method: 'get', url: "https://noteably-final.onrender.com/api/TodoList/getByStudent/" + studentId }); // Fetch ToDo items by studentId
+      const token = localStorage.getItem("token");
+      const response = await axiosRequest({
+        method: 'get',
+        url: `https://noteably-final.onrender.com/api/TodoList/getByStudent/${studentId}`,
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
       setToDoItems(response.data);
     } catch (error) {
       console.error("Error fetching ToDo items", error);
     }
   };
+  
 
   const groupedSchedules = {
     high: schedules.filter(schedule => schedule.priority === 'high'),
