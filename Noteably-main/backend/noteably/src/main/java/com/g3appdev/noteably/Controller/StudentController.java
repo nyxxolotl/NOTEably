@@ -101,7 +101,7 @@ public class StudentController {
             System.out.println("Generated JWT token: " + token);
 
             StudentResponseDto response = new StudentResponseDto();
-            response.setId(savedStudent.getId());
+            response.setId(student.getId());
             response.setStudentId(student.getStudentId());
             response.setName(student.getName());
             response.setCourse(student.getCourse());
