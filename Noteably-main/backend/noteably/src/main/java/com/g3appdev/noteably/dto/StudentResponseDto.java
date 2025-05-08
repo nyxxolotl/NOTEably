@@ -25,6 +25,10 @@ public class StudentResponseDto {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }    
+
     public String getStudentId() {
         return studentId;
     }
