@@ -16,7 +16,7 @@ FRONTEND
 BACKEND
 - cd Noteably-main
 - cd backend\noteably
-- mvn spring-boot:run
+- ./mvnw spring-boot:run
 
 _____________________________________________________________________________________________________________________________________________________________________________________________________________________
 
@@ -24,5 +24,5 @@ ERD link:
 https://online.visual-paradigm.com/w/yesvzlaa/diagrams/#diagram:workspace=yesvzlaa&proj=0&id=4&type=ERDiagram
 
 
-FIGMA link:
-https://www.figma.com/design/XmyCplTZdRflpI5OvNgOJN/NOTEably?fuid=1364045221058134168 
+[NEW] FIGMA link:
+https://www.figma.com/design/z2Fr9xqxca8GVBzCls6sOx/NOTEably-v2?node-id=0-1&t=iwjblTc76A4b9VWY-1
