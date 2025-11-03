@@ -96,8 +96,21 @@ public class StudentService implements UserDetailsService {
         System.out.println("LoginStudent: raw password: " + password);
         System.out.println("LoginStudent: stored password hash: " + student.getPassword());
 
-        if (!passwordEncoder.matches(password, student.getPassword())) {
-            throw new RuntimeException("Invalid password");
+        // ✅ Fix: Allow both hashed and plain-text passwords (for old accounts)
+        if (student.getPassword().startsWith("$2a$")) {
+            // BCrypt hash
+            if (!passwordEncoder.matches(password, student.getPassword())) {
+                throw new RuntimeException("Invalid password");
+            }
+        } else {
+            // Plain text (old records)
+            if (!student.getPassword().equals(password)) {
+                throw new RuntimeException("Invalid password");
+            } else {
+                // Re-encode old password for security
+                student.setPassword(passwordEncoder.encode(password));
+                studentRepo.save(student);
+            }
         }
 
         return student;

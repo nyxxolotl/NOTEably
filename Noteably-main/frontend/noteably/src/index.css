@@ -69,6 +69,5 @@ code {
 }
 
 .auth-button.login:hover {
-  background-color: var(--blue);
   transform: scale(1.05);
 }

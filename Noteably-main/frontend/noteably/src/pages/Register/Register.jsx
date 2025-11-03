@@ -50,16 +50,15 @@ const Register = () => {
     return (
         <div className="register-page">
             <Header />
-
-            <main className="main-content">
+            <div className="register-main-content">
                 <div className="auth-container">
                     <div className="register-content">
                         <div className="register-image">
-                            <img src="/ASSETS/register.png" alt="Register" />
+                            <img src="/ASSETS/register-bg.png" alt="Register" />
                         </div>
                         <div className="register-form">
-                            <h1 className="auth-title">Register</h1>
-                            <p>Existing User? <Link to="/login" className="signin">Sign in</Link></p>
+                            <h1 className="auth-title">Create an account</h1>
+                            <p>Already a user? <Link to="/login" className="signin">Sign in</Link></p>
                             <form onSubmit={handleSubmit} className="auth-form">
                                 <input
                                     type="text"
@@ -98,9 +97,9 @@ const Register = () => {
                                         className="auth-input"
                                     />
                                     {showPassword ? (
-                                        <Visibility onClick={handleTogglePassword} className="toggle-password-icon" style={{ color: 'gray', position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)' }} />
+                                        <Visibility onClick={handleTogglePassword} className="toggle-password-icon" style={{ color: 'gray', position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', cursor: "pointer" }} />
                                     ) : (
-                                        <VisibilityOff onClick={handleTogglePassword} className="toggle-password-icon" style={{ color: 'gray', position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)' }} />
+                                        <VisibilityOff onClick={handleTogglePassword} className="toggle-password-icon" style={{ color: 'gray', position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', cursor: "pointer" }} />
                                     )}
                                 </div>
                                 <button type="submit" className="register-button">Register</button>
@@ -108,7 +107,7 @@ const Register = () => {
                         </div>
                     </div>
                 </div>
-            </main>
+            </div>
         </div>
     );
 };

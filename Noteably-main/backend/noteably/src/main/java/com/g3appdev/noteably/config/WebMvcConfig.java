@@ -16,21 +16,26 @@ public class WebMvcConfig implements WebMvcConfigurer {
     }
 
     @Override
-public void addCorsMappings(CorsRegistry registry) {
-    registry.addMapping("/**")
-            .allowedOrigins("https://noteably.vercel.app")
-            .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-            .allowedHeaders("*")
-            .allowCredentials(true)
-            .maxAge(3600);
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins(
+                    "http://localhost:3000",
+                    "https://noteably.vercel.app"
+                )
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                .allowedHeaders("*")
+                .allowCredentials(true)
+                .maxAge(3600);
 
-    // Allow access to the uploads folder from the frontend
-    registry.addMapping("/uploads/**")
-            .allowedOrigins("https://noteably.vercel.app")
-            .allowedMethods("GET") // Only allow GET for static files
-            .allowedHeaders("*")
-            .allowCredentials(true)
-            .maxAge(3600);
-}
-
+        // Allow access to the uploads folder from the frontend
+        registry.addMapping("/uploads/**")
+                .allowedOrigins(
+                    "http://localhost:3000",
+                    "https://noteably.vercel.app"
+                )
+                .allowedMethods("GET") // Only allow GET for static files
+                .allowedHeaders("*")
+                .allowCredentials(true)
+                .maxAge(3600);
+    }
 }

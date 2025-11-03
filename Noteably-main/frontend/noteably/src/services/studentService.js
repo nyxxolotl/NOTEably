@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'https://noteably-final.onrender.com/api';
+const API_BASE_URL = 'http://localhost:8080/api';
 
 // Utility function to get complete image URL
 export const getImageUrl = (imagePath) => {
@@ -14,8 +14,11 @@ export const getImageUrl = (imagePath) => {
 
 export const getAuthToken = () => {
     const token = localStorage.getItem('token');
-    if (!token || token === 'null' || token === 'undefined') {
-        console.warn('Invalid token found in localStorage:', token);
+    if (!token || token === 'null' || token === 'undefined' || token.trim() === '') {
+        // only warn in dev
+        if (process.env.NODE_ENV !== 'production') {
+        console.warn('No valid token in localStorage:', token);
+        }
         return null;
     }
     return token;

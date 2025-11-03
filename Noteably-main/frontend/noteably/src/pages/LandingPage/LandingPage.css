@@ -65,7 +65,6 @@
 }
 
 .Lregister-button:hover {
-    background-color: var(--yellow);
     transform: scale(1.05);
 }
 
