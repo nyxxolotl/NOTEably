@@ -95,7 +95,7 @@ function App() {
           </List>
         </Drawer>
       )}
-      <Box component="main" sx={{ flexGrow: 1, p: 3, backgroundColor: '#f0f0f0' }}>
+      <Box component="main" sx={{ flexGrow: 1, p: 3}}>
         <Suspense fallback={<div>Loading...</div>}>
           <Routes>
             <Route path="/" element={<LandingPage />} />

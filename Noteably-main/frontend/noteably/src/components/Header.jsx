@@ -5,14 +5,11 @@ const Header = () => {
     return (
         <header className="header">
         <Link to="/">
-            <img src="/ASSETS/noteably_logo.png" alt="Noteably Logo" className="logo" />
+            <img src="/ASSETS/Sniglet.png" alt="Noteably Logo" className="logo" />
         </Link>
         <div className="auth-buttons"> {/* This wraps both buttons */}
-            <Link to="/register">
-            <button className="auth-button register">Register</button>
-            </Link>
             <Link to="/login">
-            <button className="auth-button login">Log In</button>
+            <button className="auth-button login">Sign In</button>
             </Link>
         </div>
         </header>
