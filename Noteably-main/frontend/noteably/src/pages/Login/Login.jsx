@@ -4,8 +4,8 @@ import axios from 'axios';
 import { API_ENDPOINTS } from '../../config/api';
 import { getStudentByStudentId } from '../../services/studentService';
 import './Login.css';
-import Header from '../../components/Header';
-
+import Visibility from '@mui/icons-material/Visibility'; 
+import VisibilityOff from '@mui/icons-material/VisibilityOff'; 
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -112,16 +112,19 @@ const Login = () => {
 
     return (
         <div className="login-page">
-            <Header />
-
             <div className="login-container">
+                <header className="login-header">
+                    <Link to="/">
+                        <img src="/ASSETS/Sniglet.png" alt="Noteably Logo" className="logo" />
+                    </Link>
+                </header>
                 <img
                     src={imageUrl}
                     alt="Password visibility status"
                     className={`password-image ${animationPhase}`}
                 />
                 <div className="login-card">
-                    <h2>Welcome back~!</h2>
+                    <h1>Welcome back~!</h1>
                     <p>No account? <Link to="/register">Sign up</Link></p>
                     <form onSubmit={handleLogin} className="login-form">
                         <input
@@ -139,12 +142,11 @@ const Login = () => {
                                 onChange={(e) => setPassword(e.target.value)}
                                 required
                             />
-                            <input
-                                type="checkbox"
-                                className="show-password-checkbox"
-                                checked={showPassword}
-                                onChange={handleTogglePassword}
-                            />
+                            {showPassword ? (
+                                <Visibility onClick={handleTogglePassword} className="toggle-password-icon" style={{ color: 'gray', position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', cursor: "pointer" }} />
+                            ) : (
+                                <VisibilityOff onClick={handleTogglePassword} className="toggle-password-icon" style={{ color: 'gray', position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', cursor: "pointer" }} />
+                            )}
                         </div>
                         <button type="submit" className="login-button">Log in</button>
                     </form>
