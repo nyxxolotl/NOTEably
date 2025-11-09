@@ -15,6 +15,7 @@ const Login = () => {
     const [animationPhase, setAnimationPhase] = useState('pass-hide'); // Starting frame
     const [customAlertMessage, setCustomAlertMessage] = useState(''); // Custom alert message
     const [isAlertVisible, setIsAlertVisible] = useState(false); // Visibility of custom alert
+    const [alertColor, setAlertColor] = useState(''); // new state for alert color
     const navigate = useNavigate();
 
     const handleLogin = async (e) => {
@@ -46,7 +47,7 @@ const Login = () => {
                     console.log('Full student info:', fullStudentInfo);
                     localStorage.setItem('fullStudentInfo', JSON.stringify(fullStudentInfo));
 
-                    showAlert('Login successful!'); // Show custom alert
+                    showAlert('Login successful!', false); 
                     setTimeout(() => navigate('/dashboard'), 1500); // Navigate after a delay
                 } else if (response.data.studentId) {
                     // Handle flat student object response
@@ -54,7 +55,7 @@ const Login = () => {
                     localStorage.setItem('studentId', studentId);
                     localStorage.setItem('studentName', response.data.name);
                     // No token in this response structure
-                    showAlert('Login successful!'); // Show custom alert
+                    showAlert('Login successful!', false); 
                     setTimeout(() => navigate('/dashboard'), 1500); // Navigate after a delay
                 } else {
                     setMessage('Invalid login response structure.');
@@ -64,17 +65,21 @@ const Login = () => {
             }
             } catch (error) {
                 console.error('Error during login:', error);
+
+                let errorMessage = 'Error logging in. Please check your credentials.';
+
                 if (error.response) {
                     if (error.response.status === 401) {
-                        setMessage('Unauthorized: Invalid email or password.');
+                        errorMessage = 'Unauthorized: Invalid email or password.';
                     } else if (error.response.status === 403) {
-                        setMessage('Forbidden: Access denied.');
-                    } else {
-                        setMessage('Error logging in. Please check your credentials.');
+                        errorMessage = 'Forbidden: Access denied.';
+                    } else if (error.response.data && error.response.data.message) {
+                        errorMessage = `Error: ${error.response.data.message}`;
                     }
-                } else {
-                    setMessage('Error logging in. Please check your credentials.');
                 }
+
+                setMessage(errorMessage);
+                showAlert(errorMessage, true); 
             }
     };
 
@@ -96,8 +101,9 @@ const Login = () => {
         }
     };
 
-    const showAlert = (message) => {
+    const showAlert = (message, isError = false) => {
         setCustomAlertMessage(message);
+        setAlertColor(isError ? 'var(--red)' : 'var(--green)'); 
         setIsAlertVisible(true);
         setTimeout(() => setIsAlertVisible(false), 2000);
     };
@@ -150,14 +156,13 @@ const Login = () => {
                         </div>
                         <button type="submit" className="login-button">Log in</button>
                     </form>
-                    {message && <p className="error-message">{message}</p>}
                 </div>
             </div>
 
             {isAlertVisible && (
                 <div className="custom-alert">
                     <img src="/ASSETS/popup-alert.png" alt="Success Icon" className="alert-icon" />
-                    <p>{customAlertMessage}</p>
+                    <p style={{ color: alertColor }}>{customAlertMessage}</p>
                 </div>
             )}
 

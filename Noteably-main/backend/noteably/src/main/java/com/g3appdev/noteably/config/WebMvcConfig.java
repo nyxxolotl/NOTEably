@@ -18,10 +18,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins(
-                    "http://localhost:3000",
-                    "https://noteably.vercel.app"
-                )
+                .allowedOrigins("http://localhost:3000")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
                 .allowCredentials(true)
@@ -29,10 +26,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
         // Allow access to the uploads folder from the frontend
         registry.addMapping("/uploads/**")
-                .allowedOrigins(
-                    "http://localhost:3000",
-                    "https://noteably.vercel.app"
-                )
+                .allowedOrigins("http://localhost:3000")
                 .allowedMethods("GET") // Only allow GET for static files
                 .allowedHeaders("*")
                 .allowCredentials(true)

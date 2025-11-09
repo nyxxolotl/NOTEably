@@ -134,7 +134,7 @@
     transform: translate(-50%, -50%);
     background-color: #fff !important;
     color: #073B4C !important;
-    border: 2px solid lightgray !important;
+    border: 2px solid var(--darkblue) !important;
     padding: 15px 25px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -143,7 +143,7 @@
     text-align: left;
     display: flex;
     align-items: center;
-    font-weight: bold;
+    font-weight: 600;
     gap: 15px; /* Space between image and text */
     animation: fadeInOut 2s forwards;
 }
