@@ -1,38 +1,72 @@
-.App {
-  text-align: center;
+.dashboard-wrapper {
+  display: flex;
+  padding: 30px 50px;
+  width: 100vw;
+  justify-content: space-between;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Sidebar */
+.sidebar-container {
+  width: 240px;
+  background: white;
+  border: 1px solid var(--darkblue);
+  padding: 15px;
+  border-radius: 25px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.sidebar-list {
+  margin-top: 20px;
   display: flex;
   flex-direction: column;
+  padding: 0px 5px;
+  color: var(--darkblue);
+  font-size: 18px;
+  gap: 5px;
+}
+
+/* Sidebar List */
+.dashboard-nav,
+.folder-nav,
+.todo-nav,
+.calendar-nav,
+.timer-nav,
+.settings-nav {
+  display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  gap: 10px;
+  border-radius: 30px;
+  width: 100%; 
+  transition: background-color 0.3s, color 0.3s;
+  padding: 10px 5px;
+  cursor: pointer;
 }
 
-.App-link {
-  color: #61dafb;
+.dashboard-nav:hover {
+  background: var(--red) !important;
+  color: white !important;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.folder-nav:hover {
+  background: var(--orange) !important;
+  color: white !important;
+}
+
+.todo-nav:hover {
+  background: var(--yellow) !important;
+  color: white !important;
+}
+
+.calendar-nav:hover {
+  background: var(--green) !important;
+  color: white !important;
+}
+
+.timer-nav:hover {
+  background: var(--blue) !important;
+  color: white !important;
+}
+
+.settings-nav:hover {
+  background: var(--darkblue) !important;
+  color: white !important;
 }

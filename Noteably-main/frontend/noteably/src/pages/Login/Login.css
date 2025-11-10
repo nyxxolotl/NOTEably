@@ -13,6 +13,7 @@
     align-items: center;
     position: relative;
     min-height: 85vh;
+    width: 93vw;
 }
 
 /* MIKU OO EE OO */
@@ -25,7 +26,6 @@
 .login-card {
     background-color: white;
     padding: 50px 30px;
-    border-radius: 12px;
     width: 400px;
     text-align: center;
     border: 1px solid var(--darkblue); 

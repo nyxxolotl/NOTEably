@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import FolderWidget from './FolderWidget';
 import ToDoListWidget from './ToDoListWidget';
 import TimerListWidget from './TimerListWidget';
-import { Box, Grid, Typography, Paper } from '@mui/material';
+import { Grid, Typography, Paper } from '@mui/material';
 import TimerIcon from '@mui/icons-material/Timer';
 import FolderIcon from '@mui/icons-material/Folder';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -48,12 +48,12 @@ function Dashboard() {
   }, []);
 
   return (
-    <Box className="dashboard-container">
-      <Box className="dashboard-header">
-        <Box className="dashboard-profile">
+    <div className="dashboard-container">
+      <div className="dashboard-header">
+        <div className="dashboard-profile">
           <img src={getImageUrl(studentData.profilePicture)} alt="Profile" />
-        </Box>
-        <Box>
+        </div>
+        <div>
           <Typography variant="h4" sx={{ color: 'var(--darkblue)', mb: 0.5 }}>
             Hello, {studentData.studentName || 'Student'}!
           </Typography>
@@ -63,56 +63,56 @@ function Dashboard() {
           <Typography variant="subtitle2" sx={{ color: 'var(--green)' }}>
             Stay organized, stay ahead!
           </Typography>
-        </Box>
-      </Box>
+        </div>
+      </div>
 
       {/* --- Small Compact Widgets --- */}
       <Grid container spacing={2}>
         <Grid item xs={12} md={4}>
           <Paper className="dashboard-widget compact-widget" sx={{ border: '2px solid var(--yellow)' }}>
-            <Box className="dashboard-widget-header">
-              <Box className="dashboard-icon-box yellow-bg">
+            <div className="dashboard-widget-header">
+              <div className="dashboard-icon-div yellow-bg">
                 <CheckCircleIcon sx={{ color: 'white' }} />
-              </Box>
+              </div>
               <Typography variant="h6" sx={{ color: 'var(--yellow)', ml: 1 }}>
                 To-Do List
               </Typography>
-            </Box>
-            <Box className="dashboard-widget-content no-scroll-x">
+            </div>
+            <div className="dashboard-widget-content no-scroll-x">
               <ToDoListWidget />
-            </Box>
+            </div>
           </Paper>
         </Grid>
 
         <Grid item xs={12} md={4}>
           <Paper className="dashboard-widget compact-widget" sx={{ border: '2px solid var(--blue)' }}>
-            <Box className="dashboard-widget-header">
-              <Box className="dashboard-icon-box blue-bg">
+            <div className="dashboard-widget-header">
+              <div className="dashboard-icon-div blue-bg">
                 <TimerIcon sx={{ color: 'white' }} />
-              </Box>
+              </div>
               <Typography variant="h6" sx={{ color: 'var(--blue)', ml: 1 }}>
                 Timer
               </Typography>
-            </Box>
-            <Box className="dashboard-widget-content no-scroll-x">
+            </div>
+            <div className="dashboard-widget-content no-scroll-x">
               <TimerListWidget />
-            </Box>
+            </div>
           </Paper>
         </Grid>
 
         <Grid item xs={12} md={4}>
           <Paper className="dashboard-widget compact-widget" sx={{ border: '2px solid var(--orange)' }}>
-            <Box className="dashboard-widget-header">
-              <Box className="dashboard-icon-box orange-bg">
+            <div className="dashboard-widget-header">
+              <div className="dashboard-icon-div orange-bg">
                 <FolderIcon sx={{ color: 'white' }} />
-              </Box>
+              </div>
               <Typography variant="h6" sx={{ color: 'var(--orange)', ml: 1 }}>
                 Folders
               </Typography>
-            </Box>
-            <Box className="dashboard-widget-content no-scroll-x">
+            </div>
+            <div className="dashboard-widget-content no-scroll-x">
               <FolderWidget />
-            </Box>
+            </div>
           </Paper>
         </Grid>
       </Grid>
@@ -121,19 +121,19 @@ function Dashboard() {
       <Grid container spacing={2} sx={{ marginTop: '20px' }}>
         <Grid item xs={12}>
           <Paper className="dashboard-widget">
-            <Box className="dashboard-widget-header green-bg">
+            <div className="dashboard-widget-header green-bg">
               <EventNoteIcon sx={{ color: 'white' }} />
               <Typography variant="h6" sx={{ color: 'var(--green)', ml: 1 }}>
                 Schedule
               </Typography>
-            </Box>
-            <Box className="dashboard-widget-content">
+            </div>
+            <div className="dashboard-widget-content">
               <Calendar />
-            </Box>
+            </div>
           </Paper>
         </Grid>
       </Grid>
-    </Box>
+    </div>
   );
 }
 
