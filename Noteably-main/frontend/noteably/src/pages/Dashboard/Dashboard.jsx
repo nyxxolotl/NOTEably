@@ -54,19 +54,16 @@ function Dashboard() {
           <img src={getImageUrl(studentData.profilePicture)} alt="Profile" />
         </div>
         <div>
-          <Typography variant="h4" sx={{ color: 'var(--darkblue)', mb: 0.5 }}>
-            Hello, {studentData.studentName || 'Student'}!
-          </Typography>
-          <Typography variant="subtitle1" sx={{ color: 'var(--blue)', mb: 0.5 }}>
-            Student ID: {studentData.studentId || 'Unknown ID'}
-          </Typography>
-          <Typography variant="subtitle2" sx={{ color: 'var(--green)' }}>
-            Stay organized, stay ahead!
-          </Typography>
+          <p className='dashboard-profile-name'>Hello, {studentData.studentName || 'Student'}!</p>
+          <p className='dashboard-profile-student-id'>Student ID: {studentData.studentId || 'Unknown ID'}</p>
+          <p className='dashboard-profile-motto'>Stay organized, stay ahead!</p>
         </div>
       </div>
 
-      {/* --- Small Compact Widgets --- */}
+      <div className='second-row'>
+        <Calendar />
+      </div>
+
       <Grid container spacing={2}>
         <Grid item xs={12} md={4}>
           <Paper className="dashboard-widget compact-widget" sx={{ border: '2px solid var(--yellow)' }}>
@@ -112,23 +109,6 @@ function Dashboard() {
             </div>
             <div className="dashboard-widget-content no-scroll-x">
               <FolderWidget />
-            </div>
-          </Paper>
-        </Grid>
-      </Grid>
-
-      {/* --- Calendar below --- */}
-      <Grid container spacing={2} sx={{ marginTop: '20px' }}>
-        <Grid item xs={12}>
-          <Paper className="dashboard-widget">
-            <div className="dashboard-widget-header green-bg">
-              <EventNoteIcon sx={{ color: 'white' }} />
-              <Typography variant="h6" sx={{ color: 'var(--green)', ml: 1 }}>
-                Schedule
-              </Typography>
-            </div>
-            <div className="dashboard-widget-content">
-              <Calendar />
             </div>
           </Paper>
         </Grid>

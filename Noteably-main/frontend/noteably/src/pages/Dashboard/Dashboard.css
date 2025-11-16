@@ -1,19 +1,16 @@
 .dashboard-container {
   min-height: 100vh;
-  background-color: rgba(255, 255, 255, 0.8);
-  border: 1px solid #ddd;
-  border-radius: 30px;
-  padding: 24px;
-  background-image: url('../../assets/polkadot.png');
-  background-position: center;
-  background-size: cover;
-  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 }
 
 .dashboard-header {
   display: flex;
   align-items: center;
-  margin-bottom: 32px;
+  border: 1px solid var(--darkblue);
+  width: 100%;
+  border-radius: 25px;
+  padding: 25px 40px;
 }
 
 .dashboard-profile {
@@ -29,6 +26,25 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.dashboard-profile-name {
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--darkblue);
+  margin-bottom: 5px;
+}
+
+.dashboard-profile-student-id {
+  font-size: 18px;
+  color: var(--darkblue);
+  margin-bottom: 20px;
+}
+
+.dashboard-profile-motto {
+  font-size: 18px;
+  color: var(--darkblue);
+  font-weight: 500;
 }
 
 /* Widget Boxes */

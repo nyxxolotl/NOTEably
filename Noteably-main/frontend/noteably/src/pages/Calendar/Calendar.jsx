@@ -5,9 +5,9 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
 import axios from 'axios';
 import KanbanBoard from '../../KanbanBoard';
-import { Box, Tabs, Tab } from '@mui/material';
+import { Box } from '@mui/material';
 
-const apiUrl = "https://noteably-final.onrender.com/api/schedules"; 
+const apiUrl = "http://localhost:8080/api/schedules"; 
 
 function Calendar() { 
   const studentId = localStorage.getItem('studentId'); // Get studentId from local storage
@@ -35,27 +35,7 @@ function Calendar() {
 
   return (
     <Box sx={{ padding: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      {/* Navigation Tabs */}
-      <Box sx={{ width: '100%', maxWidth: '1000px', mb: 4 }}>
-      <Tabs
-            value={currentView}
-            onChange={handleViewChange}
-            centered
-            indicatorColor="#06D6A0"
-            textColor="primary"
-            sx={{
-              '& .MuiTab-root': {
-                '&:hover': {
-                  backgroundColor: '#FFFFF', 
-                },
-              },
-            }}
-          >
-            <Tab value="calendar" label="Calendar View" />
-            <Tab value="board" label="Board View" />
-      </Tabs>
 
-      </Box>
 
       {currentView === "calendar" && (
         <Box sx={{ width: '100%', maxWidth: '1000px', backgroundColor: '#ffffff', borderRadius: '12px', boxShadow: 3, p: 3, mb: 4 }}>
@@ -85,9 +65,7 @@ function Calendar() {
         </Box>
       )}
 
-      {currentView === "board" && (
-        <KanbanBoard schedules={schedules} />
-      )}
+
     </Box>
   );
 }

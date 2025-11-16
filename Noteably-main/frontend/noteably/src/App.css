@@ -1,8 +1,7 @@
 .dashboard-wrapper {
   display: flex;
-  padding: 30px 50px;
-  width: 100vw;
-  justify-content: space-between;
+  padding: 30px 100px;
+  gap: 50px;
 }
 
 /* Sidebar */
