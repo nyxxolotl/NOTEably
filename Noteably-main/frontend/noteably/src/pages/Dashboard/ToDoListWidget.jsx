@@ -162,33 +162,10 @@ const ToDoListWidget = () => {
   const noteablyColors = ['#FFCC66', '#F26C6C', '#FF8A80', '#4DB6AC', '#AED581'];
 
   return (
-    <Box
-      sx={{
-        backgroundImage: 'url("/ASSETS/polkadots.png")',
-        backgroundRepeat: 'repeat',
-        backgroundSize: 'cover',
-        width: '100%',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: 4,
-      }}
-    >
-      {/* ToDo List Container */}
-      <Box sx={{
-        padding: '30px',
-        borderRadius: '20px',
-        backgroundColor: '#FFFFFF',
-        boxShadow: '0 5px 20px rgba(0, 0, 0, 0.2)',
-        width: '100%',
-        maxWidth: '1200px',
-        minHeight: '600px',
-        overflowY: 'auto',
-      }}>
+    <div>
+      <div className="todolist-container">
         {toDoItems.length === 0 ? (
-          <Typography sx={{ textAlign: 'center', color: '#999' }}>
-            No tasks added yet.
-          </Typography>
+          <p style={{ color: "grey", marginTop: "30px"}}>No tasks added yet.</p>
         ) : (
           toDoItems.map((item, index) => {
             const randomColor = noteablyColors[index % noteablyColors.length];
@@ -243,7 +220,7 @@ const ToDoListWidget = () => {
             );
           })
         )}
-      </Box>
+      </div>
 
       {/* Floating Add Button */}
       <Fab
@@ -341,7 +318,7 @@ const ToDoListWidget = () => {
         onConfirm={confirmUpdateTask}
         onCancel={() => setConfirmEditOpen(false)}
       />
-    </Box>
+    </div>
   );
 };
 

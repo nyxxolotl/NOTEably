@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { axiosRequest } from '../../services/studentService';
-import { Box, Typography, List, ListItem, ListItemText, IconButton } from '@mui/material';
+import { List, ListItem, ListItemText, IconButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 
@@ -36,20 +36,9 @@ const TimerListWidget = () => {
     }, []);
 
     return (
-        <Box className="scrollable" sx={{
-            padding: '20px',
-            borderRadius: '10px',
-            backgroundColor: '',
-            boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-            width: '400px',
-            height: '300px',
-            overflowY: 'auto',
-        }}>
-            
+        <div className="scrollable">
             {timerList.length === 0 ? (
-                <Typography style={{ textAlign: 'center', color: '#999' }}>
-                    No timers added yet.
-                </Typography>
+                <p style={{ color: "grey", marginTop: "30px" }}>No timers added yet.</p>
             ) : (
                 <List>
                     {timerList.map((timer) => (
@@ -67,7 +56,7 @@ const TimerListWidget = () => {
                     ))}
                 </List>
             )}
-        </Box>
+        </div>
     );
 };
 

@@ -5,6 +5,7 @@
   font-size: 14px !important; 
   font-weight: 600; 
   background: white !important;
+  box-shadow: none !important;
 }
   
 .fc-button:hover {

@@ -11,4 +11,8 @@
 
 .todolist-container {
     margin-top: 5px;
+    padding: 30px;
+    background-color: #FFFFFF;
+    width: 100%;
+    overflow-y: auto;
 }

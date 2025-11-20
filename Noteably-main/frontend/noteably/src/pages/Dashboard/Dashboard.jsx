@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import FolderWidget from './FolderWidget';
 import ToDoListWidget from './ToDoListWidget';
 import TimerListWidget from './TimerListWidget';
-import { Grid, Typography, Paper } from '@mui/material';
 import TimerIcon from '@mui/icons-material/Timer';
 import FolderIcon from '@mui/icons-material/Folder';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -68,44 +67,35 @@ function Dashboard() {
             </div>
             <h1 className='todolist-title'>Tasks</h1>
           </div>
-          {/*<div className="dashboard-widget-content no-scroll-x">
+          <div className="dashboard-widget-content no-scroll-x">
             <ToDoListWidget />
-          </div>*/}
+          </div>
         </div>
       </div>
-      <Grid container spacing={2}>
-        <Grid item xs={12} md={4}>
-          <Paper className="dashboard-widget compact-widget" sx={{ border: '2px solid var(--blue)' }}>
-            <div className="dashboard-widget-header">
-              <div className="dashboard-icon-div blue-bg">
-                <TimerIcon sx={{ color: 'white' }} />
-              </div>
-              <Typography variant="h6" sx={{ color: 'var(--blue)', ml: 1 }}>
-                Timer
-              </Typography>
+      <div className='third-row'>
+        <div className="folder-widget">
+          <div className="dashboard-widget-header">
+            <div className="dashboard-icon-div orange-bg">
+              <FolderIcon sx={{ color: 'white' }} />
             </div>
-            <div className="dashboard-widget-content no-scroll-x">
-              <TimerListWidget />
+            <h1 className='folderlist-title'>Folders</h1>
+          </div>
+          <div className="dashboard-widget-content no-scroll-x">
+            <FolderWidget />
+          </div>
+        </div>
+        <div className="dashboard-widget compact-widget">
+          <div className="dashboard-widget-header">
+            <div className="dashboard-icon-div blue-bg">
+              <TimerIcon sx={{ color: 'white' }} />
             </div>
-          </Paper>
-        </Grid>
-
-        <Grid item xs={12} md={4}>
-          <Paper className="dashboard-widget compact-widget" sx={{ border: '2px solid var(--orange)' }}>
-            <div className="dashboard-widget-header">
-              <div className="dashboard-icon-div orange-bg">
-                <FolderIcon sx={{ color: 'white' }} />
-              </div>
-              <Typography variant="h6" sx={{ color: 'var(--orange)', ml: 1 }}>
-                Folders
-              </Typography>
-            </div>
-            <div className="dashboard-widget-content no-scroll-x">
-              <FolderWidget />
-            </div>
-          </Paper>
-        </Grid>
-      </Grid>
+            <h1 className='timers-title'>Timers</h1>
+          </div>
+          <div className="dashboard-widget-content no-scroll-x">
+            <TimerListWidget />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
