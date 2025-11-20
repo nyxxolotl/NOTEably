@@ -4,8 +4,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
 import axios from 'axios';
-import KanbanBoard from '../../KanbanBoard';
-import { Box } from '@mui/material';
+import './Calendar.css';
 
 const apiUrl = "http://localhost:8080/api/schedules"; 
 
@@ -34,18 +33,16 @@ function Calendar() {
   };
 
   return (
-    <Box sx={{ padding: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-
-
+    <div className="calendar-wrapper">
       {currentView === "calendar" && (
-        <Box sx={{ width: '100%', maxWidth: '1000px', backgroundColor: '#ffffff', borderRadius: '12px', boxShadow: 3, p: 3, mb: 4 }}>
+        <div className="calendar-container">
           <FullCalendar
             plugins={[dayGridPlugin, timeGridPlugin, listPlugin]}
             initialView="dayGridMonth"
             headerToolbar={{
-              left: 'prev,next today',
+              left: 'prev',
               center: 'title',
-              right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek',
+              right: 'next dayGridMonth,timeGridWeek,timeGridDay,listWeek',
             }}
             events={schedules.map((s) => ({
               title: s.title,
@@ -53,7 +50,7 @@ function Calendar() {
               end: s.endDate || s.startDate,
               color: s.colorCode,
             }))}
-            height="600px"
+            height="500px"
             buttonText={{
               today: 'Today',
               month: 'Month',
@@ -62,11 +59,9 @@ function Calendar() {
               list: 'List'
             }}
           />
-        </Box>
+        </div>
       )}
-
-
-    </Box>
+    </div>
   );
 }
 

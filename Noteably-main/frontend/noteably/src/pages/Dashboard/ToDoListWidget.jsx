@@ -167,7 +167,6 @@ const ToDoListWidget = () => {
         backgroundImage: 'url("/ASSETS/polkadots.png")',
         backgroundRepeat: 'repeat',
         backgroundSize: 'cover',
-        minHeight: '100vh',
         width: '100%',
         display: 'flex',
         justifyContent: 'center',

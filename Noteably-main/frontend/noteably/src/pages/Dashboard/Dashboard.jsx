@@ -6,7 +6,6 @@ import { Grid, Typography, Paper } from '@mui/material';
 import TimerIcon from '@mui/icons-material/Timer';
 import FolderIcon from '@mui/icons-material/Folder';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import EventNoteIcon from '@mui/icons-material/EventNote';
 import Calendar from '../Calendar/Calendar';
 import { API_ENDPOINTS, axiosConfig } from '../../config/api';
 import { getImageUrl, axiosRequest } from '../../services/studentService';
@@ -62,25 +61,19 @@ function Dashboard() {
 
       <div className='second-row'>
         <Calendar />
+        <div className="dashboard-widget">
+          <div className="dashboard-widget-header">
+            <div className="dashboard-icon-div yellow-bg">
+              <CheckCircleIcon sx={{ color: 'white' }} />
+            </div>
+            <h1 className='todolist-title'>Tasks</h1>
+          </div>
+          {/*<div className="dashboard-widget-content no-scroll-x">
+            <ToDoListWidget />
+          </div>*/}
+        </div>
       </div>
-
       <Grid container spacing={2}>
-        <Grid item xs={12} md={4}>
-          <Paper className="dashboard-widget compact-widget" sx={{ border: '2px solid var(--yellow)' }}>
-            <div className="dashboard-widget-header">
-              <div className="dashboard-icon-div yellow-bg">
-                <CheckCircleIcon sx={{ color: 'white' }} />
-              </div>
-              <Typography variant="h6" sx={{ color: 'var(--yellow)', ml: 1 }}>
-                To-Do List
-              </Typography>
-            </div>
-            <div className="dashboard-widget-content no-scroll-x">
-              <ToDoListWidget />
-            </div>
-          </Paper>
-        </Grid>
-
         <Grid item xs={12} md={4}>
           <Paper className="dashboard-widget compact-widget" sx={{ border: '2px solid var(--blue)' }}>
             <div className="dashboard-widget-header">

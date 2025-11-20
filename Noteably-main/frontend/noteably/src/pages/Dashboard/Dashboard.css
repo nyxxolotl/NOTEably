@@ -48,32 +48,44 @@
 }
 
 /* Widget Boxes */
-.dashboard-widget {
-  padding: 16px;
-  border-radius: 20px;
-  background-color: white;
+.second-row {
+  display: flex;
+  gap: 20px;
+  margin: 30px 0px;
+  height: 565px;
 }
 
-.compact-widget {
-  height: 260px; /* ✅ Compact height */
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+.dashboard-widget {
+  padding: 30px;
+  border-radius: 30px;
+  background-color: white;
+  border: 1px solid var(--darkblue);
+  width: 300px;
 }
 
 .dashboard-widget-header {
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
+}
+
+/* Todolist Widget */
+.todolist-title {
+  font-size: 25px;
+  font-weight: 600;
+  color: var(--darkblue);
+  margin-left: 10px;
+}
+
+.yellow-bg {
+  background: var(--yellow);
+  padding: 7px;
+  border-radius: 100%;
+  align-items: center;
+  display: flex;
+  border: 1px solid var(--darkblue);
 }
 
 /* Colored Backgrounds for Icons */
-.yellow-bg {
-  background: var(--yellow);
-  padding: 6px;
-  border-radius: 10px;
-}
-
 .blue-bg {
   background: var(--blue);
   padding: 6px;

@@ -1,49 +1,46 @@
-/* General button styles */
 .fc-button {
-    background-color: #118AB2 !important; /* Background color for buttons */
-    color: #ffffff !important; /* Text color */
-    border: none !important; /* Remove border */
-    border-radius: 5px !important; /* Rounded corners */
-    padding: 10px 15px !important; /* Adjust padding */
-    font-size: 14px !important; /* Text size */
-    font-weight: bold !important; /* Bold text */
-    transition: background-color 0.3s ease-in-out !important; /* Smooth hover transition */
-    box-shadow: none !important; /* Remove any shadow */
-    outline: none !important; /* Remove focus outline */
-  }
+  color: var(--darkblue) !important; /* Text color */
+  border-radius: 10px !important; 
+  border: 2px solid var(--darkblue) ;
+  font-size: 14px !important; 
+  font-weight: 600; 
+  background: white !important;
+}
   
-  /* Hover effect for buttons */
-  .fc-button:hover {
-    background-color: #073B4C !important; /* Darker shade on hover */
-    color: #ffffff !important; /* Keep text white */
-  }
+.fc-button:hover {
+  transform: scale(1.05);
+}
   
-  /* Active button (when clicked or selected) */
-  .fc-button.fc-button-active {
-    background-color: #06D6A0 !important; /* Highlighted color for active button */
-    color: #000000 !important; /* Change text color for contrast */
-  }
+.fc-button.fc-button-active {
+  background-color: var(--green) !important;  
+  color: white !important;
+}
+
+.fc-toolbar-title {
+  font-size: 25px !important;
+  font-weight: 600; 
+  color: var(--darkblue); 
+  margin: 0px 10px !important;
+} 
+
+.fc-toolbar .fc-toolbar-chunk {
+  margin: 5px 0 !important; 
+  display: flex;
+}
   
-  /* Specific button styles */
-  .fc-today-button {
-    background-color: #FFD166 !important; /* Custom color for "Today" button */
-  }
+.fc-toolbar {
+  font-size: 16px !important; 
+}
   
-  .fc-today-button:hover {
-    background-color: #FFA500 !important; /* Hover color for "Today" button */
-  }
+.fc-button-group > .fc-button {
+  margin-right: 5px !important; 
+}
   
-  /* Toolbar layout (optional, for spacing between buttons) */
-  .fc-toolbar .fc-toolbar-chunk {
-    margin: 5px 0 !important; /* Add spacing between toolbar sections */
-  }
-  
-  /* Optional: Make the toolbar buttons larger or spaced out */
-  .fc-toolbar {
-    font-size: 16px !important; /* Adjust toolbar font size */
-  }
-  
-  .fc-button-group > .fc-button {
-    margin-right: 5px !important; /* Add spacing between grouped buttons */
-  }
-  
+.fc-prev-button, .fc-next-button {
+  background: var(--green) !important;
+  color: white !important;
+}
+
+.fc-scroller {
+  overflow-y: auto !important;
+}
