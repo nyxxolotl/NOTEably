@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import './FolderApp.css';
 
 function FolderApp() {
-    const url = "https://noteably-final.onrender.com/api/folders";
+    const url = "http://localhost:8080/api/folders";
     const navigate = useNavigate();
 
     const fullStudentInfo = localStorage.getItem('fullStudentInfo');

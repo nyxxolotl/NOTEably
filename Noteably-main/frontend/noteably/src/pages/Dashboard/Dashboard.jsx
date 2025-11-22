@@ -67,7 +67,7 @@ function Dashboard() {
             </div>
             <h1 className='todolist-title'>Tasks</h1>
           </div>
-          <div className="dashboard-widget-content no-scroll-x">
+          <div className="todolist-tasks-list">
             <ToDoListWidget />
           </div>
         </div>

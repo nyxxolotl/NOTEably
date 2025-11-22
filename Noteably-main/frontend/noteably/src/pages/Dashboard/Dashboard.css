@@ -72,6 +72,7 @@
 .dashboard-widget-header {
   display: flex;
   align-items: center;
+  margin-bottom: 30px;
 }
 
 .todolist-title, .folderlist-title, .timers-title {
@@ -89,6 +90,15 @@
   align-items: center;
   display: flex;
   border: 1px solid var(--darkblue);
+}
+
+.todolist-tasks-list {
+  height: 430px;
+  overflow-y: auto;
+  margin: 0 auto;
+  scrollbar-color: #D0D5E2 transparent; 
+  overflow-x: hidden; 
+  scrollbar-width: thin; 
 }
 
 /* Folder Widget */

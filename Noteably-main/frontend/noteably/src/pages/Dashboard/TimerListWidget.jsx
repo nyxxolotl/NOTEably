@@ -4,7 +4,7 @@ import { List, ListItem, ListItemText, IconButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 
-const apiUrl = "https://noteably-final.onrender.com/api/timer";
+const apiUrl = "http://localhost:8080/api/timer";
 
 const TimerListWidget = () => {
     const [timerList, setTimerList] = useState([]);

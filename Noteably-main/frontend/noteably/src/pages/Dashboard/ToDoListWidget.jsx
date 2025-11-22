@@ -4,7 +4,6 @@ import {
   Box,
   Typography,
   Checkbox,
-  Fab,
   Dialog,
   DialogTitle,
   DialogContent,
@@ -16,7 +15,7 @@ import {
 import { Add, Edit, Delete } from '@mui/icons-material';
 import ConfirmEditDialog from '../../dialogs/ConfirmEditDialog';
 
-const apiUrl = "https://noteably-final.onrender.com/api/TodoList";
+const apiUrl = "http://localhost:8080/api/TodoList";
 
 const ToDoListWidget = () => {
   const [toDoItems, setToDoItems] = useState([]);
@@ -159,13 +158,13 @@ const ToDoListWidget = () => {
     fetchToDoItems();
   }, []);
 
-  const noteablyColors = ['#FFCC66', '#F26C6C', '#FF8A80', '#4DB6AC', '#AED581'];
+  const noteablyColors = ['#FEBD59', '#F04770', '#F78C6A', '#40D19A', '#108AB1'];
 
   return (
     <div>
       <div className="todolist-container">
         {toDoItems.length === 0 ? (
-          <p style={{ color: "grey", marginTop: "30px"}}>No tasks added yet.</p>
+          <p style={{ color: "grey" }}>No tasks added yet.</p>
         ) : (
           toDoItems.map((item, index) => {
             const randomColor = noteablyColors[index % noteablyColors.length];
@@ -182,9 +181,9 @@ const ToDoListWidget = () => {
                   alignItems: 'center',
                   justifyContent: 'space-between',
                   transition: 'all 0.3s ease',
+                  border: item.completed ? "2px solid grey" : "2px solid var(--darkblue)",
                   '&:hover': {
-                    transform: 'translateY(-3px)',
-                    boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)',
+                    transform: 'translateY(-3px)'
                   },
                 }}
               >
@@ -193,58 +192,36 @@ const ToDoListWidget = () => {
                     checked={item.completed}
                     onChange={() => handleCheckboxToggle(item.toDoListID)}
                     sx={{
-                      color: '#FFD166',
-                      '&.Mui-checked': { color: '#06D6A0' },
+                      color: 'white',
+                      '&.Mui-checked': { color: 'grey' },
                     }}
                   />
                   <Typography
                     variant="body1"
                     sx={{
                       textDecoration: item.completed ? 'line-through' : 'none',
-                      color: item.completed ? '#999' : '#000',
+                      color: item.completed ? 'grey' : 'white',
                       marginLeft: 1,
+                      fontFamily: "'Fredoka', sans-serif",
+                      fontWeight: 500,
                     }}
                   >
                     {item.title}
                   </Typography>
                 </Box>
-                <Box>
+                {/*<Box>
                   <IconButton onClick={() => openEditModal(item)} size="small">
                     <Edit fontSize="small" />
                   </IconButton>
                   <IconButton onClick={() => deleteToDoItem(item.toDoListID)} size="small">
                     <Delete fontSize="small" />
                   </IconButton>
-                </Box>
+                </Box>*/}
               </Box>
             );
           })
         )}
       </div>
-
-      {/* Floating Add Button */}
-      <Fab
-        color="primary"
-        aria-label="add"
-        onClick={() => {
-          setModalOpen(true);
-          setEditMode(false);
-          setNewItem({ title: "", description: "" });
-        }}
-        sx={{
-          position: 'fixed',
-          bottom: 30,
-          right: 30,
-          backgroundColor: '#FFD166',
-          color: '#fff',
-          zIndex: 2000,
-          '&:hover': { backgroundColor: '#EF476F' },
-          boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.3)',
-        }}
-      >
-        <Add />
-      </Fab>
-
       {/* Modal for Create/Edit */}
       <Dialog
   open={modalOpen}

@@ -31,8 +31,8 @@ const ConfirmationDialog = ({ isOpen, message, onConfirm, onCancel }) => {
 function NoteApp() {
     const { folderId } = useParams();
     const navigate = useNavigate();
-    const url = "https://noteably-final.onrender.com/api/note";
-    const folderUrl = "https://noteably-final.onrender.com/api/folders";
+    const url = "http://localhost:8080/api/note";
+    const folderUrl = "http://localhost:8080/api/folders";
     
     const [data, setData] = useState({
         title: "",

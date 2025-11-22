@@ -3,7 +3,7 @@ import { axiosRequest } from '../../services/studentService';
 import { IconButton, Box, Typography, TextField, Button, Checkbox, Dialog, DialogContent, DialogTitle, DialogActions, FormControl, InputLabel, Select, MenuItem, Fab } from '@mui/material';
 import { Edit, Delete, Add, Search } from '@mui/icons-material';
 
-const apiUrl = "https://noteably-final.onrender.com/api/TodoList";
+const apiUrl = "http://localhost:8080/api/TodoList";
 
 function ToDoList() {
   const fullStudentInfo = localStorage.getItem('fullStudentInfo');
