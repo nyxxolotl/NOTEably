@@ -74,7 +74,7 @@ function Dashboard() {
       </div>
       <div className='third-row'>
         <div className="folder-widget">
-          <div className="dashboard-widget-header">
+          <div className="folder-widget-header">
             <div className="dashboard-icon-div orange-bg">
               <FolderIcon sx={{ color: 'white' }} />
             </div>

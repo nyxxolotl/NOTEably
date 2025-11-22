@@ -101,6 +101,12 @@
 }
 
 /* Folder Widget */
+.folder-widget-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
 .folder-widget {
   padding: 30px;
   border-radius: 30px;

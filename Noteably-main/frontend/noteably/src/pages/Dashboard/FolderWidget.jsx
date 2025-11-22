@@ -40,21 +40,27 @@ const FolderWidget = () => {
 
     return (
         <div className='folders-wrapper'>
-            {folders.map((folder, index) => (
-                <div
-                    key={folder.folderId}
-                    className="folder-item"
-                    sx={{ width: '120px', textAlign: 'center', cursor: 'pointer' }}
-                    onClick={() => openFolder(folder.folderId)}
-                >
-                    <img
-                        src={`./ASSETS/folder-${['orange', 'blue', 'green', 'red', 'yellow'][index % 5]}.png`}
-                        alt="Folder Icon"
-                        className="folder-icon"
-                    />
-                    <p style={{ color: "var(--darkblue)" }}>{folder.title}</p>
+            {folders.length === 0 ? (
+                <p style={{ color: "grey" }}>No folders added yet.</p>
+            ) : (
+                <div>
+                    {folders.map((folder, index) => (
+                        <div
+                            key={folder.folderId}
+                            className="folder-item"
+                            sx={{ width: '120px', textAlign: 'center', cursor: 'pointer' }}
+                            onClick={() => openFolder(folder.folderId)}
+                        >
+                            <img
+                                src={`./ASSETS/folder-${['orange', 'blue', 'green', 'red', 'yellow'][index % 5]}.png`}
+                                alt="Folder Icon"
+                                className="folder-icon"
+                            />
+                            <p style={{ color: "var(--darkblue)" }}>{folder.title}</p>
+                        </div>
+                    ))}
                 </div>
-            ))}
+            )}
         </div>
     );
 };
