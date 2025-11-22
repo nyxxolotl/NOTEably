@@ -1,7 +1,17 @@
+.folders-wrapper {
+    display: flex;
+    gap: 10px; 
+    position: relative; 
+    cursor: pointer;
+    overflow-x: auto;
+    margin: 0 auto;
+    scrollbar-color: #D0D5E2 transparent; 
+    scrollbar-width: thin; 
+}
+
 .folder-item {
     border: 1px solid #ccc;
     border-radius: 8px;
-    padding: 10px;
     text-align: center;
     width: 145px; /* Set a fixed width */
     height: 145px; /* Set a fixed height */

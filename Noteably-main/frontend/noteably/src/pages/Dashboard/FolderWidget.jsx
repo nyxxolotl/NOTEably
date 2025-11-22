@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { axiosRequest } from '../../services/studentService';
-import { Box, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import './FolderWidget.css';
 
@@ -39,32 +39,23 @@ const FolderWidget = () => {
     }, [studentId]);
 
     return (
-        <Box
-            sx={{
-                display: 'flex',
-                flexWrap: 'wrap',
-                gap: 2,
-                ml: '8px',
-                overflowY: 'auto',
-                maxHeight: '200px', // Adjust for compact height
-            }}
-        >
+        <div className='folders-wrapper'>
             {folders.map((folder, index) => (
-                <Box
+                <div
                     key={folder.folderId}
                     className="folder-item"
                     sx={{ width: '120px', textAlign: 'center', cursor: 'pointer' }}
                     onClick={() => openFolder(folder.folderId)}
                 >
                     <img
-                        src={`./ASSETS/folder-${['blue', 'green', 'orange', 'red', 'yellow'][index % 5]}.png`}
+                        src={`./ASSETS/folder-${['orange', 'blue', 'green', 'red', 'yellow'][index % 5]}.png`}
                         alt="Folder Icon"
                         className="folder-icon"
                     />
-                    <Typography variant="body2">{folder.title}</Typography>
-                </Box>
+                    <p style={{ color: "var(--darkblue)" }}>{folder.title}</p>
+                </div>
             ))}
-        </Box>
+        </div>
     );
 };
 

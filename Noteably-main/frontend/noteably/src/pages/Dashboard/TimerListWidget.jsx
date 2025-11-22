@@ -38,7 +38,7 @@ const TimerListWidget = () => {
     return (
         <div className="scrollable">
             {timerList.length === 0 ? (
-                <p style={{ color: "grey", marginTop: "30px" }}>No timers added yet.</p>
+                <p style={{ color: "grey" }}>No timers added yet.</p>
             ) : (
                 <List>
                     {timerList.map((timer) => (
