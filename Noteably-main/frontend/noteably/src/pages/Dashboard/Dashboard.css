@@ -1,5 +1,4 @@
 .dashboard-container {
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
@@ -119,7 +118,21 @@
   border: 1px solid var(--darkblue);
 }
 
+.folders-list {
+  overflow-y: auto;
+  margin: 0 auto;
+  scrollbar-color: #D0D5E2 transparent; 
+  overflow-x: hidden; 
+  scrollbar-width: thin; 
+}
+
 /* Timers Widget */
+.timer-widget-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
 .blue-bg {
   background: var(--blue);
   padding: 7px;
@@ -129,13 +142,11 @@
   border: 1px solid var(--darkblue);
 }
 
-/* Widget Content */
-.dashboard-widget-content {
-  flex: 1;
+.timers-list {
   overflow-y: auto;
-}
-
-/* No X Scroll */
-.no-scroll-x {
-  overflow-x: hidden;
+  margin: 0 auto;
+  scrollbar-color: #D0D5E2 transparent; 
+  overflow-x: hidden; 
+  scrollbar-width: thin; 
+  height: 160px;
 }

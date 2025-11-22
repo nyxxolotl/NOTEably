@@ -1,0 +1,26 @@
+.timer-item {
+    margin-bottom: 15px; 
+    background: #118AB2; 
+    border-radius: 10px;
+    color: white; 
+    width: 100%;
+    display: flex;
+    padding: 20px;
+    border: 2px solid var(--darkblue);
+    justify-content: space-between;
+    align-items: center;
+}
+
+.timer-item:hover {
+    transform: translateY(-3px);
+}
+
+.timer-item-title {
+    display: flex;
+    flex-direction: column;
+}
+
+.timer-play-icon {
+    cursor: pointer;
+    color: white;
+}

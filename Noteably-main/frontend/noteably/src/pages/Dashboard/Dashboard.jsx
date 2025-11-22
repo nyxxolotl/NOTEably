@@ -80,18 +80,18 @@ function Dashboard() {
             </div>
             <h1 className='folderlist-title'>Folders</h1>
           </div>
-          <div className="dashboard-widget-content no-scroll-x">
+          <div className="folders-list">
             <FolderWidget />
           </div>
         </div>
         <div className="dashboard-widget compact-widget">
-          <div className="dashboard-widget-header">
+          <div className="timer-widget-header">
             <div className="dashboard-icon-div blue-bg">
               <TimerIcon sx={{ color: 'white' }} />
             </div>
             <h1 className='timers-title'>Timers</h1>
           </div>
-          <div className="dashboard-widget-content no-scroll-x">
+          <div className="timers-list">
             <TimerListWidget />
           </div>
         </div>

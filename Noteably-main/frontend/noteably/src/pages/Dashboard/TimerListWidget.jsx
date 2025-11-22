@@ -3,6 +3,7 @@ import { axiosRequest } from '../../services/studentService';
 import { List, ListItem, ListItemText, IconButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import './TimerListWidget.css';
 
 const apiUrl = "http://localhost:8080/api/timer";
 
@@ -36,25 +37,23 @@ const TimerListWidget = () => {
     }, []);
 
     return (
-        <div className="scrollable">
+        <div>
             {timerList.length === 0 ? (
                 <p style={{ color: "grey" }}>No timers added yet.</p>
             ) : (
-                <List>
+                <div>
                     {timerList.map((timer) => (
-                            <ListItem key={timer.timerID} sx={{ marginBottom: '10px', backgroundColor: '#118AB2', borderRadius: '5px', color: 'white', width: '100%' }}>
-                            <ListItemText
-                                primary={timer.title}
-                                secondary={`${timer.hours}h ${timer.minutes}m ${timer.seconds}s`}
-                                primaryTypographyProps={{ style: { color: 'white', fontWeight: 'bold' } }}
-                                secondaryTypographyProps={{ style: { color: 'white' } }}
-                            />
-                            <IconButton onClick={() => navigate('/running', { state: { initialTime: timer.hours * 3600 + timer.minutes * 60 + timer.seconds, title: timer.title } })} sx={{ color: 'white' }}>
+                        <div className="timer-item" key={timer.timerID}>
+                            <div className='timer-item-title'>
+                                <p style={{ fontWeight: 600, color: 'white' }}>{timer.title}</p>
+                                <p style={{ color: 'white' }}>{`${timer.hours}h ${timer.minutes}m ${timer.seconds}s`}</p>       
+                            </div>
+                            <div className="timer-play-icon" onClick={() => navigate('/running', { state: { initialTime: timer.hours * 3600 + timer.minutes * 60 + timer.seconds, title: timer.title } })}>
                                 <PlayArrowIcon />
-                            </IconButton>
-                        </ListItem>
+                            </div>
+                        </div>
                     ))}
-                </List>
+                </div>
             )}
         </div>
     );
