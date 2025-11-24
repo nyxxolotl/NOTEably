@@ -1,335 +1,513 @@
-
 /* Main container */
-  .timer-container {
-    display: flex;
-    flex-direction: column;
-  }
+.timer-container {
+  display: flex;
+  flex-direction: column;
+}
 
-  .timer-second-row {
-    display: flex;
-    gap: 20px;
-    margin-top: 30px;
-    height: 520px;
-  }
+.timer-second-row {
+  display: flex;
+  gap: 20px;
+  margin-top: 30px;
+  height: 520px;
+}
 
-  .timer-header {
-    display: flex;
-    align-items: center;
-    border: 1px solid var(--darkblue);
-    width: 100%;
-    border-radius: 25px;
-    padding: 25px 40px;
-  }
-  
-  .timer-header-title {
-    font-size: 28px;
-    font-weight: 600;
-    color: var(--darkblue);
-    margin-bottom: 5px;
-  }
+.timer-header {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--darkblue);
+  width: 100%;
+  border-radius: 25px;
+  padding: 25px 40px;
+}
 
-  .timer-box {
-    padding: 30px;
-    border-radius: 30px;
-    background-color: white;
-    border: 1px solid var(--darkblue);
-    width: 435px;
-  }
+.timer-header-title {
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--darkblue);
+  margin-bottom: 5px;
+}
+
+.timer-box {
+  padding: 30px;
+  border-radius: 30px;
+  background-color: white;
+  border: 1px solid var(--darkblue);
+  width: 435px;
+}
 
 
 
-  .timer-box-left {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
-  }
+.timer-box-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
 
-  .timer-input-title {
-    font-size: 20px; /*not final*/
-    font-weight: 600;
-    color: var(--darkblue);
-    margin-bottom: 5px;
-    text-align: center;
-  }
+.timer-box-right {
+  max-height: 450px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 10px;
+}
 
-  .timer-action-buttons {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-    margin-top: 10px;
-  }
+.timer-box-right::-webkit-scrollbar {
+  width: 6px;
+}
 
-  /* Inputs */
-  .timer-title-input {
-    width: 100%;
-  }
+.timer-box-right::-webkit-scrollbar-track {
+  background: transparent;
+}
 
-  .timer-input-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 25px;
-    margin-bottom: 20px;
-    width: 100%;
-  }
-  
-  /* Labels above time inputs */
-  .timer-input-row .timer-subtitle {
-    text-align: center;
-    margin-bottom: 5px;
-  }
-  
-  /* Time inputs equal width */
-  .timer-input-row .timer-textfield {
-    width: 100px;
-  }
+.timer-box-right::-webkit-scrollbar-thumb {
+  background-color: var(--yellow);
+  border-radius: 3px;
+}
 
-  .timer-textfield {
-    background-color: #fff;
-  }
 
-  .timer-textfield .MuiOutlinedInput-root,
-  .timer-title-input .MuiOutlinedInput-root {
-    height: 40px;
-  }
-  
-  .timer-textfield .MuiOutlinedInput-notchedOutline,
-  .timer-title-input .MuiOutlinedInput-notchedOutline {
-    border-color: var(--darkblue) !important;
-    border-width: 1px !important;
-    border-radius: 10px !important;
-  }
 
-  .timer-textfield:hover .MuiOutlinedInput-notchedOutline,
-  .timer-textfield.Mui-focused .MuiOutlinedInput-notchedOutline,
-  .timer-title-input:hover .MuiOutlinedInput-notchedOutline,
-  .timer-title-input.Mui-focused .MuiOutlinedInput-notchedOutline {
-    border-width: 2px !important;
-  }
+.timer-input-title {
+  font-size: 20px;
+  /*not final*/
+  font-weight: 600;
+  color: var(--darkblue);
+  margin-bottom: 5px;
+  text-align: center;
+}
 
-  .input-hours:hover .MuiOutlinedInput-notchedOutline,
-  .input-hours.Mui-focused .MuiOutlinedInput-notchedOutline {
-    border-color: var(--red) !important;
-  }
+.timer-action-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin-top: 10px;
+}
 
-  .input-minutes:hover .MuiOutlinedInput-notchedOutline,
-  .input-minutes.Mui-focused .MuiOutlinedInput-notchedOutline {
-    border-color: var(--yellow) !important;
-  }
+/* Inputs */
+.timer-title-input {
+  width: 100%;
+}
 
-  .input-seconds:hover .MuiOutlinedInput-notchedOutline,
-  .input-seconds.Mui-focused .MuiOutlinedInput-notchedOutline {
-    border-color: var(--green) !important;
-  }
+.timer-input-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 25px;
+  margin-bottom: 20px;
+  width: 100%;
+}
 
-  .timer-title-input:hover .MuiOutlinedInput-notchedOutline,
-  .timer-title-input.Mui-focused .MuiOutlinedInput-notchedOutline {
-    border-color: var(--blue) !important;
-  }
+/* Labels above time inputs */
+.timer-input-row .timer-subtitle {
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+/* Time inputs equal width */
+.timer-input-row .timer-textfield {
+  width: 100px;
+}
+
+.timer-textfield {
+  background-color: #fff;
+}
+
+.timer-textfield .MuiOutlinedInput-root,
+.timer-title-input .MuiOutlinedInput-root {
+  height: 40px;
+}
+
+.timer-textfield .MuiOutlinedInput-notchedOutline,
+.timer-title-input .MuiOutlinedInput-notchedOutline {
+  border-color: var(--darkblue) !important;
+  border-width: 1px !important;
+  border-radius: 10px !important;
+}
+
+.timer-textfield:hover .MuiOutlinedInput-notchedOutline,
+.timer-textfield.Mui-focused .MuiOutlinedInput-notchedOutline,
+.timer-title-input:hover .MuiOutlinedInput-notchedOutline,
+.timer-title-input.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-width: 2px !important;
+}
+
+.input-hours:hover .MuiOutlinedInput-notchedOutline,
+.input-hours.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: var(--red) !important;
+}
+
+.input-minutes:hover .MuiOutlinedInput-notchedOutline,
+.input-minutes.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: var(--yellow) !important;
+}
+
+.input-seconds:hover .MuiOutlinedInput-notchedOutline,
+.input-seconds.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: var(--green) !important;
+}
+
+.timer-title-input:hover .MuiOutlinedInput-notchedOutline,
+.timer-title-input.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: var(--blue) !important;
+}
 
 /* Buttons */
-  .timer-button {
-    color: white;
-    border: 2px solid var(--darkblue);
-    height: 50px;
-    border-radius: 15px;
-    box-shadow: 0px 2px 0px 0px #ccc;
-    transition: transform 0.05s ease;
-  }
+.timer-button {
+  color: white;
+  border: 2px solid var(--darkblue);
+  height: 50px;
+  border-radius: 15px;
+  box-shadow: 0px 2px 0px 0px #ccc;
+  transition: transform 0.05s ease;
+}
 
-  .timer-button:active {
-    transform: translateY(1px);
-  }
-  
-  .timer-start {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0;
+.timer-button:active {
+  transform: translateY(1px);
+}
 
-    background-color: var(--green) !important;
-    width: 280px;
-    font-size: 20px;
-    font-weight: 500;
-  }
-  .timer-start svg {
-    width: 45px;
-    height: auto;
-  }
-  .timer-start:hover {
-    background-color: var(--blue) !important;
-  }
-  .timer-start:disabled {
-    background-color: #ccc !important;
-    border: 2px solid gray;
-    box-shadow: none;
-  }
-  
-  .timer-reset {
-    background-color: var(--red) !important;
-    width: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .timer-reset svg {
-    width: 30px;
-    height: auto;
-  }
-  .timer-reset:hover {
-    background-color: var(--orange) !important;
-  }
-  
+.timer-start {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0;
+
+  background-color: var(--green) !important;
+  width: 280px;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.timer-start svg {
+  width: 45px;
+  height: auto;
+}
+
+.timer-start:hover {
+  background-color: var(--blue) !important;
+}
+
+.timer-start:disabled {
+  background-color: #ccc !important;
+  border: 2px solid gray;
+  box-shadow: none;
+}
+
+.timer-reset {
+  background-color: var(--red) !important;
+  width: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer !important;
+}
+
+.timer-reset svg {
+  width: 30px;
+  height: auto;
+}
+
+.timer-reset:hover {
+  background-color: var(--orange) !important;
+}
+
 
 
 /* List styling */
-  .list-item {
-    border-radius: 15px;
-    margin-bottom: 15px;
-    padding: 15px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  .timer-item-box {
-    padding: 5px 20px;
-    margin-bottom: 12px;
-    border-radius: 10px;
-    border: 2px solid var(--darkblue);
+.list-item {
+  border-radius: 15px;
+  margin-bottom: 15px;
+  padding: 15px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
 
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
+.timer-item-box {
+  padding: 5px 20px;
+  margin-bottom: 12px;
+  border-radius: 10px;
+  border: 2px solid var(--darkblue);
 
-  .timer-list-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-  }
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
-  .timer-title {
-    font-size: 20px;
-    font-weight: 500;
-  }
+.timer-list-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
 
-  .timer-sub {
-    font-weight: 500;
-  }
+.timer-title {
+  font-size: 20px;
+  font-weight: 500;
+}
 
-  .timer-list-buttons {
-    display: flex;
-    justify-content: right;
-    align-items: center;
-  }
+.timer-sub {
+  font-weight: 500;
+}
 
-  .timer-icon-button {
-    color: white !important;
-    transition: color 0.1s !important;
-  }
+.timer-list-buttons {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+}
 
-  .timer-icon-button:hover {
-    color: var(--darkblue) !important;
-  }
+.timer-icon-button {
+  color: white !important;
+  transition: color 0.1s !important;
+}
 
-  .timer-icon-button.play svg {
-    width: 60px !important;
-    height: auto !important;
-  }
+.timer-icon-button:hover {
+  color: var(--darkblue) !important;
+}
 
-  /* more dropdown */
+.timer-icon-button.play svg {
+  width: 60px !important;
+  height: auto !important;
+}
 
-  .timer-more .MuiPaper-root {
-    border-radius: 10px;
-    border: 1px solid var(--darkblue);
-    color: var(--darkblue);
-    background-color: white;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
-    width: 100px;
-  }
+/* more dropdown */
 
-  .timer-more .MuiMenuItem-root {
-    font-size: 14px;
-    padding: 5px 10px;
-  }
+.timer-more .MuiPaper-root {
+  border-radius: 10px;
+  border: 1px solid var(--darkblue);
+  color: var(--darkblue);
+  background-color: white;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  width: 100px;
+}
 
-  .timer-more .menu-edit:hover {
-    background: var(--yellow);
-    color: var(--darkblue);
-    font-weight: 500;
-  }
+.timer-more .MuiMenuItem-root {
+  font-size: 14px;
+  padding: 5px 10px;
+}
 
-  .timer-more .menu-delete {
-    color: var(--red);
-  }
+.timer-more .menu-edit:hover {
+  background: var(--yellow);
+  color: var(--darkblue);
+  font-weight: 500;
+}
 
-  .timer-more .menu-delete:hover {
-    background: var(--red);
-    color: white;
-    font-weight: 500;
-  }
+.timer-more .menu-delete {
+  color: var(--red);
+}
 
-
-  /* color for list */
-  .color-0 {
-    background-color: var(--red);
-  }
-  .color-1 {
-    background-color: var(--orange);
-  }
-  .color-2 {
-    background-color: var(--yellow);
-  }
-  .color-3 {
-    background-color: var(--green);
-  }
-  .color-4 {
-    background-color: var(--blue);
-  }
-  .color-5 {
-    background-color: var(--green);
-  }
-  .color-6 {
-    background-color: var(--yellow);
-  }
-  .color-7 {
-    background-color: var(--orange);
-  }
+.timer-more .menu-delete:hover {
+  background: var(--red);
+  color: white;
+  font-weight: 500;
+}
 
 
-  /*--------------oldies---------------*/
+/* color for list */
+.color-0 {
+  background-color: var(--red);
+}
+
+.color-1 {
+  background-color: var(--orange);
+}
+
+.color-2 {
+  background-color: var(--yellow);
+}
+
+.color-3 {
+  background-color: var(--green);
+}
+
+.color-4 {
+  background-color: var(--blue);
+}
+
+.color-5 {
+  background-color: var(--green);
+}
+
+.color-6 {
+  background-color: var(--yellow);
+}
+
+.color-7 {
+  background-color: var(--orange);
+}
 
 
-  /* Grid container */
-  .timer-grid-container {
-    width: 90%;
-    height: 100%;
-    padding: 30px;
-  }
 
-  .timer-setup {
-    justify-content: center;
-    align-items: center;
-  }
+/* timer running */
+.timer-running-wrapper {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-direction: column;
+}
 
-  .timer-setup .timer-title {
-    align-self: flex-start;
-    text-align: center;
-    width: 100%;
-    margin-bottom: 70px;
-  }
-  
-  .timer-scrollable::-webkit-scrollbar {
-    width: 1px;
-  }
-  .timer-scrollable::-webkit-scrollbar-thumb {
-    background-color: #d3d3d3;
-    border-radius: 4px;
-  }
-  .timer-scrollable::-webkit-scrollbar-thumb:hover {
-    background-color: #6a6a6a;
-  }
+.timer-running-title {
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--darkblue);
+  margin-bottom: 5px;
+}
+
+.timer-running-subtitle {
+  margin-bottom: 10px;
+  color: var(--blue);
+  font-size: 18px;
+}
+
+.timer-running-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-left: 70px;
+}
+
+.timer-running-play {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  color: white;
+  border: 2px solid var(--darkblue);
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: 0px 2px 0px 0px #ccc;
+  transition: all 0.05s ease;
+}
+
+.timer-running-play:hover {
+  background-color: var(--blue) !important;
+}
+
+.timer-running-play:active {
+  transform: translateY(1px);
+}
+
+/* Active state (green) */
+.timer-running-play.active {
+  background-color: var(--green);
+  cursor: pointer;
+}
+
+/* Disabled state (gray) */
+.timer-running-play.disabled {
+  background-color: #ccc;
+  border: 2px solid gray;
+  cursor: not-allowed;
+}
+
+.timer-running-play.disabled:hover {
+  background-color: #ccc !important;
+}
+
+.timer-running-play svg {
+  width: 50px;
+  height: auto;
+}
+
+.timer-running-stop {
+  background-color: var(--red);
+  color: white;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+
+  border: 2px solid var(--darkblue);
+  box-shadow: 0px 2px 0px 0px #ccc;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  transition: all 0.05s ease;
+  cursor: pointer;
+}
+
+.timer-running-stop:hover {
+  background-color: var(--orange);
+}
+
+.timer-running-stop:active {
+  transform: translateY(1px);
+}
+
+.timer-running-stop svg {
+  width: 40px;
+  height: auto;
+  cursor: pointer;
+}
+
+/* clock movement and time */
+
+/* OUTER CIRCLE */
+.timer-outer-circle {
+  position: relative;
+  width: 250px;
+  height: 250px;
+  margin: 30px auto;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* INNER CIRCLE */
+.timer-inner-circle {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* TIMER TEXT */
+.timer-text {
+  font-size: 2rem;
+  font-weight: 500;
+  color: var(--blue);
+}
+
+/*--------------oldies---------------*/
+
+
+/* Grid container */
+.timer-grid-container {
+  width: 90%;
+  height: 100%;
+  padding: 30px;
+}
+
+.timer-setup {
+  justify-content: center;
+  align-items: center;
+}
+
+.timer-setup .timer-title {
+  align-self: flex-start;
+  text-align: center;
+  width: 100%;
+  margin-bottom: 70px;
+}
+
+.timer-scrollable::-webkit-scrollbar {
+  width: 1px;
+}
+
+.timer-scrollable::-webkit-scrollbar-thumb {
+  background-color: #d3d3d3;
+  border-radius: 4px;
+}
+
+.timer-scrollable::-webkit-scrollbar-thumb:hover {
+  background-color: #6a6a6a;
+}

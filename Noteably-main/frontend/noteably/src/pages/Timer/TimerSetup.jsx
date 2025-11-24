@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import TimerRunning from './TimerRunning';
 
 import {
   TextField, Typography, Grid, Box, List, ListItem, ListItemText, IconButton
@@ -29,6 +30,7 @@ function TimerSetup() {
   const [minutes, setMinutes] = useState('00');
   const [seconds, setSeconds] = useState('00');
   const navigate = useNavigate();
+  const [activeTimer, setActiveTimer] = useState(null);
 
   const [menuAnchor, setMenuAnchor] = useState(null);
   const [openMenuId, setOpenMenuId] = useState(null);
@@ -116,13 +118,12 @@ function TimerSetup() {
     const totalSeconds =
       timer.hours * 3600 + timer.minutes * 60 + timer.seconds;
 
-    navigate('/running', {
-      state: {
-        title: timer.title,
-        initialTime: totalSeconds,
-      },
+    setActiveTimer({
+      title: timer.title,
+      initialTime: totalSeconds
     });
   };
+
 
   const handleEditClick = (timer) => {
     setTimerToEdit(timer);
@@ -158,19 +159,26 @@ function TimerSetup() {
     setSeconds('00');
   };
 
-  const handleStart = () => {
-    const totalSeconds =
-      parseInt(hours || '0', 10) * 3600 +
-      parseInt(minutes || '0', 10) * 60 +
-      parseInt(seconds || '0', 10);
+const handleStart = () => {
+  const totalSeconds =
+    parseInt(hours || '0', 10) * 3600 +
+    parseInt(minutes || '0', 10) * 60 +
+    parseInt(seconds || '0', 10);
 
-    if (totalSeconds > 0) {
-      addTimer(title, hours, minutes, seconds);
-      navigate('/running', { state: { title, initialTime: totalSeconds } });
-    } else {
-      alert('Please enter a valid time.');
-    }
-  };
+  if (totalSeconds > 0) {
+    // Add the timer to the list
+    addTimer(title, hours, minutes, seconds);
+
+    // Set the active timer to show TimerRunning in place
+    setActiveTimer({
+      title,
+      initialTime: totalSeconds
+    });
+  } else {
+    alert('Please enter a valid time.');
+  }
+};
+
 
   useEffect(() => {
     fetchTimers();
@@ -206,6 +214,13 @@ function TimerSetup() {
       <div className="timer-second-row"> {/*from dashboard css*/}
         {/* Timer Setup */}
         <div className="timer-box">
+          {activeTimer ? (
+          <TimerRunning
+            title={activeTimer.title}
+            initialTime={activeTimer.initialTime}
+            onStop={() => setActiveTimer(null)}
+          />
+          ) : (
           <div className="timer-box-left">
             <div className="timer-input-title">Title</div>
             <TextField
@@ -266,10 +281,12 @@ function TimerSetup() {
               </button>
             </div>
           </div>
+          )}
         </div>
 
         {/* Timer List */}
         <div className="timer-box">
+        <div className="timer-box-right">
           <List>
             {timerList.map((timer, index) => (
               <ListItem
@@ -348,6 +365,7 @@ function TimerSetup() {
           onConfirm={handleDeleteConfirm}
           onCancel={handleDeleteCancel}
         />
+        </div>
       </div>
     </div>
   );
