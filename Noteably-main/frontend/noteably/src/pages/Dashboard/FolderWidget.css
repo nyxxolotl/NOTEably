@@ -1,25 +1,20 @@
 .folders-wrapper {
     display: flex;
-    gap: 10px; 
+    gap: 100px; 
     position: relative; 
-    cursor: pointer;
     overflow-x: auto;
     margin: 0 auto;
     scrollbar-color: #D0D5E2 transparent; 
     scrollbar-width: thin; 
 }
 
-.folder-item {
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    text-align: center;
+.folder-item-widget {
     width: 145px; /* Set a fixed width */
     height: 145px; /* Set a fixed height */
 }
 
-.folder-icon {
-    width: 40px;
-    height: 40px;
+.folder-icon-widget {
+    width: 150px;
 }
 
 .no-folder-message {

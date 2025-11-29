@@ -13,7 +13,7 @@
 }
   
 .fc-button.fc-button-active {
-  background-color: var(--green) !important;  
+  background-color: var(--yellow) !important;  
   color: white !important;
 }
 

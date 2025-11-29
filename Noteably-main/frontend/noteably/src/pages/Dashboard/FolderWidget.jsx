@@ -43,20 +43,19 @@ const FolderWidget = () => {
             {folders.length === 0 ? (
                 <p style={{ color: "grey" }}>No folders added yet.</p>
             ) : (
-                <div>
+                <div style={{ display: "flex", marginTop: "10px", curosr: "pointer" }}>
                     {folders.map((folder, index) => (
                         <div
                             key={folder.folderId}
-                            className="folder-item"
-                            sx={{ width: '120px', textAlign: 'center', cursor: 'pointer' }}
+                            className="folder-item-widget"
                             onClick={() => openFolder(folder.folderId)}
                         >
                             <img
-                                src={`./ASSETS/folder-${['orange', 'blue', 'green', 'red', 'yellow'][index % 5]}.png`}
+                                src={`./ASSETS/folder-${['orange', 'red', 'yellow', 'blue', 'green'][index % 5]}.png`}
                                 alt="Folder Icon"
-                                className="folder-icon"
+                                className="folder-icon-widget"
                             />
-                            <p style={{ color: "var(--darkblue)" }}>{folder.title}</p>
+                            <p style={{ color: "var(--darkblue)", marginLeft: "15px" }}>{folder.title}</p>
                         </div>
                     ))}
                 </div>

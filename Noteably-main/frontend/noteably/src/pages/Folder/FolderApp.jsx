@@ -4,6 +4,7 @@ import { axiosRequest, getAuthToken } from '../../services/studentService';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useNavigate } from 'react-router-dom';
 import './FolderApp.css';
+import SearchIcon from '@mui/icons-material/Search';
 
 function FolderApp() {
     const url = "http://localhost:8080/api/folders";
@@ -117,16 +118,19 @@ function FolderApp() {
     const openFolder = (id) => navigate(`/noteApp/${id}`, { state: { folderId: id } });
 
     return (
-        <main className='folder-app'>
+        <div className='folder-app'>
             <div className="top-section">
-                <input
-                    type="text"
-                    placeholder="Look for a folder"
-                    className="search-bar"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                />
-                <button onClick={() => setIsModalOpen(true)} className="add-btn">+</button>
+                <div className="folder-search-container">
+                    <SearchIcon style={{ color: "var(--darkblue)"}}/>
+                    <input
+                        type="text"
+                        placeholder="look for a folder"
+                        className="folder-search-bar"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                </div>
+                <button onClick={() => setIsModalOpen(true)} className="add-folder-btn">+ Add Folder</button>
             </div>
 
             <div className="folder-grid">
@@ -137,11 +141,11 @@ function FolderApp() {
                         }
                     }}>
                         <img
-                            src={`./ASSETS/folder-${['blue', 'green', 'orange', 'red', 'yellow'][index % 5]}.png`}
+                            src={`./ASSETS/folder-${['orange', 'red', 'yellow','blue', 'green'][index % 5]}.png`}
                             alt="Folder Icon"
                             className="folder-icon"
                         />
-                        <div className="folder-title" style={{ justifyContent: 'space-between' }}>
+                        <div className="folder-title">
                             <span>{folder.title}</span>
                             <MoreVertIcon
                                 className="options-icon"
@@ -154,8 +158,8 @@ function FolderApp() {
                         </div>
                         {openDropdown === folder.folderId && (
                             <div ref={dropdownRef} className="options-dropdown">
-                                <button onClick={(e) => { e.stopPropagation(); editFolder(folder); }}>Rename</button>
-                                <button onClick={(e) => { e.stopPropagation(); confirmDelete(folder); }}>Delete</button>
+                                <button onClick={(e) => { e.stopPropagation(); editFolder(folder); }} className='rename-item'>Rename</button>
+                                <button onClick={(e) => { e.stopPropagation(); confirmDelete(folder); }} className="delete-item">Delete</button>
                             </div>
                         )}
                     </div>
@@ -166,8 +170,8 @@ function FolderApp() {
             {isModalOpen && (
                 <div className="modal-overlay" onClick={closeModal}>
                     <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                        <h2 style={{ marginBottom: '10px', color: '#073B4C', fontWeight: 'bold' }}>
-                            {data.folderId ? 'Edit Folder' : 'Create Folder'}
+                        <h2 style={{ marginBottom: '30px', color: 'var(--darkblue)', fontWeight: 600, fontSize: '28px' }}>
+                            {data.folderId ? 'Rename Folder' : 'Add Folder'}
                         </h2>
                         <form onSubmit={(e) => {
                             e.preventDefault();
@@ -178,46 +182,35 @@ function FolderApp() {
                                 submit(e);
                             }
                         }}>
-                            <input
-                                type="hidden"
-                                id="folderId"
-                                value={data.folderId}
-                            />
-                            <input
-                                type="text"
-                                id="title"
-                                value={data.title}
-                                onChange={handle}
-                                placeholder="Enter folder title"
-                                required
-                                style={{
-                                    padding: '12px',
-                                    borderRadius: '12px',
-                                    border: '1px solid #ccc',
-                                    fontSize: '15px',
-                                    outline: 'none',
-                                    backgroundColor: '#fff',
-                                    marginBottom: '15px'
-                                }}
-                            />
-                            <button
-                                type="submit"
-                                style={{
-                                    backgroundColor: '#FFD166',
-                                    color: 'white',
-                                    border: 'none',
-                                    padding: '12px',
-                                    borderRadius: '10px',
-                                    fontSize: '16px',
-                                    fontWeight: 'bold',
-                                    cursor: 'pointer',
-                                    transition: 'background-color 0.3s ease'
-                                }}
-                                onMouseOver={(e) => e.target.style.backgroundColor = '#EF476F'}
-                                onMouseOut={(e) => e.target.style.backgroundColor = '#FFD166'}
-                            >
-                                {data.folderId ? 'Update' : 'Create'}
-                            </button>
+                            <div className='input-label'>
+                                <p style={{ color: "var(--darkblue)", fontSize: "20px" }}>Title</p>
+                                <input
+                                    type="hidden"
+                                    id="folderId"
+                                    value={data.folderId}
+                                />
+                                <input
+                                    type="text"
+                                    id="title"
+                                    value={data.title}
+                                    onChange={handle}
+                                    required
+                                />
+                            </div>
+                            <div className='buttons'>
+                                <button
+                                    className='cancel-button'
+                                    onClick={closeModal}
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    type="submit"
+                                    className='submit-button'
+                                >
+                                    {data.folderId ? 'Save' : 'Create'}
+                                </button>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -247,16 +240,23 @@ function FolderApp() {
                     <div className="confirm-content">
                         <div className="dialog-content-with-image">
                             <img src="./ASSETS/popup-delete.png" alt="Delete Icon" className="dialog-icon" />
-                            <span>Are you sure you want to delete this?</span>
+                            <span 
+                                style={{
+                                    color: "var(--darkblue)",
+                                    fontSize: "20px",
+                                }}
+                            >
+                                Are you sure you want to delete this folder?
+                            </span>
                         </div>
-                        <div className="confirm-buttons">
-                            <button onClick={handleDelete} className="ok-btn">Ok</button>
-                            <button onClick={() => setShowDeleteConfirm(false)} className="cancel-btn">Cancel</button>
+                        <div className="buttons">
+                            <button onClick={() => setShowDeleteConfirm(false)} className="cancel-delete-btn">Cancel</button>
+                            <button onClick={handleDelete} className="delete-btn">Delete</button>
                         </div>
                     </div>
                 </div>
             )}
-        </main>
+        </div>
     );
 }
 

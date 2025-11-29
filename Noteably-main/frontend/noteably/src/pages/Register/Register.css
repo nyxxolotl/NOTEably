@@ -81,6 +81,7 @@
   font-size: 16px;
   width: 100%;
   outline: none;
+  color: var(--darkblue);
 }
 
 .auth-input-name:hover,
