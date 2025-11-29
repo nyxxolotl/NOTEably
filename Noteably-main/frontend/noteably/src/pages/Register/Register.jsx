@@ -65,28 +65,28 @@ const Register = () => {
                                     name="name"
                                     placeholder="Name"
                                     onChange={handleChange}
-                                    className="auth-input"
+                                    className="auth-input-name"
                                 />
                                 <input
                                     type="text"
                                     name="course"
                                     placeholder="Course"
                                     onChange={handleChange}
-                                    className="auth-input"
+                                    className="auth-input-course"
                                 />
                                 <input
                                     type="text"
                                     name="contactNumber"
                                     placeholder="Contact Number"
                                     onChange={handleChange}
-                                    className="auth-input"
+                                    className="auth-input-number"
                                 />
                                 <input
                                     type="email"
                                     name="email"
                                     placeholder="Email"
                                     onChange={handleChange}
-                                    className="auth-input"
+                                    className="auth-input-email"
                                 />
                                 <div className="password-container">
                                     <input
@@ -94,7 +94,7 @@ const Register = () => {
                                         name="password"
                                         placeholder="Password"
                                         onChange={handleChange}
-                                        className="auth-input"
+                                        className="auth-input-password"
                                     />
                                     {showPassword ? (
                                         <Visibility onClick={handleTogglePassword} className="toggle-password-icon" style={{ color: 'gray', position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', cursor: "pointer" }} />

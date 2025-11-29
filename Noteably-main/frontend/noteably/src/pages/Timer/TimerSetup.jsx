@@ -233,7 +233,7 @@ const handleStart = () => {
 
             <div className="timer-input-row">
               <Grid item>
-                <div className="timer-input-title">Hours</div>
+                <div className="timer-input-subtitle">Hours</div>
                 <TextField
                   value={hours}
                   onChange={(e) => setHours(e.target.value)}
@@ -243,7 +243,7 @@ const handleStart = () => {
                 />
               </Grid>
               <Grid item>
-                <div className="timer-input-title">Minutes</div>
+                <div className="timer-input-subtitle">Minutes</div>
                 <TextField
                   value={minutes}
                   onChange={(e) => setMinutes(e.target.value)}
@@ -253,7 +253,7 @@ const handleStart = () => {
                 />
               </Grid>
               <Grid item>
-                <div className="timer-input-title">Seconds</div>
+                <div className="timer-input-subtitle">Seconds</div>
                 <TextField
                   value={seconds}
                   onChange={(e) => setSeconds(e.target.value)}

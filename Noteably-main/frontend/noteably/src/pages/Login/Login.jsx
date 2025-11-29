@@ -139,6 +139,7 @@ const Login = () => {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             required
+                            className='login-input-email'
                         />
                         <div className="password-container">
                             <input
@@ -147,6 +148,7 @@ const Login = () => {
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 required
+                                className='login-input-password'
                             />
                             {showPassword ? (
                                 <Visibility onClick={handleTogglePassword} className="toggle-password-icon" style={{ color: 'gray', position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', cursor: "pointer" }} />

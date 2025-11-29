@@ -68,7 +68,12 @@
   flex-direction: column;
 }
 
-.auth-input {
+/* inputs */
+.auth-input-name,
+.auth-input-course,
+.auth-input-number,
+.auth-input-email,
+.auth-input-password {
   padding: 12px 15px;
   margin: 10px 0;
   border: 1px solid #073B4C;
@@ -77,6 +82,32 @@
   width: 100%;
   outline: none;
 }
+
+.auth-input-name:hover,
+.auth-input-name:focus {
+  border: 1px solid var(--red);
+}
+
+.auth-input-course:hover,
+.auth-input-course:focus {
+  border: 1px solid var(--orange);
+}
+
+.auth-input-number:hover,
+.auth-input-number:focus {
+  border: 1px solid var(--yellow);
+}
+
+.auth-input-email:hover,
+.auth-input-email:focus {
+  border: 1px solid var(--green);
+}
+
+.auth-input-password:hover,
+.auth-input-password:focus {
+  border: 1px solid var(--blue);
+}
+
 
 .register-button {
   padding: 10px;
