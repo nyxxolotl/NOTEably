@@ -10,6 +10,8 @@
   
 .fc-button:hover {
   transform: scale(1.05);
+  background-color: var(--orange) !important;
+  color: white !important;
 }
   
 .fc-button.fc-button-active {
@@ -40,6 +42,10 @@
 .fc-prev-button, .fc-next-button {
   background: var(--green) !important;
   color: white !important;
+}
+
+.fc-prev-button:hover, .fc-next-button:hover {
+  background: var(--blue) !important;
 }
 
 .fc-scroller {

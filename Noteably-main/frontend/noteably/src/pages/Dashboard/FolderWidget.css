@@ -15,6 +15,7 @@
 
 .folder-icon-widget {
     width: 150px;
+    cursor: pointer;
 }
 
 .no-folder-message {
