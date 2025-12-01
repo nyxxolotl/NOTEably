@@ -10,7 +10,7 @@
     z-index: 0;
     position: relative;
     width: 905px;
-    min-height: 90vh;    
+    min-height: 90vh;
 }
 
 .top-section {
@@ -18,7 +18,7 @@
     display: flex;
     align-items: center;
     margin-bottom: 30px;
-    margin-top: 20px;
+    margin-top: 10px !important;
     height: 50px;
     gap: 10px;
 }
@@ -61,7 +61,8 @@
     color: white;
     font-weight: 500;
     font-size: 15px;
-    cursor: pointer;;
+    cursor: pointer;
+    box-shadow: 0px 2px 0px 0px #ccc;
 }
 
 .add-folder-btn:hover {
