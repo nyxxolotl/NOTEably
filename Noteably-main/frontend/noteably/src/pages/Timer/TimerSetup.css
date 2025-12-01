@@ -2,6 +2,7 @@
 .timer-container {
   display: flex;
   flex-direction: column;
+  height: 90vh
 }
 
 .timer-second-row {
@@ -32,10 +33,9 @@
   border-radius: 30px;
   background-color: white;
   border: 1px solid var(--darkblue);
-  width: 435px;
+  width: 442.5px;
+  height: 100%;
 }
-
-
 
 .timer-box-left {
   display: flex;
