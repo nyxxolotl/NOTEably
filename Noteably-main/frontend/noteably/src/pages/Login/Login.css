@@ -82,12 +82,12 @@
 
 .login-input-email:hover,
 .login-input-email:focus {
-    border-color: var(--orange);
+    border-color: var(--yellow);
 }
 
 .login-input-password:hover,
 .login-input-password:focus {
-    border-color: var(--red);
+    border-color: var(--green);
 }
 
 .password-container {
@@ -126,7 +126,6 @@
     font-weight: 600;
     border: none;
     cursor: pointer;
-    transition: background-color 0.3s;
     width: 100%;
     margin-top: 20px;
     padding: 10px;
@@ -135,7 +134,8 @@
 }
 
 .login-button:hover {
-    transform: scale(1.05)
+    transform: scale(1.05);
+    background-color: var(--red);
 }
 
 

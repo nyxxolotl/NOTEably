@@ -119,12 +119,12 @@
   border: 2px solid var(--darkblue);
   border-radius: 30px !important;
   cursor: pointer;
-  transition: background-color 0.3s;
   font-weight: 600;
 }
 
 .register-button:hover {
-  transform: scale(1.05)
+  transform: scale(1.05);
+  background-color: var(--red);
 }
 
 /* Responsive adjustments */
