@@ -27,6 +27,19 @@
   margin-bottom: 5px;
 }
 
+.edit-profile-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 40px;
+  height: 40px;
+  background-color: var(--blue);
+  color: white;
+  border: 2px solid var(--darkblue);
+  border-radius: 50%;
+}
+
 .settings-box {
   padding: 30px;
   border-radius: 30px;
@@ -39,9 +52,62 @@
   height: 355px;
 }
 
+.settings-box-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .settings-box.nav {
   width: 230px;
   height: 520px;
+  padding: 10px;
+}
+
+.settings-nav-list {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  padding: 0px 5px;
+  color: var(--darkblue);
+  font-size: 18px;
+  gap: 5px;
+}
+
+.settings-nav-list p {
+  padding-left: 20px;
+}
+
+.settings-nav-profile,
+.settings-nav-security,
+.settings-nav-logout {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 30px;
+  width: 100%; 
+  transition: background-color 0.3s, color 0.3s;
+  padding: 10px 5px;
+  cursor: pointer;
+}
+
+.settings-nav-logout {
+  color: var(--red);
+}
+
+.settings-nav-profile:hover{
+  background: var(--orange) !important;
+  color: white !important;
+}
+
+.settings-nav-security:hover {
+  background: var(--yellow) !important;
+  color: white !important;
+}
+
+.settings-nav-logout:hover {
+  background: var(--red) !important;
+  color: white !important;
 }
 
 .settings-box.profile {
@@ -211,12 +277,6 @@
   border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 1rem;
-}
-
-.settings-footer {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
 }
 
 .save-button,

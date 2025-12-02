@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { getImageUrl, uploadProfilePicture, axiosRequest } from '../../services/studentService';
 import { Box, Modal, IconButton, Button } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import LockIcon from '@mui/icons-material/Lock';
 import AddIcon from '@mui/icons-material/Add'; // For plus icon
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import EditIcon from '@mui/icons-material/EditRounded';
 import './Settings.css';
 import { useNavigate } from 'react-router-dom';
 
@@ -123,7 +123,11 @@ function SettingsPage() {
 
       <div className="settings-second-row">
         <div className="settings-box nav">
-
+          <div className="settings-nav-list">
+            <p className="settings-nav-profile">Profile</p>
+            <p className="settings-nav-security">Security</p>
+            <p className="settings-nav-logout" onClick={handleLogout}>Log out</p>
+          </div>
         </div>
 
         <div>
@@ -137,13 +141,17 @@ function SettingsPage() {
             </div>
           </div>
           <div className="settings-box under">
-            {/* Left - Profile Picture */}
+            <div className="settings-box-header">
+              <p className="settings-header-title">Personal Information</p>
+              <button className="edit-profile-btn">
+                <EditIcon />
+              </button>
+            </div>
             <div style={{ flex: '1', textAlign: 'center', borderRight: '1px solid lightgray', paddingRight: '2rem' }}>
             </div>
 
             {/* Right - Info and Buttons */}
             <div style={{ flex: '2' }}>
-              <h2 style={{ color: '#118AB2' }}>{student.name}</h2>
               <p style={{ color: '#666' }}>Course: {student.course}</p>
               <p style={{ color: '#666' }}>Contact: {student.contactNumber}</p>
               <p style={{ color: '#666' }}>Email: {student.email}</p>
@@ -154,9 +162,6 @@ function SettingsPage() {
                 <IconButton onClick={() => setOpenPasswordModal(true)} style={{ backgroundColor: '#EF476F', color: 'white' }}><LockIcon /></IconButton>
               </div>
 
-              <div className="settings-footer" style={{ display: 'flex', gap: '1rem', marginTop: '2rem' }}>
-                <button className="logout-button" onClick={handleLogout}>Logout</button>
-              </div>
             </div>
           </div>
         </div>
