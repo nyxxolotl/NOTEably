@@ -16,6 +16,12 @@
 .folder-icon-widget {
     width: 150px;
     cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.folder-icon-widget:hover {
+    transform: translateY(-3px);
+    z-index: 10000;
 }
 
 .no-folder-message {

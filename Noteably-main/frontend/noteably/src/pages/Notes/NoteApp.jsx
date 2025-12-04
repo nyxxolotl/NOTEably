@@ -21,9 +21,9 @@ const ConfirmationDialog = ({ isOpen, message, onConfirm, onCancel }) => {
 
           <span>{message}</span>
         </div>
-        <div className="confirm-buttons">
-          <button onClick={onConfirm} className="ok-btn">Ok</button>
-          <button onClick={onCancel} className="cancel-btn">Cancel</button>
+        <div className="buttons">
+          <button onClick={onCancel} className="cancel-delete-btn">Cancel</button>
+          <button onClick={onConfirm} className="delete-btn">Delete</button>
         </div>
       </div>
     </div>
@@ -242,7 +242,7 @@ function NoteApp() {
         message={
           <div className="dialog-content-with-image">
             <img src="/ASSETS/popup-delete.png" alt="Delete" className="dialog-icon" />
-            <span>Are you sure you want to delete this?</span>
+            <span style={{ fontSize: "20px", color: "var(--darkblue)" }}>Are you sure you want to delete this?</span>
           </div>
         }
         onConfirm={confirmDelete}
@@ -300,7 +300,7 @@ function NoteApp() {
               </button>
 
               <button type="submit" className="notes-save-button">
-                {editingNoteId ? "Save Changes" : "Save"}
+                {editingNoteId ? "Save" : "Save"}
               </button>
             </div>
           </form>

@@ -180,7 +180,7 @@
   justify-content: center;
   align-items: center;
   gap: 0;
-
+  cursor: pointer;
   background-color: var(--green) !important;
   width: 280px;
   font-size: 20px;
@@ -194,12 +194,15 @@
 
 .timer-start:hover {
   background-color: var(--blue) !important;
+  transform: scale(1.05);
 }
 
 .timer-start:disabled {
   background-color: #ccc !important;
   border: 2px solid gray;
   box-shadow: none;
+  transform: none;
+  cursor: not-allowed;
 }
 
 .timer-reset {

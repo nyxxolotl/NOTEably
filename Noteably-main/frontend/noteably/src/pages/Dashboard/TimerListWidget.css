@@ -9,6 +9,7 @@
     border: 2px solid var(--darkblue);
     justify-content: space-between;
     align-items: center;
+    transition: all 0.3s ease;
 }
 
 .timer-item:hover {
