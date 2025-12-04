@@ -55,10 +55,10 @@
   color: white !important;
 }
 
-.calendar-nav:hover {
+/*.calendar-nav:hover {
   background: var(--green) !important;
   color: white !important;
-}
+}*/
 
 .timer-nav:hover {
   background: var(--blue) !important;
@@ -66,6 +66,6 @@
 }
 
 .settings-nav:hover {
-  background: var(--darkblue) !important;
+  background: var(--green) !important;
   color: white !important;
 }

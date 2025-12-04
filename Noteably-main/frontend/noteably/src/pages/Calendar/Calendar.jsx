@@ -42,7 +42,7 @@ function Calendar() {
             headerToolbar={{
               left: 'prev',
               center: 'title',
-              right: 'next dayGridMonth,timeGridWeek,timeGridDay,listWeek',
+              right: 'next',
             }}
             events={schedules.map((s) => ({
               title: s.title,
@@ -51,13 +51,6 @@ function Calendar() {
               color: s.colorCode,
             }))}
             height="500px"
-            buttonText={{
-              today: 'Today',
-              month: 'Month',
-              week: 'Week',
-              day: 'Day',
-              list: 'List'
-            }}
           />
         </div>
       )}

@@ -45,7 +45,8 @@ function SettingsPage() {
       setStudent(prev => ({
         ...prev,
         name: data.name || '', course: data.course || '', contactNumber: data.contactNumber || '',
-        email: data.email || '', profilePicture: data.profilePicture || '/ASSETS/Profile_blue.png',
+        email: data.email || '', profilePicture: data.profilePicture || '/ASSETS/Cutie.png',
+        studentId: data.studentId || '',
       }));
     } catch (error) {
       console.error('Error fetching student data:', error);
@@ -69,9 +70,10 @@ function SettingsPage() {
       const { id } = JSON.parse(localStorage.getItem('fullStudentInfo'));
       await axiosRequest({
         method: 'put',
-        url: `https://noteably-final.onrender.com/api/students/${id}`,
+        url: `http://localhost:8080/api/students/${id}`,
         data: {
           name: student.name,
+          studentId: student.studentId,
           course: student.course,
           contactNumber: student.contactNumber,
           email: student.email,
@@ -136,15 +138,15 @@ function SettingsPage() {
             <img src={getImageUrl(student.profilePicture)} alt="Profile" className="settings-profile-image" />
             <div className="settings-divider2">
               <h2 style={{ color: 'var(--darkblue)' }}>{student.name}</h2>
-              <p>ID: 6969</p>
+              <p>ID: {student.studentId}</p>
             </div>
             </div>
           </div>
           <div className="settings-box under">
             <div className="settings-box-header">
               <p className="settings-header-title">Personal Information</p>
-              <button className="edit-profile-btn">
-                <EditIcon />
+              <button className="edit-profile-btn" onClick={() => setOpenInfoModal(true)} >
+                <EditIcon /> Edit Info
               </button>
             </div>
             <div style={{ flex: '1', textAlign: 'center', borderRight: '1px solid lightgray', paddingRight: '2rem' }}>
@@ -158,7 +160,6 @@ function SettingsPage() {
 
               <div style={{ marginTop: '20px', display: 'flex', gap: '1rem' }}>
                 <IconButton onClick={() => setOpenProfileModal(true)} style={{ backgroundColor: '#118AB2', color: 'white' }}><PhotoCamera /></IconButton>
-                <IconButton onClick={() => setOpenInfoModal(true)} style={{ backgroundColor: '#06D6A0', color: 'white' }}><EditIcon /></IconButton>
                 <IconButton onClick={() => setOpenPasswordModal(true)} style={{ backgroundColor: '#EF476F', color: 'white' }}><LockIcon /></IconButton>
               </div>
 

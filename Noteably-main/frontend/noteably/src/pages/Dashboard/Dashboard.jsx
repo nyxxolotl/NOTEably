@@ -36,7 +36,7 @@ function Dashboard() {
         setStudentData({ 
           studentId: apiStudentId, 
           studentName: name,
-          profilePicture: profilePicture || '/ASSETS/Profile_blue.png',
+          profilePicture: profilePicture || '/ASSETS/Cutie.png',
         });
       } catch (error) {
         console.error('Error fetching student data:', error.response?.data || error.message);

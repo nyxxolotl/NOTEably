@@ -4,12 +4,12 @@ const API_BASE_URL = 'http://localhost:8080/api';
 
 // Utility function to get complete image URL
 export const getImageUrl = (imagePath) => {
-    if (!imagePath) return '/ASSETS/Profile_blue.png';
+    if (!imagePath) return '/ASSETS/Cutie.png';
     if (imagePath.startsWith('/ASSETS/') || imagePath.startsWith('http')) {
         return imagePath;
     }
     console.log('Profile picture path:', imagePath);
-    return '/ASSETS/Profile_blue.png';
+    return '/ASSETS/Cutie.png';
 };
 
 export const getAuthToken = () => {

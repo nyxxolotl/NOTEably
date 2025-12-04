@@ -35,7 +35,7 @@ function App() {
   const isDashboardActive = location.pathname === '/dashboard';
   const isFolderActive = location.pathname === '/folders';
   const isToDoActive = location.pathname === '/todo';
-  const isCalendarActive = location.pathname === '/schedule';
+  //const isCalendarActive = location.pathname === '/schedule';
   const isTimerActive = location.pathname === '/timer';
   const isSettingsActive = location.pathname === '/settings';
 
@@ -93,7 +93,7 @@ function App() {
             >
               <ToDoIcon />To-Do
             </span>
-            <span 
+            {/*<span 
               className='calendar-nav'
               style={{ 
                 backgroundColor: isCalendarActive ? themeColors.green : 'transparent',
@@ -103,7 +103,7 @@ function App() {
               onClick={() => navigate('/schedule')}
             >
               <CalendarIcon />Schedule
-            </span>
+            </span>*/}
             <span 
               className='timer-nav'
               style={{ 
@@ -118,7 +118,7 @@ function App() {
             <span 
               className='settings-nav'
               style={{ 
-                backgroundColor: isSettingsActive ? themeColors.dark : 'transparent',
+                backgroundColor: isSettingsActive ? themeColors.green : 'transparent',
                 color: isSettingsActive ? 'white' : 'var(--darkblue)',
                 border: isSettingsActive ? '2px solid var(--darkblue)' : '2px solid transparent',
               }}

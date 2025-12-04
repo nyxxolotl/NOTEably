@@ -6,6 +6,7 @@
   font-weight: 600; 
   background: white !important;
   box-shadow: none !important;
+  transition: all 0.3s ease;
 }
   
 .fc-button:hover {
