@@ -6,6 +6,7 @@ import { getStudentByStudentId } from '../../services/studentService';
 import './Login.css';
 import Visibility from '@mui/icons-material/Visibility'; 
 import VisibilityOff from '@mui/icons-material/VisibilityOff'; 
+import Header from '../../components/Header';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -119,11 +120,7 @@ const Login = () => {
     return (
         <div className="login-page">
             <div className="login-container">
-                <header className="login-header">
-                    <Link to="/">
-                        <img src="/ASSETS/Sniglet.png" alt="Noteably Logo" className="logo" />
-                    </Link>
-                </header>
+                <Header />
                 <img
                     src={imageUrl}
                     alt="Password visibility status"

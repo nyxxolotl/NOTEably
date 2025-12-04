@@ -35,9 +35,10 @@ code {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 5px 30px;
+  padding: 5px 100px;
   background: transparent;
   margin-top: -20px;
+  outline: red 2px solid;
 }
 
 .logo {

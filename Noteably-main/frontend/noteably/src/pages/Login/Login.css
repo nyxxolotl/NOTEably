@@ -1,19 +1,10 @@
-.login-header {
-    display: flex;
-    padding: 5px 30px;
-    background: transparent;
-    z-index: 0 !important;
-    width: 100%;
-    margin-top: -20px;
-}
-
 .login-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     position: relative;
     min-height: 85vh;
-    width: 93vw;
+    width: 97.2vw;
 }
 
 /* MIKU OO EE OO */
