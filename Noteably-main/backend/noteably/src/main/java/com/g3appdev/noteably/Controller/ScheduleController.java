@@ -11,7 +11,10 @@ import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-@CrossOrigin(origins = "https://noteably.vercel.app/")
+@CrossOrigin(origins = {
+    "http://localhost:3000",
+    "http://localhost:5173"
+})
 @RestController
 @RequestMapping("/api/schedules")
 public class ScheduleController {

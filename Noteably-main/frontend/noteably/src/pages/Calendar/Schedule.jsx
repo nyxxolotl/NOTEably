@@ -9,7 +9,7 @@ import { Button, TextField, Select, MenuItem, Typography, Box, Dialog, DialogAct
 import { Edit, Delete, Event, PriorityHigh, LowPriority, Star, EventNote, Add } from '@mui/icons-material';
 import './Fullcalendar.css';
 
-const apiUrl = "https://noteably-final.onrender.com/api/schedules";
+const apiUrl = "http://localhost:8080/api/schedules";
 
 function Schedule() {
   const studentId = localStorage.getItem('studentId'); // Get studentId from local storage
@@ -27,46 +27,61 @@ function Schedule() {
   const [openAlertDialog, setOpenAlertDialog] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
 
-
- 
   useEffect(() => {
     fetchSchedules();
     fetchToDoItems();
   }, []);
 
+  const getAuthToken = () => {
+    return localStorage.getItem("token");
+  };
+
+  // Helper to build headers that always include Authorization + optional content-type
+  const buildHeaders = (includeJson = true) => {
+    const token = getAuthToken();
+    const headers = {};
+    if (includeJson) headers["Content-Type"] = "application/json";
+    if (token) headers["Authorization"] = `Bearer ${token}`;
+    return headers;
+  };
+
   const fetchSchedules = async () => {
     try {
-      const token = localStorage.getItem("token"); // Ensure your login stores token here
       const response = await axiosRequest({
         method: 'get',
         url: `${apiUrl}/getByStudent/${studentId}`,
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
+        headers: buildHeaders(false)
       });
-      setSchedules(response.data);
+      setSchedules(response.data || []);
     } catch (error) {
-      console.error("Error fetching schedules", error);
+      console.error("Error fetching schedules", extractAxiosError(error));
     }
   };
-  
 
   const fetchToDoItems = async () => {
     try {
-      const token = localStorage.getItem("token");
       const response = await axiosRequest({
         method: 'get',
-        url: `https://noteably-final.onrender.com/api/TodoList/getByStudent/${studentId}`,
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
+        url: `http://localhost:8080/api/TodoList/getByStudent/${studentId}`,
+        headers: buildHeaders(false)
       });
-      setToDoItems(response.data);
+      setToDoItems(response.data || []);
     } catch (error) {
-      console.error("Error fetching ToDo items", error);
+      console.error("Error fetching ToDo items", extractAxiosError(error));
     }
   };
-  
+
+  const extractAxiosError = (err) => {
+    // Useful helper for clearer logs
+    if (!err) return null;
+    if (err.response) {
+      return { status: err.response.status, data: err.response.data };
+    }
+    if (err.request) {
+      return { message: "No response received", request: err.request };
+    }
+    return { message: err.message };
+  };
 
   const groupedSchedules = {
     high: schedules.filter(schedule => schedule.priority === 'high'),
@@ -76,34 +91,40 @@ function Schedule() {
 
   const addOrUpdateSchedule = async () => {
     const today = new Date().toISOString().split('T')[0];
-    if (formData.startDate < today) {
+    if (formData.startDate && formData.startDate < today) {
       setAlertMessage("Start date cannot be in the past. Please select today or a future date.");
       setOpenAlertDialog(true);
       return;
     }
-    if (formData.endDate < formData.startDate) {
+    if (formData.endDate && formData.endDate < formData.startDate) {
       setAlertMessage("End date cannot be earlier than the start date.");
       setOpenAlertDialog(true);
       return;
     }
-  
+
     try {
       const url = isEditMode ? `${apiUrl}/editSched/${selectedId}` : `${apiUrl}/postSched`;
       const method = isEditMode ? "put" : "post";
-  
-      const scheduleData = { ...formData, studentId: parseInt(studentId, 10) }; // Include studentId
-  
-      await axiosRequest({ method, url, data: scheduleData, headers: { "Content-Type": "application/json" } });
+
+      // Ensure studentId is an integer
+      const scheduleData = { ...formData, studentId: studentId ? parseInt(studentId, 10) : null };
+
+      await axiosRequest({
+        method,
+        url,
+        data: scheduleData,
+        headers: buildHeaders(true)
+      });
+
+      // clear form
       setFormData({ title: "", priority: "moderate", startDate: "", endDate: "", colorCode: "", todoListIds: [] });
       setIsEditMode(false);
       setSelectedId(null);
-      fetchSchedules();
+      await fetchSchedules();
     } catch (error) {
-      console.error("Error saving schedule", error);
+      console.error("Error saving schedule", extractAxiosError(error));
     }
   };
-  
-  
 
   const handleDeleteClick = (id) => {
     setScheduleToDelete(id);
@@ -112,32 +133,37 @@ function Schedule() {
 
   const deleteSchedule = async (id) => {
     try {
-      await axiosRequest({ method: 'delete', url: `${apiUrl}/deleteSched/${id}` });
-      fetchSchedules();
+      await axiosRequest({
+        method: 'delete',
+        url: `${apiUrl}/deleteSched/${id}`,
+        headers: buildHeaders(false)
+      });
+
+      await fetchSchedules();
       setOpenDeleteDialog(false);
       setScheduleToDelete(null);
     } catch (error) {
-      console.error("Error deleting schedule", error);
+      console.error("Error deleting schedule", extractAxiosError(error));
     }
   };
 
+  const handleEdit = (schedule) => {
+    // defensive mapping: backend may use different field names (scheduleID, scheduleId, id)
+    const sid = schedule.scheduleID ?? schedule.scheduleId ?? schedule.id ?? null;
+    const tasksArray = schedule.tasks ?? schedule.tasksList ?? schedule.todoList ?? [];
 
-const handleEdit = (schedule) => {
-  setFormData({
-    title: schedule.title,
-    priority: schedule.priority,
-    startDate: schedule.startDate,
-    endDate: schedule.endDate,
-    colorCode: schedule.colorCode,
-    todoListIds: schedule.tasks.map((task) => task.toDoListID),
-  });
-  setIsEditMode(true);
-  setSelectedId(schedule.scheduleID);
-  setOpenEditConfirmationDialog(true); // Open confirmation dialog first
-};
-
-
-  
+    setFormData({
+      title: schedule.title ?? "",
+      priority: schedule.priority ?? "moderate",
+      startDate: schedule.startDate ?? "",
+      endDate: schedule.endDate ?? "",
+      colorCode: schedule.colorCode ?? "",
+      todoListIds: tasksArray.map(t => t.toDoListID ?? t.toDoListId ?? t.id ?? t.todoListId ?? null).filter(Boolean),
+    });
+    setIsEditMode(true);
+    setSelectedId(sid);
+    setOpenEditConfirmationDialog(true); // Open confirmation dialog first
+  };
 
   const handleCloseEditDialog = () => {
     setOpenEditDialog(false); // Close the edit dialog
@@ -156,13 +182,23 @@ const handleEdit = (schedule) => {
 
   const addNewToDo = async () => {
     try {
-      const newToDoData = { ...newToDo, studentId: parseInt(studentId, 10) }; // Include studentId
-      const response = await axiosRequest({ method: 'post', url: "https://noteably-final.onrender.com/api/TodoList/postListRecord", data: { ...newToDoData, scheduleId: selectedId } });
+      // Ensure scheduleId is set (prefer selectedId if present)
+      const scheduleIdToSend = newToDo.scheduleId ?? selectedId;
+      const newToDoData = { ...newToDo, studentId: studentId ? parseInt(studentId, 10) : null, scheduleId: scheduleIdToSend };
+
+      await axiosRequest({
+        method: 'post',
+        url: "http://localhost:8080/api/TodoList/postListRecord",
+        data: newToDoData,
+        headers: buildHeaders(true)
+      });
+
       setNewToDo({ title: "", description: "" });
       setOpenToDoDialog(false);
-      fetchToDoItems();
+      await fetchToDoItems();
+      await fetchSchedules(); // refresh schedules if tasks are embedded
     } catch (error) {
-      console.error("Error adding ToDo item", error);
+      console.error("Error adding ToDo item", extractAxiosError(error));
     }
   };
 
@@ -177,6 +213,11 @@ const handleEdit = (schedule) => {
       default:
         return <Event />;
     }
+  };
+
+  // helper to normalize schedule id for UI buttons etc.
+  const normalizeScheduleId = (schedule) => {
+    return schedule?.scheduleID ?? schedule?.scheduleId ?? schedule?.id ?? null;
   };
 
   return (
@@ -218,41 +259,38 @@ const handleEdit = (schedule) => {
       </Box>
 
       <Dialog open={openAlertDialog} onClose={() => setOpenAlertDialog(false)}>
-  <DialogContent>
-    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-      <Box
-        component="img"
-        src="/ASSETS/popup-alert.png"// Path to your image
-        alt="Alert Icon"
-        sx={{ width: '50px', height: '50px' }}
-      />
-      <DialogContentText sx={{ fontSize: '16px', color: '#333' }}>
-        {alertMessage}
-      </DialogContentText>
-    </Box>
-  </DialogContent>
-  <DialogActions>
-    <Button
-      onClick={() => setOpenAlertDialog(false)}
-      sx={{
-        textTransform: 'none',
-        color: '#fff',
-        backgroundColor: '#EF476F',
-        borderRadius: '8px',
-        padding: '5px 20px',
-        fontWeight: 'bold',
-        '&:hover': {
-          backgroundColor: '#F78C6B',
-        },
-      }}
-    >
-      Close
-    </Button>
-  </DialogActions>
-</Dialog>
-
-
-
+        <DialogContent>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            <Box
+              component="img"
+              src="/ASSETS/popup-alert.png"
+              alt="Alert Icon"
+              sx={{ width: '50px', height: '50px' }}
+            />
+            <DialogContentText sx={{ fontSize: '16px', color: '#333' }}>
+              {alertMessage}
+            </DialogContentText>
+          </Box>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={() => setOpenAlertDialog(false)}
+            sx={{
+              textTransform: 'none',
+              color: '#fff',
+              backgroundColor: '#EF476F',
+              borderRadius: '8px',
+              padding: '5px 20px',
+              fontWeight: 'bold',
+              '&:hover': {
+                backgroundColor: '#F78C6B',
+              },
+            }}
+          >
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
 
       <Dialog open={openEditDialog} onClose={handleCloseEditDialog}>
       <DialogTitle>Edit Schedule</DialogTitle>
@@ -330,7 +368,7 @@ const handleEdit = (schedule) => {
         <Box sx={{ display: 'flex', justifyContent: 'left',  alignItems: 'left', textAlign: 'left', gap: 2 }}>
           <Box
             component="img"
-            src="/ASSETS/popup-alert.png" 
+            src="/ASSETS/popup-alert.png"
             alt="Edit Confirmation"
             sx={{ width: '80px', height: '80px' }}
           />
@@ -382,9 +420,6 @@ const handleEdit = (schedule) => {
       </DialogActions>
     </Dialog>
 
-
-
-
       <Dialog open={openToDoDialog} onClose={() => setOpenToDoDialog(false)}>
         <DialogTitle>Add ToDo Item</DialogTitle>
         <DialogContent>
@@ -397,91 +432,60 @@ const handleEdit = (schedule) => {
         </DialogActions>
       </Dialog>
 
-        <Dialog 
-          open={openDeleteDialog} 
-          onClose={() => setOpenDeleteDialog(false)}
-          sx={{
-            '& .MuiDialog-paper': {
-              borderRadius: '12px',
-              padding: '20px',
-              maxWidth: '600px' // Increased width for better text fit
-            }
-          }}
->
-  <DialogContent>
-    <Box
-      sx={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: '20px', // Spacing between image, text, and buttons
-        padding: '10px',
-      }}
-    >
-      {/* Image */}
-      <Box
-        component="img"
-        src="/ASSETS/popup-delete.png"
-        alt="Delete Icon"
+      <Dialog 
+        open={openDeleteDialog} 
+        onClose={() => setOpenDeleteDialog(false)}
         sx={{
-          width: '80px', // Adjust size
-          height: '80px',
-        }}
-      />
-
-      {/* Text */}
-      <DialogContentText
-        sx={{
-          color: 'black',
-          fontSize: '16px',
-          flex: '1', // Allow text to take up remaining space
+          '& .MuiDialog-paper': {
+            borderRadius: '12px',
+            padding: '20px',
+            maxWidth: '600px'
+          }
         }}
       >
-        Are you sure you want to delete this schedule?
-      </DialogContentText>
-
-      {/* Buttons */}
-      <Box
-        sx={{
-          display: 'flex',
-          gap: '10px', // Spacing between buttons
-        }}
-      >
-        <Button
-          onClick={() => deleteSchedule(scheduleToDelete)}
-          sx={{
-            textTransform: 'none', // Prevent text from being auto-capitalized
-            color: '#fff',
-            backgroundColor: '#06D6A0',
-            borderRadius: '8px',
-            padding: '5px 20px',
-            fontWeight: 'bold',
-            '&:hover': {
-              backgroundColor: '#F78C6B',
-            },
-          }}
-        >
-          Ok
-        </Button>
-        <Button
-          onClick={() => setOpenDeleteDialog(false)}
-          sx={{
-            textTransform: 'none', // Prevent text from being auto-capitalized
-            color: '#fff',
-            backgroundColor: '#EF476F',
-            borderRadius: '8px',
-            padding: '5px 20px',
-            fontWeight: 'bold',
-            '&:hover': {
-              backgroundColor: '#F78C6B',
-            },
-          }}
-        >
-          Cancel
-        </Button>
-      </Box>
-    </Box>
-  </DialogContent>
-</Dialog>
+        <DialogContent>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: '20px', padding: '10px' }}>
+            <Box component="img" src="/ASSETS/popup-delete.png" alt="Delete Icon" sx={{ width: '80px', height: '80px' }} />
+            <DialogContentText sx={{ color: 'black', fontSize: '16px', flex: '1' }}>
+              Are you sure you want to delete this schedule?
+            </DialogContentText>
+            <Box sx={{ display: 'flex', gap: '10px' }}>
+              <Button
+                onClick={() => deleteSchedule(scheduleToDelete)}
+                sx={{
+                  textTransform: 'none',
+                  color: '#fff',
+                  backgroundColor: '#06D6A0',
+                  borderRadius: '8px',
+                  padding: '5px 20px',
+                  fontWeight: 'bold',
+                  '&:hover': {
+                    backgroundColor: '#F78C6B',
+                  },
+                }}
+              >
+                Ok
+              </Button>
+              <Button
+                onClick={() => setOpenDeleteDialog(false)}
+                sx={{
+                  textTransform: 'none',
+                  color: '#fff',
+                  backgroundColor: '#EF476F',
+                  borderRadius: '8px',
+                  padding: '5px 20px',
+                  fontWeight: 'bold',
+                  '&:hover': {
+                    backgroundColor: '#F78C6B',
+                  },
+                }}
+              >
+                Cancel
+              </Button>
+            </Box>
+          </Box>
+        </DialogContent>
+      </Dialog>
 
       <Box sx={{ width: '100%', maxWidth: '1000px', backgroundColor: '#ffffff', borderRadius: '12px', boxShadow: 3, overflow: 'hidden', p: 3, mb: 4, color: '#073B4C' }}>
         <FullCalendar
@@ -508,33 +512,29 @@ const handleEdit = (schedule) => {
           }}
         />
       </Box>
+
       <Box sx={{ width: '100%', maxWidth: '1000px', p: 3, backgroundColor: '#ffffff', borderRadius: '12px', boxShadow: 'inset 0px 2px 2px 0px rgba(0, 0, 0, 0.1)', border: '1px solid lightgray',  mb: 4, display: 'flex', gap: 2 }}>
         {Object.keys(groupedSchedules).map((priority, index) => (
           <Box key={index} sx={{ flex: 1, backgroundColor: '#ffffff', borderRadius: '12px', padding: '16px', boxShadow: 3 }}>
             <Typography variant="h6" sx={{ mb: 2, color: priority === 'high' ? '#EF476F' : priority === 'moderate' ? '#FFD166' : '#06D6A0', textAlign: 'center' }}>
               {priority.toUpperCase()} PRIORITY
             </Typography>
-            {groupedSchedules[priority].map(schedule => (
-              <Box key={schedule.scheduleID} sx={{ backgroundColor: schedule.colorCode, borderRadius: '15px', padding: '16px', mb: 3, color: '#ffffff', boxShadow: 3 }}>
-              <Typography variant="h6" sx={{ color: '#073B4C'}}>
-                {getPriorityIcon(schedule.priority)} {schedule.title}
-              </Typography>
-              <Typography variant="body2" sx={{ color: '#073B4C' }}>
-                <EventNote /> {schedule.startDate} {schedule.endDate && `- ${schedule.endDate}`}
-              </Typography>
-                <Box
-                    sx={{
-                      display: 'flex',
-                      gap: 1,
-                      mt: 2,
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}
-                  >
+            {groupedSchedules[priority].map(schedule => {
+              const id = normalizeScheduleId(schedule);
+              const tasks = schedule.tasks ?? schedule.tasksList ?? [];
+              return (
+                <Box key={id ?? Math.random()} sx={{ backgroundColor: schedule.colorCode, borderRadius: '15px', padding: '16px', mb: 3, color: '#ffffff', boxShadow: 3 }}>
+                  <Typography variant="h6" sx={{ color: '#073B4C'}}>
+                    {getPriorityIcon(schedule.priority)} {schedule.title}
+                  </Typography>
+                  <Typography variant="body2" sx={{ color: '#073B4C' }}>
+                    <EventNote /> {schedule.startDate} {schedule.endDate && `- ${schedule.endDate}`}
+                  </Typography>
+                  <Box sx={{ display: 'flex', gap: 1, mt: 2, alignItems: 'center', justifyContent: 'center' }}>
                     <Button
                       variant="contained"
                       startIcon={<Add />}
-                      onClick={() => setOpenToDoDialog(true)}
+                      onClick={() => { setSelectedId(id); setOpenToDoDialog(true); }}
                       sx={{
                         backgroundColor: '#fff',
                         color: '#06D6A0',
@@ -545,14 +545,9 @@ const handleEdit = (schedule) => {
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        '& .MuiButton-startIcon': {
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          margin: 0, // Ensures no unexpected icon margin
-                        },
+                        '& .MuiButton-startIcon': { display: 'flex', alignItems: 'center', justifyContent: 'center', margin: 0 },
                       }}
-                    ></Button>
+                    />
                     <Button
                       variant="contained"
                       onClick={() => handleEdit(schedule)}
@@ -567,19 +562,14 @@ const handleEdit = (schedule) => {
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        '& .MuiButton-startIcon': {
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          margin: 0,
-                        },
+                        '& .MuiButton-startIcon': { display: 'flex', alignItems: 'center', justifyContent: 'center', margin: 0 },
                       }}
-                    ></Button>
+                    />
                     <Button
                       variant="contained"
                       startIcon={<Delete />}
                       color="error"
-                      onClick={() => handleDeleteClick(schedule.scheduleID)}
+                      onClick={() => handleDeleteClick(id)}
                       sx={{
                         backgroundColor: '#fff',
                         color: '#EF476F',
@@ -590,19 +580,13 @@ const handleEdit = (schedule) => {
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        '& .MuiButton-startIcon': {
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          margin: 0,
-                        },
+                        '& .MuiButton-startIcon': { display: 'flex', alignItems: 'center', justifyContent: 'center', margin: 0 },
                       }}
-                    ></Button>
+                    />
                   </Box>
-
-            </Box>
-            
-            ))}
+                </Box>
+              );
+            })}
           </Box>
         ))}
       </Box>
