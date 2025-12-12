@@ -176,11 +176,11 @@ const ToDoListWidget = () => {
                     {item.title}
                   </p>
                 </div>
-
+{/* 
                 <div className="todo-actions">
                   <button onClick={() => openEditModal(item)} className="edit-btn">✏️</button>
                   <button onClick={() => deleteToDoItem(item.toDoListID)} className="delete-btn">🗑️</button>
-                </div>
+                </div> */}
               </div>
             );
           })

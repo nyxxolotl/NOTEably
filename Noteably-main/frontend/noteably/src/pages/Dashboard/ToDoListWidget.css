@@ -10,19 +10,13 @@
 }
 
 .todolist-container {
-    margin-top: 5px;
-    padding: 30px;
+    padding-top: 10px;
     background-color: #FFFFFF;
     width: 100%;
     overflow-y: auto;
 }
 
 /*===*/
-
-/* Container */
-.todolist-container {
-  width: 100%;
-}
 
 /* Empty state text */
 .no-tasks-text {
@@ -60,6 +54,7 @@
 /* Checkbox styles (MUI class override) */
 .todo-checkbox {
   color: white !important;
+  transform: scale(1.5);
 }
 
 .todo-checkbox.Mui-checked {
@@ -69,9 +64,9 @@
 /* Title text */
 .todo-title {
   margin-left: 8px;
-  font-family: 'Fredoka', sans-serif;
-  font-weight: 500;
   color: white;
+  font-size: 20px;
+  font-weight: 500;
 }
 
 .todo-title.done {
