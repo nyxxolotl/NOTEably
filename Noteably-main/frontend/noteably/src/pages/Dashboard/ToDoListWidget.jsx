@@ -1,19 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { axiosRequest } from '../../services/studentService';
-import {
-  Box,
-  Typography,
-  Checkbox,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Button,
-  TextField,
-  IconButton
-} from '@mui/material';
-import { Add, Edit, Delete } from '@mui/icons-material';
+import { Checkbox } from '@mui/material';
 import ConfirmEditDialog from '../../dialogs/ConfirmEditDialog';
+import "./ToDoListWidget.css";
 
 const apiUrl = "http://localhost:8080/api/TodoList";
 
@@ -26,26 +15,26 @@ const ToDoListWidget = () => {
   const [confirmEditOpen, setConfirmEditOpen] = useState(false);
 
   const fetchToDoItems = async () => {
-    const fullStudentInfo = localStorage.getItem('fullStudentInfo');
+    const fullStudentInfo = localStorage.getItem("fullStudentInfo");
     let studentId = null;
+
     if (fullStudentInfo) {
       try {
         const studentObj = JSON.parse(fullStudentInfo);
         studentId = studentObj.id;
       } catch (error) {
-        console.error("Error parsing fullStudentInfo from localStorage", error);
+        console.error("Error parsing fullStudentInfo", error);
       }
     }
-    if (!studentId) {
-      console.error("Student ID is not available.");
-      return;
-    }
+
+    if (!studentId) return;
+
     try {
       const response = await axiosRequest({
-        method: 'get',
+        method: "get",
         url: `${apiUrl}/getByStudent/${studentId}`,
-        headers: { "Content-Type": "application/json" }
       });
+
       setToDoItems(response.data);
     } catch (error) {
       console.error("Error fetching ToDo items", error);
@@ -61,20 +50,22 @@ const ToDoListWidget = () => {
   };
 
   const createNewTask = async () => {
-    const fullStudentInfo = localStorage.getItem('fullStudentInfo');
+    const fullStudentInfo = localStorage.getItem("fullStudentInfo");
     const studentObj = JSON.parse(fullStudentInfo);
     const studentId = studentObj.id;
+
     if (!newItem.title.trim()) {
       alert("Title is required.");
       return;
     }
+
     try {
       await axiosRequest({
-        method: 'post',
+        method: "post",
         url: `${apiUrl}/postListRecord`,
         data: { ...newItem, studentId, completed: false },
-        headers: { "Content-Type": "application/json" }
       });
+
       setNewItem({ title: "", description: "" });
       setModalOpen(false);
       fetchToDoItems();
@@ -84,24 +75,22 @@ const ToDoListWidget = () => {
   };
 
   const confirmUpdateTask = async () => {
-    const fullStudentInfo = localStorage.getItem('fullStudentInfo');
+    const fullStudentInfo = localStorage.getItem("fullStudentInfo");
     const studentObj = JSON.parse(fullStudentInfo);
     const studentId = studentObj.id;
+
     if (!newItem.title.trim()) {
       alert("Title is required.");
       return;
     }
+
     try {
       await axiosRequest({
-        method: 'put',
+        method: "put",
         url: `${apiUrl}/updateList/${selectedItem.toDoListID}`,
-        data: {
-          ...newItem,
-          studentId,
-          completed: selectedItem.completed,
-        },
-        headers: { "Content-Type": "application/json" }
+        data: { ...newItem, studentId, completed: selectedItem.completed },
       });
+
       setNewItem({ title: "", description: "" });
       setSelectedItem(null);
       setEditMode(false);
@@ -116,10 +105,10 @@ const ToDoListWidget = () => {
   const deleteToDoItem = async (id) => {
     try {
       await axiosRequest({
-        method: 'delete',
+        method: "delete",
         url: `${apiUrl}/deleteList/${id}`,
-        headers: { "Content-Type": "application/json" }
       });
+
       fetchToDoItems();
     } catch (error) {
       console.error("Error deleting ToDo item", error);
@@ -130,16 +119,17 @@ const ToDoListWidget = () => {
     const updatedItems = toDoItems.map(item =>
       item.toDoListID === taskId ? { ...item, completed: !item.completed } : item
     );
+
     setToDoItems(updatedItems);
 
     const itemToUpdate = toDoItems.find(item => item.toDoListID === taskId);
+
     if (itemToUpdate) {
       try {
         await axiosRequest({
-          method: 'put',
+          method: "put",
           url: `${apiUrl}/updateList/${taskId}`,
           data: { ...itemToUpdate, completed: !itemToUpdate.completed },
-          headers: { "Content-Type": "application/json" }
         });
       } catch (error) {
         console.error("Error updating completion status", error);
@@ -158,138 +148,79 @@ const ToDoListWidget = () => {
     fetchToDoItems();
   }, []);
 
-  const noteablyColors = ['#FEBD59', '#F04770', '#F78C6A', '#40D19A', '#108AB1'];
+  const noteablyColors = ["#FEBD59", "#F04770", "#F78C6A", "#40D19A", "#108AB1"];
 
   return (
     <div>
       <div className="todolist-container">
         {toDoItems.length === 0 ? (
-          <p style={{ color: "grey" }}>No tasks added yet.</p>
+          <p className="no-tasks-text">No tasks added yet.</p>
         ) : (
           toDoItems.map((item, index) => {
             const randomColor = noteablyColors[index % noteablyColors.length];
+
             return (
-              <Box
+              <div
                 key={item.toDoListID}
-                sx={{
-                  width: '100%',
-                  marginBottom: '15px',
-                  padding: '10px',
-                  borderRadius: '10px',
-                  backgroundColor: item.completed ? '#D3D3D3' : randomColor,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  transition: 'all 0.3s ease',
-                  border: item.completed ? "2px solid grey" : "2px solid var(--darkblue)",
-                  '&:hover': {
-                    transform: 'translateY(-3px)'
-                  },
-                }}
+                className={`todo-item ${item.completed ? "completed" : ""}`}
+                style={{ backgroundColor: item.completed ? "#D3D3D3" : randomColor }}
               >
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <div className="todo-left">
                   <Checkbox
                     checked={item.completed}
                     onChange={() => handleCheckboxToggle(item.toDoListID)}
-                    sx={{
-                      color: 'white',
-                      '&.Mui-checked': { color: 'grey' },
-                    }}
+                    className="todo-checkbox"
                   />
-                  <Typography
-                    variant="body1"
-                    sx={{
-                      textDecoration: item.completed ? 'line-through' : 'none',
-                      color: item.completed ? 'grey' : 'white',
-                      marginLeft: 1,
-                      fontFamily: "'Fredoka', sans-serif",
-                      fontWeight: 500,
-                    }}
-                  >
+
+                  <p className={`todo-title ${item.completed ? "done" : ""}`}>
                     {item.title}
-                  </Typography>
-                </Box>
-                {/*<Box>
-                  <IconButton onClick={() => openEditModal(item)} size="small">
-                    <Edit fontSize="small" />
-                  </IconButton>
-                  <IconButton onClick={() => deleteToDoItem(item.toDoListID)} size="small">
-                    <Delete fontSize="small" />
-                  </IconButton>
-                </Box>*/}
-              </Box>
+                  </p>
+                </div>
+
+                <div className="todo-actions">
+                  <button onClick={() => openEditModal(item)} className="edit-btn">✏️</button>
+                  <button onClick={() => deleteToDoItem(item.toDoListID)} className="delete-btn">🗑️</button>
+                </div>
+              </div>
             );
           })
         )}
       </div>
-      {/* Modal for Create/Edit */}
-      <Dialog
-  open={modalOpen}
-  onClose={() => setModalOpen(false)}
-  PaperProps={{
-    sx: {
-      borderRadius: '20px',
-      backgroundColor: '#fffbea',
-      padding: 2,
-      boxShadow: '0 8px 30px rgba(0, 0, 0, 0.15)',
-    },
-  }}
->
-  <DialogTitle sx={{ fontWeight: 'bold', textAlign: 'center', color: '#073B4C' }}>
-    {editMode ? "Edit Task" : "Create New Task"}
-  </DialogTitle>
 
-  <DialogContent sx={{ paddingTop: 2 }}>
-    <TextField
-      autoFocus
-      margin="dense"
-      label="Title"
-      fullWidth
-      value={newItem.title}
-      onChange={(e) => setNewItem({ ...newItem, title: e.target.value })}
-      sx={{ marginBottom: 2, backgroundColor: '#fff' }}
-    />
-    <TextField
-      margin="dense"
-      label="Description"
-      fullWidth
-      value={newItem.description}
-      onChange={(e) => setNewItem({ ...newItem, description: e.target.value })}
-      sx={{ backgroundColor: '#fff' }}
-    />
-  </DialogContent>
+      {/* CUSTOM MODAL */}
+      {modalOpen && (
+        <div className="custom-modal-backdrop">
+          <div className="custom-modal">
+            <h3>{editMode ? "Edit Task" : "Create New Task"}</h3>
 
-  <DialogActions sx={{ justifyContent: 'space-between', padding: 2 }}>
-    <Button
-      onClick={() => setModalOpen(false)}
-      sx={{
-        color: '#fff',
-        backgroundColor: '#EF476F',
-        '&:hover': { backgroundColor: '#d7375d' },
-        borderRadius: '10px',
-        px: 3,
-      }}
-    >
-      Cancel
-    </Button>
-    <Button
-      variant="contained"
-      onClick={saveToDoItem}
-      sx={{
-        backgroundColor: '#06D6A0',
-        color: '#fff',
-        '&:hover': { backgroundColor: '#04b789' },
-        borderRadius: '10px',
-        px: 3,
-      }}
-    >
-      {editMode ? "Update" : "Create"}
-    </Button>
-  </DialogActions>
-</Dialog>
+            <input
+              type="text"
+              placeholder="Title"
+              value={newItem.title}
+              onChange={(e) => setNewItem({ ...newItem, title: e.target.value })}
+              className="modal-input"
+            />
 
+            <textarea
+              placeholder="Description"
+              value={newItem.description}
+              onChange={(e) => setNewItem({ ...newItem, description: e.target.value })}
+              className="modal-textarea"
+            />
 
-      {/* Confirm Edit Dialog */}
+            <div className="modal-actions">
+              <button className="modal-cancel" onClick={() => setModalOpen(false)}>
+                Cancel
+              </button>
+
+              <button className="modal-save" onClick={saveToDoItem}>
+                {editMode ? "Update" : "Create"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <ConfirmEditDialog
         open={confirmEditOpen}
         onConfirm={confirmUpdateTask}

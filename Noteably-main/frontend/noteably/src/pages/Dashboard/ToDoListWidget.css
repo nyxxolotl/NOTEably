@@ -16,3 +16,139 @@
     width: 100%;
     overflow-y: auto;
 }
+
+/*===*/
+
+/* Container */
+.todolist-container {
+  width: 100%;
+}
+
+/* Empty state text */
+.no-tasks-text {
+  color: grey;
+  text-align: left;
+}
+
+/* To-do box */
+.todo-item {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 2px solid var(--darkblue);
+  transition: all 0.3s ease;
+}
+
+.todo-item.completed {
+  border: 2px solid grey;
+}
+
+.todo-item:hover {
+  transform: translateY(-3px);
+}
+
+/* Left content */
+.todo-left {
+  display: flex;
+  align-items: center;
+}
+
+/* Checkbox styles (MUI class override) */
+.todo-checkbox {
+  color: white !important;
+}
+
+.todo-checkbox.Mui-checked {
+  color: grey !important;
+}
+
+/* Title text */
+.todo-title {
+  margin-left: 8px;
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 500;
+  color: white;
+}
+
+.todo-title.done {
+  text-decoration: line-through;
+  color: grey;
+}
+
+/* Action buttons */
+.todo-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.todo-actions button {
+  border: none;
+  cursor: pointer;
+  background: transparent;
+  font-size: 18px;
+}
+
+/* --- MODAL --- */
+
+.custom-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.custom-modal {
+  background: #fffbea;
+  padding: 20px;
+  width: 350px;
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+}
+
+.modal-input,
+.modal-textarea {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.modal-cancel {
+  background: #ef476f;
+  color: white;
+  border: none;
+  padding: 6px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.modal-save {
+  background: #06d6a0;
+  color: white;
+  border: none;
+  padding: 6px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.modal-cancel:hover {
+  background: #d7375d;
+}
+
+.modal-save:hover {
+  background: #04b789;
+}
