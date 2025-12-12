@@ -15,6 +15,7 @@ import ToDoList from './pages/ToDo/ToDoList';
 import Login from './pages/Login/Login';
 import Register from './pages/Register/Register';
 import SettingsPage from './pages/Setting/Setting';
+import SecuritySettingsPage from './pages/Setting/SecuritySettings';
 import PrivateRoute from './PrivateRoute';
 
 const LandingPage = React.lazy(() => import('./pages/LandingPage/LandingPage'));
@@ -38,7 +39,7 @@ function App() {
   const isToDoActive = location.pathname === '/todo';
   //const isCalendarActive = location.pathname === '/schedule';
   const isTimerActive = location.pathname === '/timer';
-  const isSettingsActive = location.pathname === '/settings';
+  const isSettingsActive = location.pathname === '/settings' || location.pathname === '/settings/security';
 
   React.useEffect(() => {
     document.querySelector('link[rel="icon"]').href = '/ASSETS/Sniglet.png';
@@ -163,6 +164,7 @@ function App() {
             } />
             <Route path="/running" element={<TimerRunning />} />
             <Route path="/settings" element={<SettingsPage />} />
+            <Route path="/settings/security" element={<SecuritySettingsPage />} />
             <Route path="/noteApp/:folderId" element={<NoteApp />} />
           </Routes>
         </Suspense>
