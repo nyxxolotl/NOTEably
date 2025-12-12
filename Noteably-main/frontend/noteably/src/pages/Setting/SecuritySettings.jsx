@@ -18,7 +18,7 @@ const AVATAR_OPTIONS = [
   { name: 'Blue', path: '/ASSETS/Profile_blue.png' },
 ];
 
-function SettingsPage() {
+function SecuritySettings() {
   const location = useLocation();
   const [student, setStudent] = useState({
     name: '', course: '', contactNumber: '', email: '',
@@ -93,7 +93,8 @@ function SettingsPage() {
     }
   };
 
-  const handleLogout = () => {
+
+  const handleLogout = (isError = false) => {
     localStorage.clear();
     setAlertMessage('User logged out successfully!');
     setIsAlertVisible(true);
@@ -130,20 +131,21 @@ function SettingsPage() {
         <div className="settings-box nav">
           <div className="settings-nav-list">
             <p className="settings-nav-profile" 
-              style={{ 
-                backgroundColor: isSettingsActive ? 'var(--orange)' : 'transparent',
-                color: isSettingsActive ? 'white' : 'var(--darkblue)',
-                border: isSettingsActive ? '2px solid var(--darkblue)' : '2px solid transparent',
-              }}>
+                onClick={ () => navigate('/settings') }
+                style={{ 
+                    backgroundColor: isSettingsActive ? 'var(--orange)' : 'transparent',
+                    color: isSettingsActive ? 'white' : 'var(--darkblue)',
+                    border: isSettingsActive ? '2px solid var(--darkblue)' : '2px solid transparent',
+                }}>
                 Profile
             </p>
             <p className="settings-nav-security"
-              onClick={ () => navigate('/settings/security') }
-              style={{ 
-                backgroundColor: isSecuritySettingsActive ? 'var(--yellow)' : 'transparent',
-                color: isSecuritySettingsActive ? 'white' : 'var(--darkblue)',
-                border: isSecuritySettingsActive ? '2px solid var(--darkblue)' : '2px solid transparent',
-              }}>
+                onClick={ () => navigate('/settings/security') }
+                style={{ 
+                    backgroundColor: isSecuritySettingsActive ? 'var(--yellow)' : 'transparent',
+                    color: isSecuritySettingsActive ? 'white' : 'var(--darkblue)',
+                    border: isSecuritySettingsActive ? '2px solid var(--darkblue)' : '2px solid transparent',
+                }}>
                 Security
             </p>
             <p className="settings-nav-logout" onClick={handleLogout}>Log out</p>
@@ -163,20 +165,15 @@ function SettingsPage() {
           </div>
           <div className="settings-info-box">
             <div className="settings-box-header">
-              <p className="settings-header-title">Personal Information</p>
-              <button className="edit-profile-btn" onClick={() => setOpenInfoModal(true)} >
-                <EditIcon /> Edit Info
-              </button>
+              <p className="settings-header-title">Security</p>
             </div>
             <div style={{ flex: '1', textAlign: 'center', borderRight: '1px solid lightgray', paddingRight: '2rem' }}>
             </div>
 
             {/* Right - Info and Buttons */}
             <div className='settings-info-content'>
-              <p style={{ color: 'var(--darkblue)', fontSize: "20px" }}><strong style={{ fontWeight: 600 }}>Name:</strong> {student.name}</p>
-              <p style={{ color: 'var(--darkblue)', fontSize: "20px" }}><strong style={{ fontWeight: 600 }}>Course:</strong> {student.course}</p>
-              <p style={{ color: 'var(--darkblue)', fontSize: "20px" }}><strong style={{ fontWeight: 600 }}>Contact:</strong> {student.contactNumber}</p>
-              <p style={{ color: 'var(--darkblue)', fontSize: "20px" }}><strong style={{ fontWeight: 600 }}>Email:</strong> {student.email}</p>
+                <p className="password-display"><strong style={{ fontWeight: 600 }}>Password:</strong> <p style={{ fontSize: "30px", color: "grey"}}>{'••••••••'}</p></p>
+                <IconButton onClick={() => setOpenPasswordModal(true)} className='change-pass-bttn'><LockIcon /> Change Password</IconButton>
             </div>
           </div>
         </div>
@@ -293,97 +290,6 @@ function SettingsPage() {
       </Modal>
 
 
-      {/* Information Modal */}
-      <Modal open={openInfoModal} onClose={() => setOpenInfoModal(false)}>
-        <Box sx={{
-          backgroundColor: 'white',
-          padding: '2rem',
-          borderRadius: '20px',
-          margin: 'auto',
-          marginTop: '10vh',
-          maxWidth: '420px',
-          width: '90%',
-          boxShadow: 24,
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '1.2rem',
-          alignItems: 'center'
-        }}>
-          <h2 style={{ color: 'var(--darkblue)', marginBottom: '0.5rem' }}>Edit Information</h2>
-
-          <input
-            id="name"
-            placeholder="Name"
-            value={student.name}
-            onChange={handleInputChange}
-            style={{
-              width: '100%',
-              padding: '10px 12px',
-              borderRadius: '10px',
-              border: '1px solid #ccc',
-              fontSize: '14px'
-            }}
-          />
-          <input
-            id="course"
-            placeholder="Course"
-            value={student.course}
-            onChange={handleInputChange}
-            style={{
-              width: '100%',
-              padding: '10px 12px',
-              borderRadius: '10px',
-              border: '1px solid #ccc',
-              fontSize: '14px'
-            }}
-          />
-          <input
-            id="contactNumber"
-            placeholder="Contact Number"
-            value={student.contactNumber}
-            onChange={handleInputChange}
-            style={{
-              width: '100%',
-              padding: '10px 12px',
-              borderRadius: '10px',
-              border: '1px solid #ccc',
-              fontSize: '14px'
-            }}
-          />
-          <input
-            id="email"
-            placeholder="Email"
-            value={student.email}
-            onChange={handleInputChange}
-            style={{
-              width: '100%',
-              padding: '10px 12px',
-              borderRadius: '10px',
-              border: '1px solid #ccc',
-              fontSize: '14px'
-            }}
-          />
-
-          <Box sx={{ display: 'flex', justifyContent: 'center', gap: '1rem', width: '100%' }}>
-            <Button
-              onClick={() => { handleSaveChanges(); setOpenInfoModal(false); }}
-              variant="contained"
-              sx={{ backgroundColor: '#06D6A0', '&:hover': { backgroundColor: '#04b886' }, borderRadius: '10px', minWidth: '100px' }}
-            >
-              Save
-            </Button>
-            <Button
-              onClick={() => setOpenInfoModal(false)}
-              variant="outlined"
-              sx={{ color: '#EF476F', borderColor: '#EF476F', '&:hover': { borderColor: '#d03a5a', backgroundColor: '#fce8ec' }, borderRadius: '10px', minWidth: '100px' }}
-            >
-              Cancel
-            </Button>
-          </Box>
-        </Box>
-      </Modal>
-
-
       {/* Password Modal */}
       <Modal open={openPasswordModal} onClose={() => setOpenPasswordModal(false)}>
         <Box sx={{
@@ -478,4 +384,4 @@ function SettingsPage() {
   );
 }
 
-export default SettingsPage;
+export default SecuritySettings;

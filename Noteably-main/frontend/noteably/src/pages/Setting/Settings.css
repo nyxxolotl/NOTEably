@@ -61,10 +61,27 @@
   height: 355px;
 }
 
+.settings-info-box {
+  border-radius: 30px;
+  background-color: white;
+  border: 1px solid var(--darkblue);
+  width: 640px;
+  height: 355px;
+}
+
 .settings-box-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-bottom: var(--darkblue) 1px solid;
+  padding: 20px 30px;
+}
+
+.settings-info-content {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 20px 30px;
 }
 
 .settings-box.nav {
@@ -316,4 +333,49 @@
 
 .logout-button:hover {
   background-color: #D63D63;
+}
+
+.update-profile-bttn {
+  margin-top: 10px;
+  background-color: var(--red) !important;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: white !important;
+  border: var(--darkblue) 2px solid !important;
+  box-shadow: 0px 2px 0px 0px #ccc;
+  transition: all 0.3s ease !important;
+}
+
+.update-profile-bttn:hover {
+  background-color: var(--orange) !important;
+  transform: scale(1.1);
+}
+
+.change-pass-bttn {
+  margin-top: 10px;
+  background-color: var(--blue) !important;
+  border: none;
+  width: 200px;
+  height: 40px;
+  border-radius: 30px !important;
+  color: white !important;
+  border: var(--darkblue) 2px solid !important;
+  box-shadow: 0px 2px 0px 0px #ccc;
+  transition: all 0.3s ease !important;
+  font-size: 18px !important;
+}
+
+.change-pass-bttn:hover {
+  background-color: var(--green) !important;
+  transform: scale(1.05);
+}
+
+.password-display {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 20px;
+  color: var(--darkblue);
 }
