@@ -172,15 +172,11 @@ const ToDoListWidget = () => {
                     className="todo-checkbox"
                   />
 
-                  <p className={`todo-widget-title ${item.completed ? "done" : ""}`}>
+                  <p className={`todo-w-title ${item.completed ? "done" : ""}`}>
                     {item.title}
                   </p>
                 </div>
-{/* 
-                <div className="todo-actions">
-                  <button onClick={() => openEditModal(item)} className="edit-btn">✏️</button>
-                  <button onClick={() => deleteToDoItem(item.toDoListID)} className="delete-btn">🗑️</button>
-                </div> */}
+
               </div>
             );
           })

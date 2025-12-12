@@ -125,18 +125,23 @@ function ToDoList() {
     setEditModalOpen(true);
   };
 
-  const confirmUpdateTask = async () => {
-    await axiosRequest({
-      method: "put",
-      url: `${apiUrl}/updateList/${selectedItem.toDoListID}`,
-      data: { ...editData, studentId, completed: selectedItem.completed },
-    });
+const confirmUpdateTask = async () => {
+  await axiosRequest({
+    method: "put",
+    url: `${apiUrl}/updateList/${selectedItem.toDoListID}`,
+    data: {
+      toDoListID: selectedItem.toDoListID,
+      studentId,
+      title: editData.title,
+      description: editData.description,
+      completed: selectedItem.completed,
+      scheduleId: selectedItem.scheduleId || null
+    },
+  });
 
-    setEditModalOpen(false);
-    fetchToDoItems();
-  };
-
-
+  setEditModalOpen(false);
+  fetchToDoItems();
+};
 
   return (
     <div className="todo-app">
@@ -232,27 +237,47 @@ function ToDoList() {
       {/* EDIT MODAL */}
       {editModalOpen && (
         <div className="modal-overlay">
-          <div className="modal">
-            <h3>Edit Task</h3>
+          <div className="todo-modal">
+            <p className="todo-header-title modal">Update Task</p>
 
-            <input
-              type="text"
-              value={editData.title}
-              onChange={(e) =>
-                setEditData({ ...editData, title: e.target.value })
-              }
-            />
+            <div className="todo-edit-form">
+              <div>
+              <label>Title</label>
+              <input
+                type="text"
+                className="todo-edit-title-input"
+                value={editData.title}
+                onChange={(e) =>
+                  setEditData({ ...editData, title: e.target.value })
+                }
+              />
+              </div>
 
-            <textarea
-              value={editData.description}
-              onChange={(e) =>
-                setEditData({ ...editData, description: e.target.value })
-              }
-            />
+              <div>
+              <label>Description</label>
+              <textarea
+                className="todo-edit-description-input"
+                value={editData.description}
+                onChange={(e) =>
+                  setEditData({ ...editData, description: e.target.value })
+                }
+              />
+              </div>
+            </div>
 
-            <div className="modal-actions">
-              <button onClick={() => setEditModalOpen(false)}>Cancel</button>
-              <button onClick={confirmUpdateTask}>Update</button>
+            <div className="todo-modal-actions">
+              <button
+                onClick={() => setEditModalOpen(false)}
+                className="notes-cancel-button"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={confirmUpdateTask}
+                className="notes-save-button"
+              >
+                Update
+              </button>
             </div>
           </div>
         </div>
@@ -262,44 +287,50 @@ function ToDoList() {
       {/* Create Modal */}
       {modalOpen && (
         <div className="modal-overlay">
-          <div className="modal">
-            <h3>Create Task</h3>
+          <div className="todo-modal">
+            <p className="todo-header-title">Create Task</p>
 
-            <input
-              placeholder="Title"
-              value={formData.title}
-              onChange={(e) =>
-                setFormData({ ...formData, title: e.target.value })
-              }
-            />
+            <div className="todo-edit-form">
+              <div>
+              <label>Title</label>
+              <input
+                className="todo-edit-title-input"
+                placeholder="Title"
+                value={formData.title}
+                onChange={(e) =>
+                  setFormData({ ...formData, title: e.target.value })
+                }
+              />
+              </div>
 
-            <textarea
-              placeholder="Description"
-              value={formData.description}
-              onChange={(e) =>
-                setFormData({ ...formData, description: e.target.value })
-              }
-            />
+              <div>
+              <label>Description</label>
+              <textarea
+                className="todo-edit-description-input"
+                placeholder="Description"
+                value={formData.description}
+                onChange={(e) =>
+                  setFormData({ ...formData, description: e.target.value })
+                }
+              />
+              </div>
+            </div>
 
-            <select
-              value={formData.scheduleId}
-              onChange={(e) =>
-                setFormData({ ...formData, scheduleId: e.target.value })
-              }
-            >
-              <option value="">No schedule</option>
-              {schedules.map((s) => (
-                <option key={s.scheduleID} value={s.scheduleID}>
-                  {s.title}
-                </option>
-              ))}
-            </select>
 
-            <div className="modal-actions">
-              <button onClick={() => setModalOpen(false)}>
+            <div className="todo-modal-actions">
+              <button
+                onClick={() => setEditModalOpen(false)}
+                className="notes-cancel-button"
+              >
                 Cancel
               </button>
-              <button onClick={addTask}>Create</button>
+              <button
+                onClick={addTask}
+                className="notes-save-button"
+              >
+                Create
+              </button>
+
             </div>
           </div>
         </div>
@@ -308,18 +339,21 @@ function ToDoList() {
       {/* Delete Confirm */}
       {confirmDelete && (
         <div className="modal-overlay">
-          <div className="modal">
-            <p>Delete this task?</p>
-            <div className="modal-actions">
+          <div className="todo-modal delete">
+            <p className="todo-header-title modal">Delete this task?</p>
+            <div className="todo-modal-actions delete">
               <button
-                className="danger"
+                className="notes-cancel-button"
                 onClick={() =>
                   deleteTask(confirmDelete.toDoListID)
                 }
               >
                 Delete
               </button>
-              <button onClick={() => setConfirmDelete(null)}>
+              <button
+                onClick={() => setConfirmDelete(null)}
+                className="notes-save-button"
+              >
                 Cancel
               </button>
             </div>

@@ -1,3 +1,7 @@
+label {
+  color: var(--darkblue) !important;
+}
+
 .todo-app {
     display: flex;
     flex-direction: column;
@@ -41,6 +45,11 @@
   font-weight: 600;
   color: var(--darkblue);
   margin-bottom: 5px;
+}
+
+.todo-header-title.modal {
+  margin-bottom: 20px;
+  text-align: center;
 }
 
 .todo-container {
@@ -103,26 +112,83 @@
   background: rgba(0, 0, 0, 0.4);
 }
 
-.modal {
+.todo-modal {
   background: white;
-  padding: 24px;
-  max-width: 400px;
+  padding: 30px 50px;
+  width: 600px;
   margin: 10% auto;
   border-radius: 12px;
 }
 
-.modal input,
-.modal textarea,
-.modal select {
+.todo-modal.delete {
+  width: 400px;
+}
+
+.todo-modal-actions.delete {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.todo-modal input,
+.todo-modal textarea,
+.todo-modal select {
   width: 100%;
   margin-bottom: 12px;
 }
 
-.modal-actions {
+.todo-modal-actions {
   display: flex;
   justify-content: flex-end;
   gap: 8px;
 }
+
+.todo-edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+}
+
+.todo-edit-form label {
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: #333;
+}
+
+.todo-edit-form input,
+.todo-edit-form textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 2px solid var(--darkblue);
+    border-radius: 10px;
+    font-size: 14px;
+    outline: none;
+    transition: 0.2s ease;
+    resize: none;
+    margin-top: 5px;
+}
+
+/* Focus effect */
+.todo-edit-form input:focus,
+.todo-edit-form textarea:focus {
+    border-color: var(--blue);
+    box-shadow: 0 0 5px rgba(0, 90, 200, 0.25);
+}
+
+/* Title input */
+.todo-edit-title-input {
+    height: 40px;
+}
+
+/* Description textarea: bigger height */
+.todo-edit-description-input {
+    height: 90px;
+}
+
+/* .todo-delete-caption {
+  color: var(--darkblue);
+} */
 
 .danger {
   background: #ef476f;
