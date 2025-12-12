@@ -1,13 +1,31 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { Delete } from "@mui/icons-material";
+import { Checkbox } from '@mui/material';
 import { axiosRequest } from "../../services/studentService";
-import "./ToDoList.css";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { Menu, MenuItem } from "@mui/material";
 
-const apiUrl = "http://localhost:8080/api/TodoList";
+
+import "./ToDoList.css";
 
 function ToDoList() {
   const fullStudentInfo = localStorage.getItem("fullStudentInfo");
   let studentId = null;
+
+  const apiUrl = "http://localhost:8080/api/TodoList";
+  const [openMenuId, setOpenMenuId] = useState(null);
+
+  const [menuAnchor, setMenuAnchor] = useState(null);
+
+  const handleMenuOpen = (event, id) => {
+    setMenuAnchor(event.currentTarget);
+    setOpenMenuId(id);
+  };
+
+  const handleMenuClose = () => {
+    setMenuAnchor(null);
+    setOpenMenuId(null);
+  };
+
 
   if (fullStudentInfo) {
     try {
@@ -79,6 +97,47 @@ function ToDoList() {
         .includes(searchTerm.toLowerCase())
   );
 
+  const handleCheckboxToggle = async (taskId) => {
+    const updatedItems = toDoItems.map(item =>
+      item.toDoListID === taskId ? { ...item, completed: !item.completed } : item
+    );
+
+    setToDoItems(updatedItems);
+
+    const itemToUpdate = toDoItems.find(item => item.toDoListID === taskId);
+
+    if (itemToUpdate) {
+      await axiosRequest({
+        method: "put",
+        url: `${apiUrl}/updateList/${taskId}`,
+        data: { ...itemToUpdate, completed: !itemToUpdate.completed },
+      });
+    }
+  };
+
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [editData, setEditData] = useState({ title: "", description: "" });
+  const [selectedItem, setSelectedItem] = useState(null);
+
+  const openEditModal = (item) => {
+    setSelectedItem(item);
+    setEditData({ title: item.title, description: item.description });
+    setEditModalOpen(true);
+  };
+
+  const confirmUpdateTask = async () => {
+    await axiosRequest({
+      method: "put",
+      url: `${apiUrl}/updateList/${selectedItem.toDoListID}`,
+      data: { ...editData, studentId, completed: selectedItem.completed },
+    });
+
+    setEditModalOpen(false);
+    fetchToDoItems();
+  };
+
+
+
   return (
     <div className="todo-app">
       <div className="todo-header">
@@ -97,22 +156,108 @@ function ToDoList() {
         {filteredItems.length === 0 ? (
           <p className="empty-text">No tasks added yet</p>
         ) : (
-          filteredItems.map((item) => (
-            <div key={item.toDoListID} className="todo-item">
-              <div>
-                <p className="todo-title">{item.title}</p>
-                <p className="todo-desc">{item.description}</p>
-              </div>
-              <button
-                className="delete-btn"
-                onClick={() => setConfirmDelete(item)}
+          filteredItems.map((item, index) => {
+            const noteablyColors = ["#FEBD59", "#F04770", "#F78C6A", "#40D19A", "#108AB1"];
+            const randomColor = noteablyColors[index % noteablyColors.length];
+
+            return (
+              <div
+                key={item.toDoListID}
+                className={`todo-item ${item.completed ? "completed" : ""}`}
+                style={{
+                  backgroundColor: item.completed ? "#D3D3D3" : randomColor,
+                }}
               >
-                <Delete />
-              </button>
-            </div>
-          ))
+                <div className="todo-left">
+                  <Checkbox
+                    checked={item.completed}
+                    onChange={() => handleCheckboxToggle(item.toDoListID)}
+                    className="todo-checkbox"
+                  />
+
+                  <div className="todo-text-wrapper">
+                    <p className={`todo-title ${item.completed ? "done" : ""}`}>
+                      {item.title}
+                    </p>
+                    <p className={`todo-desc ${item.completed ? "done" : ""}`}>
+                      {item.description}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="todo-actions">
+                  <button
+                    className="todo-more-btn"
+                    onClick={(e) => handleMenuOpen(e, item.toDoListID)}
+                  >
+                    <MoreVertIcon />
+                  </button>
+
+                  <Menu
+                    anchorEl={menuAnchor}
+                    open={openMenuId === item.toDoListID}
+                    onClose={handleMenuClose}
+                    anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+                    transformOrigin={{ vertical: "top", horizontal: "right" }}
+                    PaperProps={{
+                      className: "options-dropdown todo"
+                    }}
+                  >
+                    <MenuItem
+                      className="edit-item"
+                      onClick={() => {
+                        openEditModal(item);
+                        setOpenMenuId(null);
+                      }}                    >
+                      Edit
+                    </MenuItem>
+
+                    <MenuItem
+                      className="delete-item"
+                      onClick={() => {
+                        setConfirmDelete(item);
+                        setOpenMenuId(null);
+                      }}                    >
+                      Delete
+                    </MenuItem>
+                  </Menu>
+                </div>
+
+              </div>
+            );
+          })
         )}
       </div>
+
+      {/* EDIT MODAL */}
+      {editModalOpen && (
+        <div className="modal-overlay">
+          <div className="modal">
+            <h3>Edit Task</h3>
+
+            <input
+              type="text"
+              value={editData.title}
+              onChange={(e) =>
+                setEditData({ ...editData, title: e.target.value })
+              }
+            />
+
+            <textarea
+              value={editData.description}
+              onChange={(e) =>
+                setEditData({ ...editData, description: e.target.value })
+              }
+            />
+
+            <div className="modal-actions">
+              <button onClick={() => setEditModalOpen(false)}>Cancel</button>
+              <button onClick={confirmUpdateTask}>Update</button>
+            </div>
+          </div>
+        </div>
+      )}
+
 
       {/* Create Modal */}
       {modalOpen && (

@@ -62,14 +62,14 @@
 }
 
 /* Title text */
-.todo-title {
+.todo-widget-title {
   margin-left: 8px;
   color: white;
   font-size: 20px;
   font-weight: 500;
 }
 
-.todo-title.done {
+.todo-widget-title.done {
   text-decoration: line-through;
   color: grey;
 }

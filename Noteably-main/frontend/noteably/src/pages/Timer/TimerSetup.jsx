@@ -315,17 +315,19 @@ const handleStart = () => {
                     anchorEl={menuAnchor}
                     open={openMenuId === timer.timerID}
                     onClose={handleMenuClose}
-                    className="timer-more"
+                    PaperProps={{
+                      className: "options-dropdown timer"
+                    }}
                   >
                     <MenuItem
-                      className="menu-edit"
+                      className="edit-item"
                       onClick={() => { handleEditClick(timer); handleMenuClose(); }}
                     >
                       Edit
                     </MenuItem>
 
                     <MenuItem
-                      className="menu-delete"
+                      className="delete-item"
                       onClick={() => { handleDeleteClick(timer.timerID); handleMenuClose(); }}
                     >
                       Delete

@@ -172,7 +172,7 @@ const ToDoListWidget = () => {
                     className="todo-checkbox"
                   />
 
-                  <p className={`todo-title ${item.completed ? "done" : ""}`}>
+                  <p className={`todo-widget-title ${item.completed ? "done" : ""}`}>
                     {item.title}
                   </p>
                 </div>
