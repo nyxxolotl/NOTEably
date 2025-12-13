@@ -73,8 +73,15 @@ function ToDoList() {
     await axiosRequest({
       method: "post",
       url: `${apiUrl}/postListRecord`,
-      data: { ...formData, studentId, completed: false },
+      data: {
+        title: formData.title,
+        description: formData.description,
+        studentId,
+        completed: false,
+        schedule: formData.schedule ?? null,
+      },
     });
+
     setFormData({ title: "", description: "", scheduleId: "" });
     setModalOpen(false);
     fetchToDoItems();
@@ -98,25 +105,30 @@ function ToDoList() {
   );
 
   const handleCheckboxToggle = async (taskId) => {
-    const updatedItems = toDoItems.map(item =>
-      item.toDoListID === taskId ? { ...item, completed: !item.completed } : item
+    const item = toDoItems.find(i => i.toDoListID === taskId);
+    if (!item) return;
+
+    // optimistic UI
+    setToDoItems(prev =>
+      prev.map(i =>
+        i.toDoListID === taskId
+          ? { ...i, completed: !i.completed }
+          : i
+      )
     );
 
-    setToDoItems(updatedItems);
-
-    const itemToUpdate = toDoItems.find(item => item.toDoListID === taskId);
-
-    if (itemToUpdate) {
-      await axiosRequest({
-        method: "put",
-        url: `${apiUrl}/putList/${taskId}`,
-        data: {
-          ...itemToUpdate,
-          completed: !itemToUpdate.completed,
-        },
-      });
-    }
+    await axiosRequest({
+      method: "put",
+      url: `${apiUrl}/putList/${taskId}`,
+      data: {
+        title: item.title,
+        description: item.description,
+        completed: !item.completed,
+        schedule: item.schedule ?? null,
+      },
+    });
   };
+
 
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [editData, setEditData] = useState({ title: "", description: "" });
@@ -136,14 +148,13 @@ function ToDoList() {
         title: editData.title,
         description: editData.description,
         completed: selectedItem.completed,
-        scheduleId: selectedItem.scheduleId ?? null,
+        schedule: selectedItem.schedule ?? null,
       },
     });
 
     setEditModalOpen(false);
     fetchToDoItems();
   };
-
 
   return (
     <div className="todo-app">

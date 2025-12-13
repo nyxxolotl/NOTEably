@@ -18,6 +18,7 @@ public class ToDoListEntity {
 	private String title;
 	private String description;
 	private int studentId;
+  private boolean completed;
 
 
 	@ManyToOne
@@ -47,6 +48,11 @@ public class ToDoListEntity {
     public void setSchedule(ScheduleEntity sched) {
 		this.sched = sched;
 	}
+
+  public void setCompleted(boolean completed) {
+    this.completed = completed;
+  }
+
 	
 	public int getToDoListID() {
 		return todolistID;
@@ -60,7 +66,12 @@ public class ToDoListEntity {
 		return description;
 	}
 
-    public ScheduleEntity getSchedule() {
+  public ScheduleEntity getSchedule() {
 		return sched;
 	}
+
+  public boolean isCompleted() {
+    return completed;
+  }
+
 }

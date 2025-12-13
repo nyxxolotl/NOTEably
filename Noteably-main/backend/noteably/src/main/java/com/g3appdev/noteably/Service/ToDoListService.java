@@ -39,17 +39,22 @@ public ToDoListEntity postToDoListRecord(ToDoListEntity todolist) {
         return tdlrepo.findByStudentId(studentId);
     }
 	
-	// Update
-	public ToDoListEntity putToDoListDetails(int id, ToDoListEntity newToDoListDetails) {
-		return tdlrepo.findById(id)
-			.map(todolist -> {
-				todolist.setTitle(newToDoListDetails.getTitle());
-				todolist.setDescription(newToDoListDetails.getDescription());
-                todolist.setSchedule(newToDoListDetails.getSchedule());
-				return tdlrepo.save(todolist);
-			}).orElseThrow(() -> new NoSuchElementException("ToDoList not found for id: " + id));
-	}
-	
+  // Update
+  public ToDoListEntity putToDoListDetails(int id, ToDoListEntity newToDoListDetails) {
+      return tdlrepo.findById(id)
+          .map(todolist -> {
+              todolist.setTitle(newToDoListDetails.getTitle());
+              todolist.setDescription(newToDoListDetails.getDescription());
+              todolist.setCompleted(newToDoListDetails.isCompleted());
+              todolist.setSchedule(newToDoListDetails.getSchedule());
+
+              return tdlrepo.save(todolist);
+          })
+          .orElseThrow(() ->
+              new NoSuchElementException("ToDoList not found for id: " + id)
+          );
+  }
+
 	// Delete
 	public String deleteTodoList(int id) {
 		tdlrepo.deleteById(id);

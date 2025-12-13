@@ -96,8 +96,8 @@
   overflow-y: auto;
   margin: 0 auto;
   scrollbar-color: #D0D5E2 transparent; 
-  overflow-x: hidden; 
-  scrollbar-width: thin; 
+  overflow-x: hidden;
+  scrollbar-width: thin;
 }
 
 /* Folder Widget */
@@ -155,4 +155,5 @@
   overflow-x: hidden; 
   scrollbar-width: thin; 
   height: 160px;
+  padding: 5px;
 }
