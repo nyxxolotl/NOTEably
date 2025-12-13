@@ -40,10 +40,10 @@
 
 .modal-content {
     background-color: white;
-    padding: 20px;
-    border-radius: 10px;
+    padding: 30px;
+    border-radius: 20px;
     text-align: center;
-    width: 300px;
+    width: 400px;
     z-index: 2001;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border: var(--darkblue) 1px solid;
@@ -70,19 +70,6 @@
     cursor: pointer;
     margin-bottom: 10px;
 }
-
-.confirm-modal {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    top: 50%;
-    left: 55%;
-    transform: translate(-50%, -50%);
-    width: 500px; /* Adjust width as needed */
-    z-index: 2001; /* Ensure it appears above other elements */
-}
-
 
 .confirm-content {
     background: white;
@@ -149,4 +136,169 @@
 
 .cancel-btn:hover {
     background-color: var(--orange);
+}
+
+.dialog-title {
+  margin-bottom: 30px;
+  text-align: center;
+  color: var(--darkblue);
+}
+
+.dialog-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.dialog-label {
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--darkblue);
+}
+
+.dialog-input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1.5px solid #ccc;
+  font-size: 14px;
+  outline: none;
+}
+
+.dialog-input:focus {
+  border-color: #118AB2;
+}
+
+.time-grid {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.time-field {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.time-input {
+  width: 80px;
+  text-align: center;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.btn {
+  padding: 10px 18px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.btn.cancel {
+  background: #EF476F;
+  color: white;
+}
+
+.btn.save {
+  background: #118AB2;
+  color: white;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+@keyframes pop {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.confirm-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.confirm-dialog {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  max-width: 380px;
+  width: 100%;
+  animation: pop 0.2s ease-out;
+}
+
+.confirm-content {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.confirm-icon {
+  width: 60px;
+  height: auto;
+}
+
+.confirm-text {
+  font-size: 16px;
+  font-weight: 500;
+  margin: 0;
+  color: #333;
+}
+
+.confirm-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.confirm-btn {
+  padding: 8px 18px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  color: white;
+}
+
+.confirm-btn.ok {
+  background-color: #06D6A0;
+}
+
+.confirm-btn.cancel {
+  background-color: #EF476F;
+}
+
+.confirm-btn:hover {
+  opacity: 0.9;
+}
+
+@keyframes pop {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }

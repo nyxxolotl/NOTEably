@@ -276,25 +276,10 @@
     transform: scale(1.05);
 }
 
-.confirm-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 2000;
-}
-
 
 .confirm-content {
     background: white;
-    border: 1px solid var(--darkblue); 
+    border: 1px solid var(--darkblue) !important; 
     padding: 30px;
     border-radius: 30px;
     animation: slideIn 0.3s ease-out;

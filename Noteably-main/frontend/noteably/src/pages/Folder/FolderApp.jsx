@@ -236,7 +236,7 @@ function FolderApp() {
             )}
 
             {showDeleteConfirm && (
-                <div className="confirm-modal">
+                <div className="modal-overlay">
                     <div className="confirm-content">
                         <div className="dialog-content-with-image">
                             <img src="./ASSETS/popup-delete.png" alt="Delete Icon" className="dialog-icon" />
