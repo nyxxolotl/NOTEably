@@ -109,7 +109,13 @@ label {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
 }
 
 .todo-modal {
@@ -118,6 +124,7 @@ label {
   width: 600px;
   margin: 10% auto;
   border-radius: 12px;
+  border: var(--darkblue) 1px solid;
 }
 
 .todo-modal.delete {

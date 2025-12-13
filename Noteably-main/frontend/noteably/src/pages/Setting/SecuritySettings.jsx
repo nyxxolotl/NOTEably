@@ -10,14 +10,6 @@ import EditIcon from '@mui/icons-material/EditRounded';
 import './Settings.css';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-const AVATAR_OPTIONS = [
-  { name: 'Red', path: '/ASSETS/Profile_red.png' },
-  { name: 'Orange', path: '/ASSETS/Profile_orange.png' },
-  { name: 'Yellow', path: '/ASSETS/Profile_yellow.png' },
-  { name: 'Green', path: '/ASSETS/Profile_green.png' },
-  { name: 'Blue', path: '/ASSETS/Profile_blue.png' },
-];
-
 function SecuritySettings() {
   const location = useLocation();
   const [student, setStudent] = useState({
@@ -61,6 +53,17 @@ function SecuritySettings() {
   const handleInputChange = (e) => {
     const { id, value } = e.target;
     setStudent(prev => ({ ...prev, [id]: value }));
+  };
+
+  
+  const handleOpenProfileModal = () => {
+    setOpenProfileModal(true);
+  };
+
+  const handleCloseProfileModal = () => {
+    setUploadedFile(null);
+    setUploadedImageUrl(null);
+    setOpenProfileModal(false);
   };
 
   const handleSaveChanges = async () => {
@@ -180,114 +183,67 @@ function SecuritySettings() {
       </div>
 
       {/* Profile Modal */}
-      <Modal open={openProfileModal} onClose={() => setOpenProfileModal(false)}>
-        <Box sx={{
-          background: 'white', padding: '2rem', borderRadius: '20px',
-          margin: 'auto', marginTop: '10vh', maxWidth: '500px', boxShadow: 24, textAlign: 'center'
-        }}>
-          <h2 style={{ color: '#118AB2' }}>Change Profile Picture</h2>
+      {openProfileModal && (
+        <div className="modal-overlay" onClick={handleCloseProfileModal}>
+          <div
+            className="custom-modal"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h2 style={{ color: 'var(--darkblue)', marginBottom: '20px' }}>
+              Change Profile Picture
+            </h2>
 
-          {/* Avatars */}
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', justifyContent: 'center', marginBottom: '1rem' }}>
-            {AVATAR_OPTIONS.map((avatar) => (
-              <div
-                key={avatar.name}
-                onClick={() => {
-                  setStudent(prev => ({ ...prev, profilePicture: avatar.path }));
-                  setUploadedFile(null);
-                  setUploadedImageUrl(null);
-                }}
-                style={{
-                  borderRadius: '50%', padding: '5px',
-                  border: student.profilePicture === avatar.path ? '3px solid #118AB2' : '2px solid lightgray',
-                  cursor: 'pointer', position: 'relative'
-                }}
-              >
-                <img src={avatar.path} alt={avatar.name} style={{ width: '70px', height: '70px', borderRadius: '50%' }} />
-              </div>
-            ))}
-
-            {/* Uploaded Image (if exists) */}
-            {uploadedImageUrl && (
-              <div
-                onClick={() => {
-                  setStudent(prev => ({ ...prev, profilePicture: uploadedImageUrl }));
-                }}
-                style={{
-                  borderRadius: '50%', padding: '5px',
-                  border: student.profilePicture === uploadedImageUrl ? '3px solid #118AB2' : '2px solid lightgray',
-                  cursor: 'pointer', position: 'relative'
-                }}
-              >
-                <img src={uploadedImageUrl} alt="Uploaded" style={{ width: '70px', height: '70px', borderRadius: '50%' }} />
-                <IconButton
-                  size="small"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setUploadedFile(null);
-                    setUploadedImageUrl(null);
-                  }}
-                  sx={{
-                    position: 'absolute', top: '-8px', right: '-8px',
-                    backgroundColor: 'red', color: 'white', width: '20px', height: '20px'
-                  }}
-                >
-                  ×
-                </IconButton>
-              </div>
-            )}
-          </div>
-
-          {/* Plus upload button */}
-          <input type="file" id="upload-file" hidden accept="image/*" onChange={(e) => {
-            const file = e.target.files[0];
-            if (file) {
-              setUploadedFile(file);
-              const url = URL.createObjectURL(file);
-              setUploadedImageUrl(url);
-              setStudent(prev => ({ ...prev, profilePicture: url })); // select uploaded
-            }
-          }} />
-          <label htmlFor="upload-file">
-            <IconButton component="span" style={{ backgroundColor: '#06D6A0', color: 'white', marginBottom: '1rem' }}>
-              <AddIcon />
-            </IconButton>
-          </label>
-          <p style={{ fontSize: '0.8rem', color: '#666' }}>Upload your own picture</p>
-
-          {/* Save and Cancel */}
-          <div style={{ marginTop: '1rem', display: 'flex', gap: '1rem', justifyContent: 'center' }}>
-            <Button
-              variant="contained"
-              color="success"
-              onClick={async () => {
-                try {
-                  if (uploadedFile) {
-                    const { id } = JSON.parse(localStorage.getItem('fullStudentInfo'));
-                    const response = await uploadProfilePicture(id, uploadedFile);
-                    setStudent(prev => ({ ...prev, profilePicture: response.profilePicture }));
-                  }
-                  await handleSaveChanges(); // save changes
-                  setUploadedFile(null);
-                  setUploadedImageUrl(null);
-                  setOpenProfileModal(false);
-                } catch (error) {
-                  console.error('Error saving profile picture:', error);
+            {/* Upload */}
+            <input
+              type="file"
+              id="upload-file"
+              hidden
+              accept="image/*"
+              onChange={(e) => {
+                const file = e.target.files[0];
+                if (file) {
+                  setUploadedFile(file);
+                  const url = URL.createObjectURL(file);
+                  setUploadedImageUrl(url);
+                  setStudent(prev => ({ ...prev, profilePicture: url }));
                 }
               }}
-            >
-              Save
-            </Button>
-            <Button variant="outlined" color="error" onClick={() => {
-              setUploadedFile(null);
-              setUploadedImageUrl(null);
-              setOpenProfileModal(false);
-            }}>
-              Cancel
-            </Button>
+            />
+            <label htmlFor="upload-file" className="upload-btn">
+              {uploadedImageUrl ? (
+                <img
+                  src={uploadedImageUrl}
+                  alt="Uploaded preview"
+                  className="upload-preview"
+                />
+              ) : (
+                <AddIcon />
+              )}
+            </label>
+
+            {/* Actions */}
+            <div className="modal-actions">
+              <button className="cancel-bttn" onClick={handleCloseProfileModal}>
+                Cancel
+              </button>
+              <button
+                className='save-bttn'
+                onClick={async () => {
+                  if (uploadedFile) {
+                    const { id } = JSON.parse(localStorage.getItem('fullStudentInfo'));
+                    const res = await uploadProfilePicture(id, uploadedFile);
+                    setStudent(prev => ({ ...prev, profilePicture: res.profilePicture }));
+                  }
+                  await handleSaveChanges();
+                  handleCloseProfileModal();
+                }}
+              >
+                Save Changes
+              </button>
+            </div>
           </div>
-        </Box>
-      </Modal>
+        </div>
+      )}
 
 
       {/* Password Modal */}

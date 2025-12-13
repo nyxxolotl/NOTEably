@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { getImageUrl, uploadProfilePicture, axiosRequest } from '../../services/studentService';
-import { Box, Modal, IconButton, Button } from '@mui/material';
+import { Box, IconButton, Button } from '@mui/material';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import LockIcon from '@mui/icons-material/Lock';
 import AddIcon from '@mui/icons-material/Add'; // For plus icon
@@ -9,14 +9,6 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import EditIcon from '@mui/icons-material/EditRounded';
 import './Settings.css';
 import { useNavigate, useLocation } from 'react-router-dom';
-
-const AVATAR_OPTIONS = [
-  { name: 'Red', path: '/ASSETS/Profile_red.png' },
-  { name: 'Orange', path: '/ASSETS/Profile_orange.png' },
-  { name: 'Yellow', path: '/ASSETS/Profile_yellow.png' },
-  { name: 'Green', path: '/ASSETS/Profile_green.png' },
-  { name: 'Blue', path: '/ASSETS/Profile_blue.png' },
-];
 
 function SettingsPage() {
   const location = useLocation();
@@ -61,6 +53,22 @@ function SettingsPage() {
   const handleInputChange = (e) => {
     const { id, value } = e.target;
     setStudent(prev => ({ ...prev, [id]: value }));
+  };
+
+  const handleOpenProfileModal = () => {
+    setOpenProfileModal(true);
+  };
+
+  const handleCloseProfileModal = () => {
+    setUploadedFile(null);
+    setUploadedImageUrl(null);
+    setOpenProfileModal(false);
+  };
+
+  const closeInfoModal = () => setOpenInfoModal(false);
+  const closePasswordModal = () => {
+    setStudent(prev => ({ ...prev, newPassword: '', confirmPassword: '' }));
+    setOpenPasswordModal(false);
   };
 
   const handleSaveChanges = async () => {
@@ -153,12 +161,12 @@ function SettingsPage() {
         <div>
           <div className="settings-box profile">
             <div className="settings-divider">
-            <img src={getImageUrl(student.profilePicture)} alt="Profile" className="settings-profile-image" />
-            <div className="settings-divider2">
-              <h2 style={{ color: 'var(--darkblue)' }}>{student.name}</h2>
-              <p>ID: {student.studentId}</p>
-              <IconButton onClick={() => setOpenProfileModal(true)} className="update-profile-bttn"><PhotoCamera /></IconButton>
-            </div>
+              <img src={getImageUrl(student.profilePicture)} alt="Profile" className="settings-profile-image" />
+              <div className="settings-divider2">
+                <h2 style={{ color: 'var(--darkblue)' }}>{student.name}</h2>
+                <p>ID: {student.studentId}</p>
+                <IconButton onClick={handleOpenProfileModal} className="update-profile-bttn"><PhotoCamera /></IconButton>
+              </div>
             </div>
           </div>
           <div className="settings-info-box">
@@ -175,7 +183,7 @@ function SettingsPage() {
             <div className='settings-info-content'>
               <p style={{ color: 'var(--darkblue)', fontSize: "20px" }}><strong style={{ fontWeight: 600 }}>Name:</strong> {student.name}</p>
               <p style={{ color: 'var(--darkblue)', fontSize: "20px" }}><strong style={{ fontWeight: 600 }}>Course:</strong> {student.course}</p>
-              <p style={{ color: 'var(--darkblue)', fontSize: "20px" }}><strong style={{ fontWeight: 600 }}>Contact:</strong> {student.contactNumber}</p>
+              <p style={{ color: 'var(--darkblue)', fontSize: "20px" }}><strong style={{ fontWeight: 600 }}>Contact No:</strong> {student.contactNumber}</p>
               <p style={{ color: 'var(--darkblue)', fontSize: "20px" }}><strong style={{ fontWeight: 600 }}>Email:</strong> {student.email}</p>
             </div>
           </div>
@@ -183,290 +191,133 @@ function SettingsPage() {
       </div>
 
       {/* Profile Modal */}
-      <Modal open={openProfileModal} onClose={() => setOpenProfileModal(false)}>
-        <Box sx={{
-          background: 'white', padding: '2rem', borderRadius: '20px',
-          margin: 'auto', marginTop: '10vh', maxWidth: '500px', boxShadow: 24, textAlign: 'center'
-        }}>
-          <h2 style={{ color: '#118AB2' }}>Change Profile Picture</h2>
+      {openProfileModal && (
+        <div className="modal-overlay" onClick={handleCloseProfileModal}>
+          <div
+            className="custom-modal"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h2 style={{ color: 'var(--darkblue)', marginBottom: '30px' }}>
+              Change Profile Picture
+            </h2>
 
-          {/* Avatars */}
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', justifyContent: 'center', marginBottom: '1rem' }}>
-            {AVATAR_OPTIONS.map((avatar) => (
-              <div
-                key={avatar.name}
-                onClick={() => {
-                  setStudent(prev => ({ ...prev, profilePicture: avatar.path }));
-                  setUploadedFile(null);
-                  setUploadedImageUrl(null);
-                }}
-                style={{
-                  borderRadius: '50%', padding: '5px',
-                  border: student.profilePicture === avatar.path ? '3px solid #118AB2' : '2px solid lightgray',
-                  cursor: 'pointer', position: 'relative'
-                }}
-              >
-                <img src={avatar.path} alt={avatar.name} style={{ width: '70px', height: '70px', borderRadius: '50%' }} />
-              </div>
-            ))}
-
-            {/* Uploaded Image (if exists) */}
-            {uploadedImageUrl && (
-              <div
-                onClick={() => {
-                  setStudent(prev => ({ ...prev, profilePicture: uploadedImageUrl }));
-                }}
-                style={{
-                  borderRadius: '50%', padding: '5px',
-                  border: student.profilePicture === uploadedImageUrl ? '3px solid #118AB2' : '2px solid lightgray',
-                  cursor: 'pointer', position: 'relative'
-                }}
-              >
-                <img src={uploadedImageUrl} alt="Uploaded" style={{ width: '70px', height: '70px', borderRadius: '50%' }} />
-                <IconButton
-                  size="small"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setUploadedFile(null);
-                    setUploadedImageUrl(null);
-                  }}
-                  sx={{
-                    position: 'absolute', top: '-8px', right: '-8px',
-                    backgroundColor: 'red', color: 'white', width: '20px', height: '20px'
-                  }}
-                >
-                  ×
-                </IconButton>
-              </div>
-            )}
-          </div>
-
-          {/* Plus upload button */}
-          <input type="file" id="upload-file" hidden accept="image/*" onChange={(e) => {
-            const file = e.target.files[0];
-            if (file) {
-              setUploadedFile(file);
-              const url = URL.createObjectURL(file);
-              setUploadedImageUrl(url);
-              setStudent(prev => ({ ...prev, profilePicture: url })); // select uploaded
-            }
-          }} />
-          <label htmlFor="upload-file">
-            <IconButton component="span" style={{ backgroundColor: '#06D6A0', color: 'white', marginBottom: '1rem' }}>
-              <AddIcon />
-            </IconButton>
-          </label>
-          <p style={{ fontSize: '0.8rem', color: '#666' }}>Upload your own picture</p>
-
-          {/* Save and Cancel */}
-          <div style={{ marginTop: '1rem', display: 'flex', gap: '1rem', justifyContent: 'center' }}>
-            <Button
-              variant="contained"
-              color="success"
-              onClick={async () => {
-                try {
-                  if (uploadedFile) {
-                    const { id } = JSON.parse(localStorage.getItem('fullStudentInfo'));
-                    const response = await uploadProfilePicture(id, uploadedFile);
-                    setStudent(prev => ({ ...prev, profilePicture: response.profilePicture }));
-                  }
-                  await handleSaveChanges(); // save changes
-                  setUploadedFile(null);
-                  setUploadedImageUrl(null);
-                  setOpenProfileModal(false);
-                } catch (error) {
-                  console.error('Error saving profile picture:', error);
+            {/* Upload */}
+            <input
+              type="file"
+              id="upload-file"
+              hidden
+              accept="image/*"
+              onChange={(e) => {
+                const file = e.target.files[0];
+                if (file) {
+                  setUploadedFile(file);
+                  const url = URL.createObjectURL(file);
+                  setUploadedImageUrl(url);
+                  setStudent(prev => ({ ...prev, profilePicture: url }));
                 }
               }}
-            >
-              Save
-            </Button>
-            <Button variant="outlined" color="error" onClick={() => {
-              setUploadedFile(null);
-              setUploadedImageUrl(null);
-              setOpenProfileModal(false);
-            }}>
-              Cancel
-            </Button>
-          </div>
-        </Box>
-      </Modal>
+            />
+            <label htmlFor="upload-file" className="upload-btn">
+              {uploadedImageUrl ? (
+                <img
+                  src={uploadedImageUrl}
+                  alt="Uploaded preview"
+                  className="upload-preview"
+                />
+              ) : (
+                <AddIcon />
+              )}
+            </label>
 
+            {/* Actions */}
+            <div className="modal-actions">
+              <button className="cancel-bttn" onClick={handleCloseProfileModal}>
+                Cancel
+              </button>
+              <button
+                className='save-bttn'
+                onClick={async () => {
+                  if (uploadedFile) {
+                    const { id } = JSON.parse(localStorage.getItem('fullStudentInfo'));
+                    const res = await uploadProfilePicture(id, uploadedFile);
+                    setStudent(prev => ({ ...prev, profilePicture: res.profilePicture }));
+                  }
+                  await handleSaveChanges();
+                  handleCloseProfileModal();
+                }}
+              >
+                Save Changes
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Information Modal */}
-      <Modal open={openInfoModal} onClose={() => setOpenInfoModal(false)}>
-        <Box sx={{
-          backgroundColor: 'white',
-          padding: '2rem',
-          borderRadius: '20px',
-          margin: 'auto',
-          marginTop: '10vh',
-          maxWidth: '420px',
-          width: '90%',
-          boxShadow: 24,
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '1.2rem',
-          alignItems: 'center'
-        }}>
-          <h2 style={{ color: 'var(--darkblue)', marginBottom: '0.5rem' }}>Edit Information</h2>
+      {openInfoModal && (
+        <div className="modal-overlay" onClick={closeInfoModal}>
+          <div className="custom-modal" onClick={(e) => e.stopPropagation()}>
+            <h2 style={{ color: 'var(--darkblue)', marginBottom: '30px' }}>Edit Information</h2>
+            <div className='input-group'>
+              <div className='name-input-row'>
+                <label>Name</label>
+                <input
+                  id="name"
+                  placeholder="Name"
+                  value={student.name}
+                  onChange={handleInputChange}
+                  className="custom-input"
+                />
+              </div>
+              <div className='course-input-row'>
+                <label>Course</label>
+                <input
+                  id="course"
+                  placeholder="Course"
+                  value={student.course}
+                  onChange={handleInputChange}
+                  className="custom-input"
+                />
+              </div>
+              <div className='contact-num-input-row'>
+                <label>Contact No.</label>
+                <input
+                  id="contactNumber"
+                  placeholder="Contact Number"
+                  value={student.contactNumber}
+                  onChange={handleInputChange}
+                  className="custom-input"
+                />
+              </div>
+              <div className='email-input-row'>
+                <label>Email</label>
+                <input
+                  id="email"
+                  placeholder="Email"
+                  value={student.email}
+                  onChange={handleInputChange}
+                  className="custom-input"
+                />
+              </div>
+            </div>
 
-          <input
-            id="name"
-            placeholder="Name"
-            value={student.name}
-            onChange={handleInputChange}
-            style={{
-              width: '100%',
-              padding: '10px 12px',
-              borderRadius: '10px',
-              border: '1px solid #ccc',
-              fontSize: '14px'
-            }}
-          />
-          <input
-            id="course"
-            placeholder="Course"
-            value={student.course}
-            onChange={handleInputChange}
-            style={{
-              width: '100%',
-              padding: '10px 12px',
-              borderRadius: '10px',
-              border: '1px solid #ccc',
-              fontSize: '14px'
-            }}
-          />
-          <input
-            id="contactNumber"
-            placeholder="Contact Number"
-            value={student.contactNumber}
-            onChange={handleInputChange}
-            style={{
-              width: '100%',
-              padding: '10px 12px',
-              borderRadius: '10px',
-              border: '1px solid #ccc',
-              fontSize: '14px'
-            }}
-          />
-          <input
-            id="email"
-            placeholder="Email"
-            value={student.email}
-            onChange={handleInputChange}
-            style={{
-              width: '100%',
-              padding: '10px 12px',
-              borderRadius: '10px',
-              border: '1px solid #ccc',
-              fontSize: '14px'
-            }}
-          />
-
-          <Box sx={{ display: 'flex', justifyContent: 'center', gap: '1rem', width: '100%' }}>
-            <Button
-              onClick={() => { handleSaveChanges(); setOpenInfoModal(false); }}
-              variant="contained"
-              sx={{ backgroundColor: '#06D6A0', '&:hover': { backgroundColor: '#04b886' }, borderRadius: '10px', minWidth: '100px' }}
-            >
-              Save
-            </Button>
-            <Button
-              onClick={() => setOpenInfoModal(false)}
-              variant="outlined"
-              sx={{ color: '#EF476F', borderColor: '#EF476F', '&:hover': { borderColor: '#d03a5a', backgroundColor: '#fce8ec' }, borderRadius: '10px', minWidth: '100px' }}
-            >
-              Cancel
-            </Button>
-          </Box>
-        </Box>
-      </Modal>
-
-
-      {/* Password Modal */}
-      <Modal open={openPasswordModal} onClose={() => setOpenPasswordModal(false)}>
-        <Box sx={{
-          backgroundColor: 'white',
-          padding: '2rem',
-          borderRadius: '20px',
-          margin: 'auto',
-          marginTop: '10vh',
-          maxWidth: '420px',
-          width: '90%',
-          boxShadow: 24,
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '1.5rem',
-          alignItems: 'center'
-        }}>
-          <h2 style={{ color: '#118AB2', marginBottom: '0.5rem' }}>🔐 Change Password</h2>
-
-          <Box sx={{ width: '100%', position: 'relative' }}>
-            <input
-              id="newPassword"
-              placeholder="New Password"
-              type={showNewPassword ? 'text' : 'password'}
-              value={student.newPassword}
-              onChange={handleInputChange}
-              style={{
-                width: '100%',
-                padding: '10px 40px 10px 12px',
-                borderRadius: '10px',
-                border: '1px solid #ccc',
-                fontSize: '14px',
-              }}
-            />
-            <IconButton
-              onClick={() => setShowNewPassword(!showNewPassword)}
-              sx={{ position: 'absolute', right: '8px', top: '50%', transform: 'translateY(-50%)' }}
-            >
-              {showNewPassword ? <Visibility /> : <VisibilityOff />}
-            </IconButton>
-          </Box>
-
-          <Box sx={{ width: '100%', position: 'relative' }}>
-            <input
-              id="confirmPassword"
-              placeholder="Confirm Password"
-              type={showConfirmPassword ? 'text' : 'password'}
-              value={student.confirmPassword}
-              onChange={handleInputChange}
-              style={{
-                width: '100%',
-                padding: '10px 40px 10px 12px',
-                borderRadius: '10px',
-                border: '1px solid #ccc',
-                fontSize: '14px',
-              }}
-            />
-            <IconButton
-              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-              sx={{ position: 'absolute', right: '8px', top: '50%', transform: 'translateY(-50%)' }}
-            >
-              {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
-            </IconButton>
-          </Box>
-
-          <Box sx={{ display: 'flex', justifyContent: 'center', gap: '1rem', width: '100%' }}>
-            <Button
-              onClick={() => { handleSaveChanges(); setOpenPasswordModal(false); }}
-              variant="contained"
-              sx={{ backgroundColor: '#06D6A0', '&:hover': { backgroundColor: '#04b886' }, borderRadius: '10px', minWidth: '100px' }}
-            >
-              Save
-            </Button>
-            <Button
-              onClick={() => setOpenPasswordModal(false)}
-              variant="outlined"
-              sx={{ color: '#EF476F', borderColor: '#EF476F', '&:hover': { borderColor: '#d03a5a', backgroundColor: '#fce8ec' }, borderRadius: '10px', minWidth: '100px' }}
-            >
-              Cancel
-            </Button>
-          </Box>
-        </Box>
-      </Modal>
-
+            <div className="modal-actions">
+              <button className='cancel-bttn' onClick={closeInfoModal}>
+                Cancel
+              </button>
+              <button
+                className='save-bttn'
+                onClick={() => {
+                  handleSaveChanges();
+                  closeInfoModal();
+                }}
+              >
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {isAlertVisible && (
         <div className="custom-alert">
