@@ -288,7 +288,7 @@ const confirmUpdateTask = async () => {
       {modalOpen && (
         <div className="modal-overlay">
           <div className="todo-modal">
-            <p className="todo-header-title">Create Task</p>
+            <p className="todo-header-title modal">Create Task</p>
 
             <div className="todo-edit-form">
               <div>
@@ -319,7 +319,7 @@ const confirmUpdateTask = async () => {
 
             <div className="todo-modal-actions">
               <button
-                onClick={() => setEditModalOpen(false)}
+                onClick={() => setModalOpen(false)}
                 className="notes-cancel-button"
               >
                 Cancel
