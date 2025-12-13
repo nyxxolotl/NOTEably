@@ -25,4 +25,4 @@ https://online.visual-paradigm.com/w/yesvzlaa/diagrams/#diagram:workspace=yesvzl
 
 
 [NEW] FIGMA link:
-https://www.figma.com/design/z2Fr9xqxca8GVBzCls6sOx/NOTEably-v2?node-id=0-1&t=iwjblTc76A4b9VWY-1
+https://www.figma.com/design/f8WVzBNIjC5FUIaUZl48Yz/NOTEably-v2?node-id=0-1&t=DQ9o7VuFkX6jb8PF-1
