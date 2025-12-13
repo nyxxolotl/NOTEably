@@ -109,8 +109,11 @@ function ToDoList() {
     if (itemToUpdate) {
       await axiosRequest({
         method: "put",
-        url: `${apiUrl}/updateList/${taskId}`,
-        data: { ...itemToUpdate, completed: !itemToUpdate.completed },
+        url: `${apiUrl}/putList/${taskId}`,
+        data: {
+          ...itemToUpdate,
+          completed: !itemToUpdate.completed,
+        },
       });
     }
   };
@@ -125,23 +128,22 @@ function ToDoList() {
     setEditModalOpen(true);
   };
 
-const confirmUpdateTask = async () => {
-  await axiosRequest({
-    method: "put",
-    url: `${apiUrl}/updateList/${selectedItem.toDoListID}`,
-    data: {
-      toDoListID: selectedItem.toDoListID,
-      studentId,
-      title: editData.title,
-      description: editData.description,
-      completed: selectedItem.completed,
-      scheduleId: selectedItem.scheduleId || null
-    },
-  });
+  const confirmUpdateTask = async () => {
+    await axiosRequest({
+      method: "put",
+      url: `${apiUrl}/putList/${selectedItem.toDoListID}`,
+      data: {
+        title: editData.title,
+        description: editData.description,
+        completed: selectedItem.completed,
+        scheduleId: selectedItem.scheduleId ?? null,
+      },
+    });
 
-  setEditModalOpen(false);
-  fetchToDoItems();
-};
+    setEditModalOpen(false);
+    fetchToDoItems();
+  };
+
 
   return (
     <div className="todo-app">
@@ -242,26 +244,26 @@ const confirmUpdateTask = async () => {
 
             <div className="todo-edit-form">
               <div>
-              <label>Title</label>
-              <input
-                type="text"
-                className="todo-edit-title-input"
-                value={editData.title}
-                onChange={(e) =>
-                  setEditData({ ...editData, title: e.target.value })
-                }
-              />
+                <label>Title</label>
+                <input
+                  type="text"
+                  className="todo-edit-title-input"
+                  value={editData.title}
+                  onChange={(e) =>
+                    setEditData({ ...editData, title: e.target.value })
+                  }
+                />
               </div>
 
               <div>
-              <label>Description</label>
-              <textarea
-                className="todo-edit-description-input"
-                value={editData.description}
-                onChange={(e) =>
-                  setEditData({ ...editData, description: e.target.value })
-                }
-              />
+                <label>Description</label>
+                <textarea
+                  className="todo-edit-description-input"
+                  value={editData.description}
+                  onChange={(e) =>
+                    setEditData({ ...editData, description: e.target.value })
+                  }
+                />
               </div>
             </div>
 
@@ -292,27 +294,27 @@ const confirmUpdateTask = async () => {
 
             <div className="todo-edit-form">
               <div>
-              <label>Title</label>
-              <input
-                className="todo-edit-title-input"
-                placeholder="Title"
-                value={formData.title}
-                onChange={(e) =>
-                  setFormData({ ...formData, title: e.target.value })
-                }
-              />
+                <label>Title</label>
+                <input
+                  className="todo-edit-title-input"
+                  placeholder="Title"
+                  value={formData.title}
+                  onChange={(e) =>
+                    setFormData({ ...formData, title: e.target.value })
+                  }
+                />
               </div>
 
               <div>
-              <label>Description</label>
-              <textarea
-                className="todo-edit-description-input"
-                placeholder="Description"
-                value={formData.description}
-                onChange={(e) =>
-                  setFormData({ ...formData, description: e.target.value })
-                }
-              />
+                <label>Description</label>
+                <textarea
+                  className="todo-edit-description-input"
+                  placeholder="Description"
+                  value={formData.description}
+                  onChange={(e) =>
+                    setFormData({ ...formData, description: e.target.value })
+                  }
+                />
               </div>
             </div>
 
