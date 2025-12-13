@@ -257,7 +257,7 @@ function SettingsPage() {
       {openInfoModal && (
         <div className="modal-overlay" onClick={closeInfoModal}>
           <div className="custom-modal" onClick={(e) => e.stopPropagation()}>
-            <h2 style={{ color: 'var(--darkblue)', marginBottom: '30px' }}>Edit Information</h2>
+            <h2 style={{ color: 'var(--darkblue)', marginBottom: '50px' }}>Edit Information</h2>
             <div className='input-group'>
               <div className='name-input-row'>
                 <label>Name</label>
@@ -301,7 +301,7 @@ function SettingsPage() {
               </div>
             </div>
 
-            <div className="modal-actions">
+            <div className="modal-actions" style={{ marginTop: '50px' }}>
               <button className='cancel-bttn' onClick={closeInfoModal}>
                 Cancel
               </button>

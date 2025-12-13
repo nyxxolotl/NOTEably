@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { getImageUrl, uploadProfilePicture, axiosRequest } from '../../services/studentService';
-import { Box, Modal, IconButton, Button } from '@mui/material';
+import { Box, IconButton, Button } from '@mui/material';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import LockIcon from '@mui/icons-material/Lock';
 import AddIcon from '@mui/icons-material/Add'; // For plus icon
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import EditIcon from '@mui/icons-material/EditRounded';
 import './Settings.css';
 import { useNavigate, useLocation } from 'react-router-dom';
 
@@ -65,6 +64,12 @@ function SecuritySettings() {
     setUploadedImageUrl(null);
     setOpenProfileModal(false);
   };
+
+  const closePasswordModal = () => {
+    setStudent(prev => ({ ...prev, newPassword: '', confirmPassword: '' }));
+    setOpenPasswordModal(false);
+  };
+
 
   const handleSaveChanges = async () => {
     try {
@@ -189,7 +194,7 @@ function SecuritySettings() {
             className="custom-modal"
             onClick={(e) => e.stopPropagation()}
           >
-            <h2 style={{ color: 'var(--darkblue)', marginBottom: '20px' }}>
+            <h2 style={{ color: 'var(--darkblue)', marginBottom: '30px' }}>
               Change Profile Picture
             </h2>
 
@@ -245,90 +250,72 @@ function SecuritySettings() {
         </div>
       )}
 
-
       {/* Password Modal */}
-      <Modal open={openPasswordModal} onClose={() => setOpenPasswordModal(false)}>
-        <Box sx={{
-          backgroundColor: 'white',
-          padding: '2rem',
-          borderRadius: '20px',
-          margin: 'auto',
-          marginTop: '10vh',
-          maxWidth: '420px',
-          width: '90%',
-          boxShadow: 24,
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '1.5rem',
-          alignItems: 'center'
-        }}>
-          <h2 style={{ color: '#118AB2', marginBottom: '0.5rem' }}>🔐 Change Password</h2>
+      {openPasswordModal && (
+        <div className="modal-overlay" onClick={closePasswordModal}>
+          <div className="custom-modal" onClick={(e) => e.stopPropagation()}>
+            <h2 style={{ color: 'var(--darkblue)', marginBottom: '50px' }}>Change Password</h2>
+            <div className='input-group'>
+              <div className="password-field">
+                <label>New Password</label>
+                <div className="password-wrapper">
+                  <input
+                    id="newPassword"
+                    type={showNewPassword ? 'text' : 'password'}
+                    value={student.newPassword}
+                    onChange={handleInputChange}
+                    className="custom-input new-password-input"
+                  />
 
-          <Box sx={{ width: '100%', position: 'relative' }}>
-            <input
-              id="newPassword"
-              placeholder="New Password"
-              type={showNewPassword ? 'text' : 'password'}
-              value={student.newPassword}
-              onChange={handleInputChange}
-              style={{
-                width: '100%',
-                padding: '10px 40px 10px 12px',
-                borderRadius: '10px',
-                border: '1px solid #ccc',
-                fontSize: '14px',
-              }}
-            />
-            <IconButton
-              onClick={() => setShowNewPassword(!showNewPassword)}
-              sx={{ position: 'absolute', right: '8px', top: '50%', transform: 'translateY(-50%)' }}
-            >
-              {showNewPassword ? <Visibility /> : <VisibilityOff />}
-            </IconButton>
-          </Box>
+                  <IconButton
+                    className="eye-visibility"
+                    onClick={() => setShowNewPassword(!showNewPassword)}
+                    size="small"
+                  >
+                    {showNewPassword ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </div>
+              </div>
 
-          <Box sx={{ width: '100%', position: 'relative' }}>
-            <input
-              id="confirmPassword"
-              placeholder="Confirm Password"
-              type={showConfirmPassword ? 'text' : 'password'}
-              value={student.confirmPassword}
-              onChange={handleInputChange}
-              style={{
-                width: '100%',
-                padding: '10px 40px 10px 12px',
-                borderRadius: '10px',
-                border: '1px solid #ccc',
-                fontSize: '14px',
-              }}
-            />
-            <IconButton
-              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-              sx={{ position: 'absolute', right: '8px', top: '50%', transform: 'translateY(-50%)' }}
-            >
-              {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
-            </IconButton>
-          </Box>
+              <div className="password-field">
+                <label>Confirm Password</label>
+                <div className="password-wrapper">
+                  <input
+                    id="confirmPassword"
+                    type={showConfirmPassword ? 'text' : 'password'}
+                    value={student.confirmPassword}
+                    onChange={handleInputChange}
+                    className="custom-input confirm-password-input"
+                  />
 
-          <Box sx={{ display: 'flex', justifyContent: 'center', gap: '1rem', width: '100%' }}>
-            <Button
-              onClick={() => { handleSaveChanges(); setOpenPasswordModal(false); }}
-              variant="contained"
-              sx={{ backgroundColor: '#06D6A0', '&:hover': { backgroundColor: '#04b886' }, borderRadius: '10px', minWidth: '100px' }}
-            >
-              Save
-            </Button>
-            <Button
-              onClick={() => setOpenPasswordModal(false)}
-              variant="outlined"
-              sx={{ color: '#EF476F', borderColor: '#EF476F', '&:hover': { borderColor: '#d03a5a', backgroundColor: '#fce8ec' }, borderRadius: '10px', minWidth: '100px' }}
-            >
-              Cancel
-            </Button>
-          </Box>
-        </Box>
-      </Modal>
+                  <IconButton
+                    className="eye-visibility"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    size="small"
+                  >
+                    {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </div>
+              </div>
+            </div>
 
+            <div className="modal-actions" style={{ marginTop: '50px' }}>
+              <button className='cancel-bttn' onClick={closePasswordModal}>
+                Cancel
+              </button>
+              <button
+                className='save-bttn'
+                onClick={() => {
+                  handleSaveChanges();
+                  closePasswordModal();
+                }}
+              >
+                Save Password
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {isAlertVisible && (
         <div className="custom-alert">
