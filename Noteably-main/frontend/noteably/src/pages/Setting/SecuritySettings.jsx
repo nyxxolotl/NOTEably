@@ -167,7 +167,6 @@ function SecuritySettings() {
             <div className="settings-divider2">
               <h2 style={{ color: 'var(--darkblue)' }}>{student.name}</h2>
               <p>ID: {student.studentId}</p>
-              <IconButton onClick={() => setOpenProfileModal(true)} className="update-profile-bttn"><PhotoCamera /></IconButton>
             </div>
             </div>
           </div>
