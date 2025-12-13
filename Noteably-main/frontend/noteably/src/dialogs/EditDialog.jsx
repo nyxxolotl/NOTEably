@@ -1,50 +1,67 @@
 import React from 'react';
-import {
-  Dialog, DialogTitle, DialogContent, DialogActions,
-  TextField, Grid, Button
-} from '@mui/material';
+import './Dialog.css';
 
 const EditDialog = ({
-  open, onClose, title, setTitle, hours, setHours,
-  minutes, setMinutes, seconds, setSeconds, onSave
-}) => (
-  <Dialog open={open} onClose={onClose}>
-    <DialogTitle>Edit Timer</DialogTitle>
-    <DialogContent>
-      <TextField
-        label="Title"
-        fullWidth
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        inputProps={{ maxLength: 20 }}
-        sx={{ marginBottom: '10px', marginTop: '10px' }}
-      />
-      <Grid container justifyContent="center" spacing={2}>
-        {[{ label: "Hours", value: hours, set: setHours },
-          { label: "Minutes", value: minutes, set: setMinutes },
-          { label: "Seconds", value: seconds, set: setSeconds }
-        ].map(({ label, value, set }) => (
-          <Grid item key={label}>
-            <TextField
-              label={label}
-              value={value}
-              onChange={(e) => set(e.target.value)}
-              inputProps={{ maxLength: 2 }}
-              sx={{ width: '100px' }}
-            />
-          </Grid>
-        ))}
-      </Grid>
-    </DialogContent>
-    <DialogActions>
-      <Button onClick={onClose} sx={{ backgroundColor: '#EF476F', color: '#fff', textTransform: 'none' }}>
-        Cancel
-      </Button>
-      <Button onClick={onSave} sx={{ backgroundColor: '#118AB2', color: '#fff', textTransform: 'none' }}>
-        Save
-      </Button>
-    </DialogActions>
-  </Dialog>
-);
+  open,
+  onClose,
+  title,
+  setTitle,
+  hours,
+  setHours,
+  minutes,
+  setMinutes,
+  seconds,
+  setSeconds,
+  onSave,
+}) => {
+  if (!open) return null;
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+        <h2 className="dialog-title">Edit Timer</h2>
+
+        <div className="dialog-content">
+          <label className="dialog-label">Title</label>
+          <input
+            className="dialog-input"
+            type="text"
+            value={title}
+            maxLength={20}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+
+          <div className="time-grid">
+            {[
+              { label: 'Hours', value: hours, set: setHours },
+              { label: 'Minutes', value: minutes, set: setMinutes },
+              { label: 'Seconds', value: seconds, set: setSeconds },
+            ].map(({ label, value, set }) => (
+              <div key={label} className="time-field">
+                <label className="dialog-label">{label}</label>
+                <input
+                  className="dialog-input time-input"
+                  type="number"
+                  maxLength={2}
+                  value={value}
+                  onChange={(e) => set(e.target.value)}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="modal-actions">
+          <button className="cancel-bttn" onClick={onClose}>
+            Cancel
+          </button>
+          <button className="save-bttn" onClick={onSave}>
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default EditDialog;
